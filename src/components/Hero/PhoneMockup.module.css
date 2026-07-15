@@ -1,0 +1,47 @@
+.wrapper {
+  position: relative;
+  width: 100%;
+  max-width: min(380px, 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.glow {
+  position: absolute;
+  inset: -12% -14%;
+  background: radial-gradient(
+    50% 50% at 55% 50%,
+    rgba(255, 214, 201, 0.5) 0%,
+    rgba(255, 214, 201, 0) 70%
+  );
+  filter: blur(14px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.image {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 40px 60px rgba(20, 12, 60, 0.35));
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image {
+    animation: none;
+  }
+}

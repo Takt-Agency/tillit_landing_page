@@ -1,0 +1,123 @@
+.section {
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(
+      120% 90% at 90% 10%,
+      #f4a68e 0%,
+      #ef8068 55%,
+      #db6a52 100%
+    );
+  color: var(--color-white);
+  padding: clamp(40px, 5vw, 56px) 0;
+  isolation: isolate;
+}
+
+.pattern {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.22;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'><g fill='none' stroke='%23ffffff' stroke-opacity='0.12' stroke-width='2' stroke-linecap='round'><path d='M40 220 C 40 130, 80 60, 130 60 S 220 130, 220 220'/><path d='M70 220 C 70 150, 100 90, 130 90 S 190 150, 190 220'/></g></svg>");
+  background-repeat: repeat;
+  background-size: 260px 260px;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-pad);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(20px, 3vw, 40px);
+  flex-wrap: wrap;
+}
+
+.content {
+  flex: 1;
+  min-width: 240px;
+}
+
+.title {
+  font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+  color: var(--color-white);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.lead {
+  margin-top: 6px;
+  font-size: clamp(0.9rem, 1.1vw, 1rem);
+  color: rgba(255, 255, 255, 0.88);
+  line-height: 1.5;
+}
+
+.stores {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.store {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 22px;
+  border-radius: var(--radius-md);
+  background: #0e0a25;
+  color: var(--color-white);
+  border: 1.5px solid rgba(255, 255, 255, 0.14);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.store:hover {
+  transform: translateY(-2px);
+  background: #1a1338;
+  box-shadow: 0 14px 28px rgba(20, 12, 60, 0.32);
+}
+
+.store i {
+  font-size: 1.8rem;
+}
+
+.storeText {
+  display: inline-flex;
+  flex-direction: column;
+  line-height: 1.1;
+  text-align: left;
+}
+
+.storeSmall {
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.75);
+  letter-spacing: 0.02em;
+}
+
+.storeBig {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-top: 2px;
+}
+
+@media (max-width: 640px) {
+  .inner {
+    flex-direction: column;
+    text-align: center;
+    align-items: stretch;
+  }
+
+  .stores {
+    justify-content: center;
+  }
+
+  .store {
+    flex: 1;
+    justify-content: center;
+    min-width: 160px;
+  }
+}
