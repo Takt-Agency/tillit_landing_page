@@ -76,9 +76,13 @@ export default function Navbar() {
         </nav>
 
         <div className={styles.actions}>
-          <a className={styles.cta} href="#cta">
+          <a
+            className={styles.cta}
+            href="#cta"
+            aria-label="Télécharger l'app"
+          >
             <i className="fa-solid fa-download" aria-hidden="true" />
-            Télécharger l'app
+            <span className={styles.ctaText}>Télécharger l'app</span>
           </a>
           <button
             type="button"
