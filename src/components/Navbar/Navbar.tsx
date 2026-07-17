@@ -3,11 +3,12 @@ import styles from './Navbar.module.css';
 import Logo from '../Logo/Logo';
 
 const NAV_LINKS = [
-  { href: '#statistiques', label: 'En chiffres' },
-  { href: '#probleme', label: 'Pourquoi TilliT' },
-  { href: '#comment-ca-marche', label: 'Comment ça marche' },
-  { href: '#tarifs', label: 'Tarifs' },
-  { href: '#avis', label: 'Avis' },
+  { href: '#probleme', label: 'Pourquoi TilliT', icon: 'fa-lightbulb' },
+  { href: '#comment-ca-marche', label: 'Comment ça marche', icon: 'fa-list-check' },
+  { href: '#tarifs', label: 'Tarifs', icon: 'fa-tag' },
+  { href: '#avis', label: 'Avis', icon: 'fa-comment-dots' },
+  { href: '#faq', label: 'FAQ', icon: 'fa-circle-question' },
+  { href: '#contact', label: 'Contact', icon: 'fa-envelope' },
 ];
 
 export default function Navbar() {
@@ -67,7 +68,15 @@ export default function Navbar() {
                     onClick={() => setOpen(false)}
                     aria-current={isActive ? 'true' : undefined}
                   >
-                    {link.label}
+                    <i
+                      className={`fa-solid ${link.icon} ${styles.navIcon}`}
+                      aria-hidden="true"
+                    />
+                    <span>{link.label}</span>
+                    <i
+                      className={`fa-solid fa-chevron-right ${styles.navArrow}`}
+                      aria-hidden="true"
+                    />
                   </a>
                 </li>
               );

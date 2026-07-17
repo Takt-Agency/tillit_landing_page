@@ -42,7 +42,7 @@ export default function Pricing() {
   return (
     <section className={styles.section} id="tarifs" aria-labelledby="pricing-title">
       <div className={styles.inner}>
-        <header className={styles.head}>
+        <header className={styles.head} data-reveal>
           <span className={styles.eyebrow}>Tarifs</span>
           <h2 id="pricing-title" className={styles.title}>
             Deux formules, un seul objectif :{' '}
@@ -55,7 +55,11 @@ export default function Pricing() {
 
         <div className={styles.grid}>
           {/* NOTE */}
-          <article className={`${styles.card} ${styles.cardNote}`}>
+          <article
+            className={`${styles.card} ${styles.cardNote}`}
+            data-reveal
+            style={{ ['--reveal-delay' as string]: '0ms' }}
+          >
             <span className={`${styles.badge} ${styles.badgeGreen}`}>
               Gratuit pour toujours
             </span>
@@ -91,7 +95,11 @@ export default function Pricing() {
           </article>
 
           {/* ZEN */}
-          <article className={`${styles.card} ${styles.cardZen}`}>
+          <article
+            className={`${styles.card} ${styles.cardZen}`}
+            data-reveal
+            style={{ ['--reveal-delay' as string]: '150ms' }}
+          >
             <span className={styles.recommended}>Recommandé</span>
             <span className={`${styles.badge} ${styles.badgeViolet}`}>
               Sécurité juridique
@@ -137,7 +145,7 @@ export default function Pricing() {
           </article>
         </div>
 
-        <p className={styles.disclaimer}>
+        <p className={styles.disclaimer} data-reveal>
           <span className={styles.warn} aria-hidden="true">
             <i className="fa-solid fa-shield-halved" />
           </span>

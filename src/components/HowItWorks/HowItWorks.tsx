@@ -83,7 +83,7 @@ export default function HowItWorks() {
       <div className={styles.inner}>
         <div className={styles.showcase}>
           <div className={styles.left}>
-            <header className={styles.head}>
+            <header className={styles.head} data-reveal>
               <span className={styles.eyebrow}>La solution</span>
               <h2 id="how-title" className={styles.title}>
                 Quatre étapes.{' '}
@@ -100,7 +100,11 @@ export default function HowItWorks() {
             {STEPS.map((step, i) => {
               const isActive = i === active;
               return (
-                <li key={step.n}>
+                <li
+                  key={step.n}
+                  data-reveal
+                  style={{ ['--reveal-delay' as string]: `${i * 100}ms` }}
+                >
                   <button
                     type="button"
                     className={`${styles.step} ${styles[`accent_${step.accent}`]} ${
@@ -133,7 +137,7 @@ export default function HowItWorks() {
           </PhoneShowcase>
         </div>
 
-        <div className={styles.banner}>
+        <div className={styles.banner} data-reveal>
           <span className={styles.bannerIcon} aria-hidden="true">
             <i className="fa-solid fa-shield-halved" />
           </span>

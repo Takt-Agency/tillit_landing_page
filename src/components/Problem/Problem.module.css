@@ -114,9 +114,6 @@
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   box-shadow: 0 20px 40px rgba(20, 12, 60, 0.18);
-  opacity: 0;
-  transform: translateY(20px);
-  animation: cardIn 0.7s ease forwards;
   transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
 }
 
@@ -124,6 +121,10 @@
   transform: translateY(-6px);
   border-color: rgba(255, 255, 255, 0.32);
   background: rgba(255, 255, 255, 0.12);
+}
+
+.card[data-reveal].is-visible:hover {
+  transform: translateY(-6px);
 }
 
 .iconWrap {

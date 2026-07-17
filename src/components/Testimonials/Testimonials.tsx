@@ -1,5 +1,18 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './Testimonials.module.css';
+
+function useIsMobile(query = '(max-width: 720px)') {
+  const [is, setIs] = useState(() =>
+    typeof window !== 'undefined' ? window.matchMedia(query).matches : false,
+  );
+  useEffect(() => {
+    const mq = window.matchMedia(query);
+    const handler = () => setIs(mq.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, [query]);
+  return is;
+}
 
 type Testimonial = {
   name: string;
@@ -103,11 +116,11 @@ const PAGE_SIZE = 3;
 export default function Testimonials() {
   const totalPages = Math.ceil(TESTIMONIALS.length / PAGE_SIZE);
   const [page, setPage] = useState(0);
+  const isMobile = useIsMobile();
 
-  const visible = TESTIMONIALS.slice(
-    page * PAGE_SIZE,
-    page * PAGE_SIZE + PAGE_SIZE,
-  );
+  const visible = isMobile
+    ? TESTIMONIALS
+    : TESTIMONIALS.slice(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE);
 
   const go = (delta: number) =>
     setPage((p) => (p + delta + totalPages) % totalPages);
@@ -122,7 +135,7 @@ export default function Testimonials() {
       <div className={styles.blobRight} aria-hidden="true" />
 
       <div className={styles.inner}>
-        <header className={styles.head}>
+        <header className={styles.head} data-reveal>
           <span className={styles.eyebrow}>
             <i className="fa-solid fa-heart" aria-hidden="true" />
             Ils nous font confiance
@@ -146,15 +159,20 @@ export default function Testimonials() {
             <i className="fa-solid fa-chevron-left" aria-hidden="true" />
           </button>
 
-          <div className={styles.cards} key={page}>
+          <div
+            className={`${styles.cards} ${isMobile ? styles.cardsSwipe : ''}`}
+            key={isMobile ? 'swipe' : page}
+          >
             {visible.map((t, i) => {
-              const isHighlighted = i === 1; // middle card highlighted
+              const isHighlighted = !isMobile && i === 1; // middle card highlighted on desktop
               return (
                 <article
                   key={t.name}
                   className={`${styles.card} ${
                     isHighlighted ? styles.cardHighlight : ''
                   }`}
+                  data-reveal
+                  style={{ ['--reveal-delay' as string]: `${i * 100}ms` }}
                 >
                   {t.verified && (
                     <span className={styles.verified}>
@@ -200,21 +218,29 @@ export default function Testimonials() {
           </button>
         </div>
 
-        <div className={styles.dots} role="tablist" aria-label="Pages d'avis">
-          {Array.from({ length: totalPages }).map((_, i) => (
-            <button
-              key={i}
-              type="button"
-              className={`${styles.dot} ${i === page ? styles.dotActive : ''}`}
-              onClick={() => setPage(i)}
-              aria-selected={i === page}
-              aria-label={`Page ${i + 1}`}
-              role="tab"
-            />
-          ))}
-        </div>
+        {!isMobile && (
+          <div className={styles.dots} role="tablist" aria-label="Pages d'avis">
+            {Array.from({ length: totalPages }).map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                className={`${styles.dot} ${i === page ? styles.dotActive : ''}`}
+                onClick={() => setPage(i)}
+                aria-selected={i === page}
+                aria-label={`Page ${i + 1}`}
+                role="tab"
+              />
+            ))}
+          </div>
+        )}
+        {isMobile && (
+          <p className={styles.swipeHint}>
+            <i className="fa-solid fa-arrows-left-right" aria-hidden="true" />
+            Glisse pour voir plus d'avis
+          </p>
+        )}
 
-        <div className={styles.statsBanner}>
+        <div className={styles.statsBanner} data-reveal>
           <div className={styles.statsGrid}>
             {STATS.map((s) => (
               <div key={s.label} className={styles.stat}>

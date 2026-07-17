@@ -6,7 +6,7 @@ export default function CTA() {
       <div className={styles.pattern} aria-hidden="true" />
 
       <div className={styles.inner}>
-        <div className={styles.content}>
+        <div className={styles.content} data-reveal="left">
           <h2 id="cta-title" className={styles.title}>
             Téléchargez TilliT
           </h2>
@@ -16,7 +16,11 @@ export default function CTA() {
           </p>
         </div>
 
-        <div className={styles.stores}>
+        <div
+          className={styles.stores}
+          data-reveal="right"
+          style={{ ['--reveal-delay' as string]: '120ms' }}
+        >
           <a
             className={styles.store}
             href="https://apps.apple.com"

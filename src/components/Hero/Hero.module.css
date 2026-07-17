@@ -11,7 +11,7 @@
   color: var(--color-white);
   padding: 0 0 clamp(120px, 14vw, 180px);
   margin-top: calc(-1 * var(--navbar-space));
-  padding-top: calc(var(--navbar-space) + clamp(24px, 4vw, 48px));
+  padding-top: calc(var(--navbar-space) + clamp(72px, 10vw, 140px));
   isolation: isolate;
 }
 

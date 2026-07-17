@@ -139,7 +139,7 @@ export default function StatsBanner() {
       aria-labelledby="statistiques-title"
     >
       <div className={styles.inner}>
-        <header className={styles.head}>
+        <header className={styles.head} data-reveal>
           <span className={styles.eyebrow}>En chiffres</span>
           <h2 id="statistiques-title" className={styles.title}>
             L'argent entre proches, ce n'est pas rare —{' '}
@@ -152,8 +152,14 @@ export default function StatsBanner() {
         </header>
 
         <div className={styles.grid}>
-          {STATS.map((stat) => (
-            <StatCard key={stat.label} stat={stat} active={active} />
+          {STATS.map((stat, i) => (
+            <div
+              key={stat.label}
+              data-reveal
+              style={{ ['--reveal-delay' as string]: `${i * 100}ms` }}
+            >
+              <StatCard stat={stat} active={active} />
+            </div>
           ))}
         </div>
       </div>

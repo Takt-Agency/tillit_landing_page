@@ -42,7 +42,7 @@ export default function Problem() {
       </div>
 
       <div className={styles.inner}>
-        <header className={styles.head}>
+        <header className={styles.head} data-reveal>
           <span className={styles.eyebrow}>Ce qui casse la relation</span>
           <h2 id="probleme-title" className={styles.title}>
             La confiance permet le prêt.
@@ -61,7 +61,8 @@ export default function Problem() {
             <article
               key={card.title}
               className={`${styles.card} ${styles[`accent_${card.accent}`]}`}
-              style={{ animationDelay: `${i * 90}ms` }}
+              data-reveal
+              style={{ ['--reveal-delay' as string]: `${i * 120}ms` }}
             >
               <div className={styles.iconWrap}>{card.icon}</div>
               <h3 className={styles.cardTitle}>{card.title}</h3>
@@ -71,7 +72,7 @@ export default function Problem() {
           ))}
         </div>
 
-        <p className={styles.outro}>
+        <p className={styles.outro} data-reveal>
           <i
             className={`fa-solid fa-heart ${styles.outroIcon}`}
             aria-hidden="true"

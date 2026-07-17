@@ -36,7 +36,7 @@ export default function Footer() {
     <footer className={styles.footer}>
       <div className={styles.inner}>
         <div className={styles.top}>
-          <div className={styles.brand}>
+          <div className={styles.brand} data-reveal="left">
             <Logo className={styles.logo} />
             <p className={styles.tagline}>
               La finance qui préserve les liens. Prêter, emprunter et suivre les
@@ -61,7 +61,11 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div className={styles.columns}>
+          <div
+            className={styles.columns}
+            data-reveal="right"
+            style={{ ['--reveal-delay' as string]: '80ms' }}
+          >
             <div className={styles.col}>
               <h4 className={styles.colTitle}>Produit</h4>
               <ul>

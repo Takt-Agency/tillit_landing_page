@@ -1,6 +1,8 @@
 .wrapper {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 50;
   padding: 18px var(--container-pad) 0;
   pointer-events: none;
@@ -71,6 +73,11 @@
 .navLinkActive {
   color: var(--color-violet);
   background: var(--color-violet-light);
+}
+
+.navIcon,
+.navArrow {
+  display: none;
 }
 
 .chevron {
@@ -157,12 +164,13 @@
   .nav {
     position: absolute;
     top: calc(100% + 10px);
-    left: 0;
-    right: 0;
+    left: 8px;
+    right: 8px;
     background: var(--color-white);
     border-radius: var(--radius-lg);
-    padding: 16px;
-    box-shadow: var(--shadow-lg);
+    padding: 10px;
+    box-shadow: 0 24px 60px rgba(31, 26, 61, 0.18);
+    border: 1px solid rgba(31, 26, 61, 0.06);
     transform: translateY(-8px);
     opacity: 0;
     pointer-events: none;
@@ -178,13 +186,66 @@
   .navList {
     flex-direction: column;
     align-items: stretch;
-    gap: 4px;
+    gap: 2px;
   }
 
   .navLink {
-    padding: 14px 16px;
+    display: grid;
+    grid-template-columns: 36px 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
     border-radius: var(--radius-md);
-    font-size: 1rem;
+    font-size: 0.95rem;
+    text-align: left;
+  }
+
+  .navIcon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--color-violet-light);
+    color: var(--color-violet);
+    font-size: 0.85rem;
+    flex-shrink: 0;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  .navArrow {
+    display: inline-block;
+    font-size: 0.7rem;
+    color: var(--color-ink-mute);
+    opacity: 0.6;
+    transition: transform 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+  }
+
+  .navLink:hover {
+    background: var(--color-violet-light);
+  }
+
+  .navLink:hover .navArrow {
+    transform: translateX(3px);
+    color: var(--color-violet);
+    opacity: 1;
+  }
+
+  .navLinkActive {
+    background: linear-gradient(135deg, #8b63e8 0%, #7a52d9 100%);
+    color: var(--color-white);
+    box-shadow: 0 10px 20px rgba(139, 99, 232, 0.32);
+  }
+
+  .navLinkActive .navIcon {
+    background: rgba(255, 255, 255, 0.22);
+    color: var(--color-white);
+  }
+
+  .navLinkActive .navArrow {
+    color: var(--color-white);
+    opacity: 1;
   }
 
   .login {
