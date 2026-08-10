@@ -1,28 +1,20 @@
 import styles from './Pricing.module.css';
 
 const NOTE_FEATURES = [
-  'Création du prêt (montant, durée, calendrier)',
-  'Rappels automatiques bienveillants (J-2, J, J+7)',
-  'Historique factuel des remboursements',
-  'Espace de dialogue in-app',
-  'Négociation et modulation (report, étalement)',
-  'Gamification légère (badges, célébration finale)',
-];
-
-const ZEN_TIERS: [string, string][] = [
-  ['100–500 €', '4,99 €'],
-  ['501–1 000 €', '9,99 €'],
-  ['1 001–2 000 €', '19,99 €'],
-  ['2 001–3 000 €', '29,99 €'],
-  ['3 001–5 000 €', '49,99 €'],
+  'Création de prêt guidée en 2 minutes',
+  'Échéancier partagé clair',
+  'Rappels bienveillants automatiques',
+  'Historique partagé du prêt',
+  'Passeport de fiabilité',
 ];
 
 const ZEN_FEATURES = [
-  'Reconnaissance de dette PDF conforme',
-  'Signature électronique qualifiée (GoodFlag, certifié eIDAS)',
-  'KYC inclus via France Connect',
-  'Dossier exportable complet (contrat + historique + preuves)',
-  "Manuel d'accompagnement : procédure simplifiée si litige",
+  'Tout ce qui est inclus dans Note',
+  'Reconnaissance de dette électronique',
+  'Signature électronique',
+  "Vérification d'identité",
+  "Conservation sécurisée de l'acte",
+  'Guide pas à pas en cas de recours',
 ];
 
 function Check({ tone }: { tone: 'green' | 'violet' }) {
@@ -43,13 +35,15 @@ export default function Pricing() {
     <section className={styles.section} id="tarifs" aria-labelledby="pricing-title">
       <div className={styles.inner}>
         <header className={styles.head} data-reveal>
-          <span className={styles.eyebrow}>Tarifs</span>
+          <span className={styles.eyebrow}>Deux formules</span>
           <h2 id="pricing-title" className={styles.title}>
-            Deux formules, un seul objectif :{' '}
-            <span className={styles.titleAccent}>la sérénité.</span>
+            Un même objectif :{' '}
+            <span className={styles.titleAccent}>préserver vos relations.</span>
           </h2>
           <p className={styles.lead}>
-            NOTE organise la confiance. ZEN ajoute la sécurité juridique.
+            Utilisez gratuitement <strong>Note</strong> pour organiser votre prêt.
+            Choisissez <strong>Zen</strong> lorsque vous souhaitez ajouter une
+            reconnaissance de dette sécurisée.
           </p>
         </header>
 
@@ -60,38 +54,32 @@ export default function Pricing() {
             data-reveal
             style={{ ['--reveal-delay' as string]: '0ms' }}
           >
-            <span className={`${styles.badge} ${styles.badgeGreen}`}>
-              Gratuit pour toujours
-            </span>
-            <h3 className={styles.cardTitle}>
-              TilliT NOTE{' '}
-              <i
-                className={`fa-solid fa-handshake-angle ${styles.cardTitleIcon} ${styles.iconGreen}`}
-                aria-hidden="true"
-              />
-            </h3>
+            <div className={styles.cardTopRow}>
+              <h3 className={styles.cardTitle}>TilliT Note</h3>
+              <span className={styles.tag}>Le plus utilisé</span>
+            </div>
+
             <p className={styles.price}>
-              <span className={styles.priceValue}>0 €</span>
+              <span className={styles.priceValue}>Gratuit</span>
             </p>
+            <p className={styles.priceMeta}>Jusqu'à 1 500 €</p>
+
             <p className={styles.desc}>
-              Pour les prêts entre proches en toute confiance
-            </p>
-            <p className={styles.meta}>
-              Jusqu'à 1 500 € · 12 ou 60 mois max
+              Pour structurer un prêt entre proches, sans frais.
             </p>
 
             <ul className={styles.features}>
               {NOTE_FEATURES.map((f) => (
                 <li key={f}>
-                  <Check tone="green" />
+                  <Check tone="violet" />
                   <span>{f}</span>
                 </li>
               ))}
             </ul>
 
-            <button type="button" className={`${styles.cta} ${styles.ctaGhost}`}>
-              Commencer avec NOTE
-            </button>
+            <p className={styles.cardFoot}>
+              Gratuit dès le premier jour. Pour toujours.
+            </p>
           </article>
 
           {/* ZEN */}
@@ -100,36 +88,20 @@ export default function Pricing() {
             data-reveal
             style={{ ['--reveal-delay' as string]: '150ms' }}
           >
-            <span className={styles.recommended}>Recommandé</span>
-            <span className={`${styles.badge} ${styles.badgeViolet}`}>
-              Sécurité juridique
-            </span>
-            <h3 className={styles.cardTitle}>
-              TilliT ZEN{' '}
-              <i
-                className={`fa-solid fa-scale-balanced ${styles.cardTitleIcon} ${styles.iconViolet}`}
-                aria-hidden="true"
-              />
-            </h3>
-            <p className={styles.price}>
-              <span className={styles.priceFrom}>À partir de</span>
-              <span className={styles.priceValue}>4,99 €</span>
-            </p>
-            <p className={styles.desc}>
-              Pour les montants importants ou les situations sensibles
-            </p>
-            <p className={styles.meta}>100 € à 5 000 € · jusqu'à 60 mois</p>
-
-            <div className={styles.tiers}>
-              {ZEN_TIERS.map(([range, price]) => (
-                <div key={range} className={styles.tierRow}>
-                  <span>{range}</span>
-                  <strong>{price}</strong>
-                </div>
-              ))}
+            <div className={styles.cardTopRow}>
+              <h3 className={styles.cardTitle}>TilliT Zen</h3>
+              <span className={`${styles.tag} ${styles.tagSoon}`}>Bientôt</span>
             </div>
 
-            <p className={styles.plusLabel}>Tout TilliT NOTE, PLUS :</p>
+            <p className={styles.price}>
+              <span className={styles.priceValue}>Dès 4,99 €</span>
+            </p>
+            <p className={styles.priceMeta}>Jusqu'à 5 000 €</p>
+
+            <p className={styles.desc}>
+              Pour les prêts plus importants, avec valeur juridique.
+            </p>
+
             <ul className={styles.features}>
               {ZEN_FEATURES.map((f) => (
                 <li key={f}>
@@ -139,10 +111,19 @@ export default function Pricing() {
               ))}
             </ul>
 
-            <button type="button" className={`${styles.cta} ${styles.ctaSolid}`}>
-              Commencer avec ZEN
-            </button>
+            <p className={styles.cardFoot}>Bientôt disponible</p>
           </article>
+        </div>
+
+        <div className={styles.ctaRow} data-reveal>
+          <a className={styles.ctaLight} href="#tarifs">
+            Tous les tarifs
+            <i className="fa-solid fa-arrow-right" aria-hidden="true" />
+          </a>
+          <a className={styles.ctaLight} href="#tarifs">
+            Découvrir TilliT Zen
+            <i className="fa-solid fa-arrow-right" aria-hidden="true" />
+          </a>
         </div>
 
         <p className={styles.disclaimer} data-reveal>
@@ -150,9 +131,8 @@ export default function Pricing() {
             <i className="fa-solid fa-shield-halved" />
           </span>
           <span>
-            <strong>ZEN réduit drastiquement le risque relationnel et juridique.</strong>{' '}
-            On ne promet pas le risque zéro. On réduit le risque de 80 %, on ne
-            l'élimine pas.
+            TilliT aide à réduire les risques de malentendus, mais ne garantit
+            jamais qu'un prêt sera remboursé.
           </span>
         </p>
       </div>

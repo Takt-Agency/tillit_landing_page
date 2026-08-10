@@ -3,6 +3,8 @@ import Navbar from './components/Navbar/Navbar';
 import Hero, { HeroSocialProof } from './components/Hero/Hero';
 import StatsBanner from './components/StatsBanner/StatsBanner';
 import Problem from './components/Problem/Problem';
+import Comparison from './components/Comparison/Comparison';
+import Benefits from './components/Benefits/Benefits';
 import HowItWorks from './components/HowItWorks/HowItWorks';
 import Pricing from './components/Pricing/Pricing';
 import Testimonials from './components/Testimonials/Testimonials';
@@ -22,6 +24,8 @@ export default function App() {
         <HeroSocialProof />
         <StatsBanner />
         <Problem />
+        <Comparison />
+        <Benefits />
         <HowItWorks />
         <Pricing />
         <Testimonials />

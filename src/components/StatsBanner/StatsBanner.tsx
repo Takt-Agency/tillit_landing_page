@@ -7,46 +7,40 @@ type Stat = {
   suffix: string;
   label: string;
   source: string;
-  accent: 'violet' | 'coral' | 'green' | 'blue';
+  accent: 'violet' | 'coral' | 'blue';
   icon: string;
 };
 
 const STATS: Stat[] = [
   {
-    value: 1.2,
-    decimals: 1,
-    suffix: 'Md',
-    label: "d'adultes dans le monde ont emprunté à un proche",
-    source: 'Global Findex, 2025',
-    accent: 'violet',
-    icon: 'fa-users',
-  },
-  {
-    value: 6.5,
-    decimals: 1,
-    suffix: 'M',
-    label: 'de Français prêtent ou empruntent à un proche chaque année',
-    source: 'Insee',
-    accent: 'coral',
-    icon: 'fa-user-group',
-  },
-  {
     value: 73,
     decimals: 0,
     suffix: '%',
-    label: "des prêteurs ne récupèrent pas l'intégralité de leur argent",
-    source: 'LendingTree, 2023',
-    accent: 'blue',
-    icon: 'fa-shield-halved',
+    label:
+      "des personnes ayant prêté à un proche n'ont pas été remboursées intégralement.",
+    source: 'LendingTree',
+    accent: 'violet',
+    icon: 'fa-hand-holding-dollar',
   },
   {
     value: 30,
     decimals: 0,
     suffix: '%',
-    label: 'des emprunteurs reconnaissent ne jamais avoir remboursé',
-    source: 'Bread Financial, 2024',
-    accent: 'green',
-    icon: 'fa-wallet',
+    label:
+      "des personnes ayant emprunté à un proche reconnaissent ne l'avoir jamais remboursé.",
+    source: 'Bread Financial',
+    accent: 'coral',
+    icon: 'fa-user-clock',
+  },
+  {
+    value: 1.2,
+    decimals: 1,
+    suffix: 'Md',
+    label:
+      "d'adultes empruntent chaque année auprès de leurs proches à travers le monde.",
+    source: 'Global Findex',
+    accent: 'blue',
+    icon: 'fa-earth-europe',
   },
 ];
 
@@ -86,23 +80,33 @@ function useCountUp(target: number, decimals: number, start: boolean, duration =
   return value;
 }
 
-function StatCard({ stat, active }: { stat: Stat; active: boolean }) {
+function StatCard({
+  stat,
+  active,
+  index,
+}: {
+  stat: Stat;
+  active: boolean;
+  index: number;
+}) {
   const current = useCountUp(stat.value, stat.decimals, active);
   return (
-    <article className={`${styles.card} ${styles[`accent_${stat.accent}`]}`}>
-      <div className={styles.valueRow}>
-        <span className={styles.iconWrap} aria-hidden="true">
-          <i className={`fa-solid ${stat.icon}`} />
-        </span>
-        <p className={styles.value}>
-          <span className={styles.number}>{formatFR(current, stat.decimals)}</span>
-          <span className={styles.suffix}>{stat.suffix}</span>
-        </p>
-      </div>
+    <article
+      className={`${styles.card} ${styles[`accent_${stat.accent}`]}`}
+      data-reveal
+      style={{ ['--reveal-delay' as string]: `${index * 120}ms` }}
+    >
+      <span className={styles.iconWrap} aria-hidden="true">
+        <i className={`fa-solid ${stat.icon}`} />
+      </span>
+      <p className={styles.value}>
+        <span className={styles.number}>{formatFR(current, stat.decimals)}</span>
+        <span className={styles.suffix}>{stat.suffix}</span>
+      </p>
       <p className={styles.label}>{stat.label}</p>
       <p className={styles.source}>
         <span className={styles.sourceDot} aria-hidden="true" />
-        <em>{stat.source}</em>
+        Source · <em>{stat.source}</em>
       </p>
     </article>
   );
@@ -125,7 +129,7 @@ export default function StatsBanner() {
           }
         }
       },
-      { threshold: 0.25 },
+      { threshold: 0.2 },
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -140,26 +144,21 @@ export default function StatsBanner() {
     >
       <div className={styles.inner}>
         <header className={styles.head} data-reveal>
-          <span className={styles.eyebrow}>En chiffres</span>
           <h2 id="statistiques-title" className={styles.title}>
-            L'argent entre proches, ce n'est pas rare —{' '}
-            <span className={styles.titleAccent}>c'est massif.</span>
+            Chaque année, des millions de personnes prêtent
+            <br />
+            <span className={styles.titleAccent}>
+              de l'argent à leurs proches.
+            </span>
           </h2>
           <p className={styles.lead}>
-            Prêter à un ami, un frère, une sœur : un geste quotidien à l'échelle
-            mondiale. Et pourtant, sans cadre, la relation en paie souvent le prix.
+            Ce simple geste peut parfois fragiliser une relation.
           </p>
         </header>
 
         <div className={styles.grid}>
           {STATS.map((stat, i) => (
-            <div
-              key={stat.label}
-              data-reveal
-              style={{ ['--reveal-delay' as string]: `${i * 100}ms` }}
-            >
-              <StatCard stat={stat} active={active} />
-            </div>
+            <StatCard key={stat.source} stat={stat} active={active} index={i} />
           ))}
         </div>
       </div>

@@ -1,24 +1,6 @@
 import styles from './Hero.module.css';
 import PhoneMockup from './PhoneMockup';
 
-const FEATURES = [
-  {
-    title: '0 %',
-    label: "0 % d'intérêt entre proches",
-    icon: <i className="fa-solid fa-percent" aria-hidden="true" />,
-  },
-  {
-    title: 'Aucune commission',
-    label: 'Aucune commission sur la dette',
-    icon: <i className="fa-solid fa-shield-halved" aria-hidden="true" />,
-  },
-  {
-    title: 'Vos données',
-    label: 'Vos données sont sécurisées',
-    icon: <i className="fa-solid fa-lock" aria-hidden="true" />,
-  },
-];
-
 const AVATARS = ['A', 'M', 'S', 'K', 'L'];
 
 export default function Hero() {
@@ -34,51 +16,50 @@ export default function Hero() {
       <div className={styles.inner}>
         <div className={styles.content}>
           <span className={styles.eyebrow}>
-            <span className={styles.eyebrowDot} aria-hidden="true">
-              <i className="fa-solid fa-heart" />
-            </span>
-            La finance qui préserve les liens
+            Simple entre nous
             <span className={styles.eyebrowShine} aria-hidden="true" />
           </span>
 
           <h1 className={styles.title}>
-            L'argent entre proches,
-            <br />
-            <span className={styles.titleAccent}>sans le malaise.</span>
+            Prêter{' '}
+            <span className={styles.titleAccent}>sereinement.</span>
           </h1>
 
           <p className={styles.subtitle}>
-            Le problème n'est pas l'argent. C'est le flou, le silence, la gêne et le
-            ghosting. TilliT transforme une promesse verbale en engagement structuré —
-            et préserve la relation.
+            Entre proches, un prêt devrait rester un geste simple. Pas une raison
+            de s'éviter.
+          </p>
+          <p className={styles.subtitleStrong}>
+            On ne remplace pas la confiance.{' '}
+            <strong>On lui donne un cadre.</strong>
           </p>
 
           <div className={styles.ctas}>
             <a className={styles.ctaPrimary} href="#cta">
-              <i className="fa-solid fa-download" aria-hidden="true" />
-              Télécharger l'app
+              Commencer gratuitement
+              <i className="fa-solid fa-arrow-right" aria-hidden="true" />
             </a>
             <a className={styles.ctaSecondary} href="#comment-ca-marche">
-              Comment ça marche
+              Découvrir comment ça marche
               <i className="fa-solid fa-arrow-right" aria-hidden="true" />
             </a>
           </div>
 
-          <ul className={styles.features}>
-            {FEATURES.map((f) => (
-              <li key={f.label} className={styles.feature}>
-                <span className={styles.featureIcon}>{f.icon}</span>
-                <span className={styles.featureText}>
-                  <strong>{f.title}</strong>
-                  <em>{f.label.replace(f.title, '').trim() || f.label}</em>
-                </span>
-              </li>
-            ))}
-          </ul>
         </div>
 
         <div className={styles.visual}>
           <PhoneMockup />
+          <div className={styles.notifCard} aria-hidden="true">
+            <span className={styles.notifIcon}>
+              <i className="fa-solid fa-bell" />
+            </span>
+            <div className={styles.notifText}>
+              <p className={styles.notifLabel}>Rappel envoyé</p>
+              <p className={styles.notifDesc}>
+                Plus besoin de relancer vous-même.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 

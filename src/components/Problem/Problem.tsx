@@ -1,84 +1,91 @@
 import styles from './Problem.module.css';
 
+type Accent = 'violet' | 'coral' | 'blue';
+
 type Card = {
+  n: string;
   title: string;
-  desc: string;
   quote: string;
-  accent: 'coral' | 'blue' | 'yellow';
-  icon: JSX.Element;
+  icon: string;
+  accent: Accent;
 };
 
 const CARDS: Card[] = [
   {
-    title: 'Le flou',
-    desc: 'On dit « je te rembourse bientôt » — mais bientôt, c\'est quand exactement ?',
-    quote: '« Il m\'a dit la semaine prochaine… il y a trois mois. »',
+    n: '01',
+    title: 'Tout commence simplement',
+    quote: '« Je te rembourse bientôt. »',
+    icon: 'fa-handshake',
+    accent: 'violet',
+  },
+  {
+    n: '02',
+    title: 'Puis chacun attend',
+    quote: '« Je ne vais pas lui courir après quand même… »',
+    icon: 'fa-hourglass-half',
     accent: 'coral',
-    icon: <i className="fa-solid fa-hourglass-half" aria-hidden="true" />,
   },
   {
-    title: 'Le silence qui pèse',
-    desc: "On n'ose plus parler d'argent. Alors, petit à petit, on n'ose plus se voir tout court.",
-    quote: '« On ne se parle plus vraiment depuis. »',
+    n: '03',
+    title: 'Le silence fait le reste',
+    quote: "Certaines amitiés ne s'en remettent pas.",
+    icon: 'fa-heart-crack',
     accent: 'blue',
-    icon: <i className="fa-solid fa-comment-slash" aria-hidden="true" />,
-  },
-  {
-    title: 'La gêne de relancer',
-    desc: "Chaque rappel ressemble à un reproche. On préfère laisser tomber… et laisser filer.",
-    quote: '« Je n\'ai pas eu le cœur de lui redemander. »',
-    accent: 'yellow',
-    icon: <i className="fa-solid fa-face-frown" aria-hidden="true" />,
   },
 ];
 
 export default function Problem() {
   return (
     <section className={styles.section} id="probleme" aria-labelledby="probleme-title">
-      <div className={styles.pattern} aria-hidden="true" />
-      <div className={styles.orbits} aria-hidden="true">
-        <span />
-        <span />
-      </div>
-
       <div className={styles.inner}>
         <header className={styles.head} data-reveal>
-          <span className={styles.eyebrow}>Ce qui casse la relation</span>
           <h2 id="probleme-title" className={styles.title}>
-            La confiance permet le prêt.
-            <br />
-            <span className={styles.titleAccent}>Le flou, lui, l'abîme.</span>
+            Le problème n'est jamais{' '}
+            <span className={styles.titleAccent}>l'argent.</span>
           </h2>
-          <p className={styles.lead}>
-            Le problème n'est jamais l'argent. C'est ce qui se glisse autour : les
-            silences, les non-dits, les rendez-vous manqués. TilliT s'occupe du cadre
-            pour que vous puissiez continuer à vous parler.
-          </p>
+          <p className={styles.lead}>C'est le flou autour.</p>
         </header>
 
         <div className={styles.grid}>
           {CARDS.map((card, i) => (
             <article
-              key={card.title}
+              key={card.n}
               className={`${styles.card} ${styles[`accent_${card.accent}`]}`}
               data-reveal
               style={{ ['--reveal-delay' as string]: `${i * 120}ms` }}
             >
-              <div className={styles.iconWrap}>{card.icon}</div>
+              <div className={styles.cardHead}>
+                <span className={styles.cardBadge}>
+                  <i className={`fa-solid ${card.icon}`} aria-hidden="true" />
+                </span>
+                <span className={styles.cardNum}>{card.n}</span>
+              </div>
               <h3 className={styles.cardTitle}>{card.title}</h3>
-              <p className={styles.cardDesc}>{card.desc}</p>
-              <p className={styles.cardQuote}>{card.quote}</p>
+              <div className={styles.cardQuoteWrap}>
+                <i
+                  className={`fa-solid fa-quote-right ${styles.quoteMark}`}
+                  aria-hidden="true"
+                />
+                <p className={styles.cardQuote}>{card.quote}</p>
+              </div>
+              <div className={styles.cardConnector} aria-hidden="true">
+                {i < CARDS.length - 1 && (
+                  <i className="fa-solid fa-arrow-right-long" />
+                )}
+              </div>
             </article>
           ))}
         </div>
 
-        <p className={styles.outro} data-reveal>
-          <i
-            className={`fa-solid fa-heart ${styles.outroIcon}`}
-            aria-hidden="true"
-          />
-          Formaliser un prêt, ce n'est pas se méfier. C'est dire « je tiens à toi ».
-        </p>
+        <div className={styles.outro} data-reveal>
+          <p className={styles.outroText}>
+            Et pourtant, il existe une façon simple d'éviter tout ça.
+          </p>
+          <a href="#comment-ca-marche" className={styles.outroCta}>
+            Pourquoi TilliT
+            <i className="fa-solid fa-arrow-right" aria-hidden="true" />
+          </a>
+        </div>
       </div>
     </section>
   );

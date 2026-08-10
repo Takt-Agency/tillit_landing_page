@@ -1,190 +1,101 @@
 import { useState } from 'react';
 import styles from './Contact.module.css';
-import mascotUrl from '../../mascoote avis.png';
-
-const INFO = [
-  {
-    icon: 'fa-envelope',
-    label: 'Écris-nous',
-    value: 'tillit@tillitapp.fr',
-    href: 'mailto:tillit@tillitapp.fr',
-  },
-  {
-    icon: 'fa-clock',
-    label: 'Réponse moyenne',
-    value: 'Sous 24 h ouvrées',
-  },
-  {
-    icon: 'fa-location-dot',
-    label: 'Basés en',
-    value: 'Union européenne 🇪🇺',
-  },
-];
 
 export default function Contact() {
-  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
+  const [form, setForm] = useState({ firstName: '', email: '' });
   const [sent, setSent] = useState(false);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!form.firstName.trim() || !form.email.trim()) return;
     const body = encodeURIComponent(
-      `Nom : ${form.name}\nEmail : ${form.email}\n\n${form.message}`,
+      `Prénom : ${form.firstName}\nEmail : ${form.email}\n\nJe souhaite être prévenu·e du lancement de TilliT.`,
     );
-    const subject = encodeURIComponent(form.subject || 'Contact TilliT');
-    window.location.href = `mailto:tillit@tillitapp.fr?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:tillit@tillitapp.fr?subject=${encodeURIComponent(
+      'Waitlist TilliT — Prévenez-moi du lancement',
+    )}&body=${body}`;
     setSent(true);
     setTimeout(() => setSent(false), 3200);
   };
 
   return (
-    <section className={styles.section} id="contact" aria-labelledby="contact-title">
+    <section
+      className={styles.section}
+      id="contact"
+      aria-labelledby="contact-title"
+    >
       <div className={styles.blob1} aria-hidden="true" />
       <div className={styles.blob2} aria-hidden="true" />
 
       <div className={styles.inner}>
-        <header className={styles.head} data-reveal>
-          <span className={styles.eyebrow}>
-            <i className="fa-solid fa-envelope-open-text" aria-hidden="true" />
-            Contact
-          </span>
-          <h2 id="contact-title" className={styles.title}>
-            Une question ?{' '}
-            <span className={styles.titleAccent}>On est là.</span>
-          </h2>
-          <p className={styles.lead}>
-            L'équipe TilliT te répond avec le sourire — pas de robot, pas de bot,
-            juste des humains bienveillants.
-          </p>
-        </header>
-
-        <div className={styles.grid}>
-          <aside className={styles.side} data-reveal="left">
-            <div className={styles.mascotCard}>
-              <img
-                src={mascotUrl}
-                alt=""
-                aria-hidden="true"
-                className={styles.mascot}
-              />
-              <div className={styles.mascotBubble}>
-                <p className={styles.bubbleTitle}>Salut, moi c'est TilliT !</p>
-                <p className={styles.bubbleText}>
-                  Une remarque, une idée, un bug ? Je fais passer le message.
-                </p>
-              </div>
+        <div className={styles.card} data-reveal>
+          <header className={styles.head}>
+            <span className={styles.mascotBadge} aria-hidden="true">
+              <i className="fa-solid fa-face-smile-beam" />
+            </span>
+            <div className={styles.headText}>
+              <h2 id="contact-title" className={styles.title}>
+                <span className={styles.brand}>TilliT</span> arrive bientôt.
+              </h2>
+              <p className={styles.lead}>
+                Nous construisons la manière la plus simple d'organiser un prêt
+                d'argent entre proches, sans malaise ni relances gênantes.
+              </p>
             </div>
+          </header>
 
-            <ul className={styles.infoList}>
-              {INFO.map((info) => {
-                const content = (
-                  <>
-                    <span className={styles.infoIcon}>
-                      <i className={`fa-solid ${info.icon}`} aria-hidden="true" />
-                    </span>
-                    <div>
-                      <p className={styles.infoLabel}>{info.label}</p>
-                      <p className={styles.infoValue}>{info.value}</p>
-                    </div>
-                  </>
-                );
-                return (
-                  <li key={info.label} className={styles.infoItem}>
-                    {info.href ? (
-                      <a href={info.href} className={styles.infoLink}>
-                        {content}
-                      </a>
-                    ) : (
-                      content
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
-          </aside>
-
-          <form
-            className={styles.form}
-            onSubmit={handleSubmit}
-            noValidate
-            data-reveal="right"
-            style={{ ['--reveal-delay' as string]: '120ms' }}
-          >
+          <form className={styles.form} onSubmit={handleSubmit} noValidate>
             <div className={styles.row}>
               <label className={styles.field}>
-                <span className={styles.label}>Ton nom</span>
+                <span className={styles.label}>Prénom</span>
                 <input
                   type="text"
-                  name="name"
-                  value={form.name}
+                  name="firstName"
+                  value={form.firstName}
                   onChange={handleChange}
-                  placeholder="Alex Martin"
-                  required
+                  placeholder="Alex"
                   className={styles.input}
+                  required
                 />
               </label>
               <label className={styles.field}>
-                <span className={styles.label}>Ton email</span>
+                <span className={styles.label}>Email</span>
                 <input
                   type="email"
                   name="email"
                   value={form.email}
                   onChange={handleChange}
                   placeholder="alex@exemple.com"
-                  required
                   className={styles.input}
+                  required
                 />
               </label>
             </div>
 
-            <label className={styles.field}>
-              <span className={styles.label}>Sujet</span>
-              <input
-                type="text"
-                name="subject"
-                value={form.subject}
-                onChange={handleChange}
-                placeholder="Une question sur TilliT ZEN…"
-                className={styles.input}
-              />
-            </label>
-
-            <label className={styles.field}>
-              <span className={styles.label}>Ton message</span>
-              <textarea
-                name="message"
-                value={form.message}
-                onChange={handleChange}
-                placeholder="Raconte-nous tout, on t'écoute 👂"
-                required
-                rows={5}
-                className={styles.textarea}
-              />
-            </label>
-
-            <button type="submit" className={styles.submit} disabled={sent}>
-              {sent ? (
-                <>
-                  <i className="fa-solid fa-check" aria-hidden="true" />
-                  Message envoyé, merci !
-                </>
-              ) : (
-                <>
-                  <i className="fa-solid fa-paper-plane" aria-hidden="true" />
-                  Envoyer le message
-                </>
-              )}
-            </button>
-
-            <p className={styles.privacy}>
-              <i className="fa-solid fa-lock" aria-hidden="true" />
-              Ton message reste privé — aucun partage, jamais.
-            </p>
+            <div className={styles.submitRow}>
+              <button
+                type="submit"
+                className={styles.submit}
+                disabled={sent || !form.firstName.trim() || !form.email.trim()}
+              >
+                {sent ? (
+                  <>
+                    <i className="fa-solid fa-check" aria-hidden="true" />
+                    Merci, à très vite !
+                  </>
+                ) : (
+                  'Me prévenir du lancement'
+                )}
+              </button>
+              <p className={styles.note}>
+                Quelques clics pour nous aider à construire une application vraiment
+                utile. <strong>Pas de spam</strong>, désinscription en un clic.
+              </p>
+            </div>
           </form>
         </div>
       </div>
