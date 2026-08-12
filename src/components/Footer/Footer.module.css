@@ -229,13 +229,11 @@
 .credit {
   color: var(--color-white);
   font-weight: 700;
-  border-bottom: 1px dashed rgba(255, 255, 255, 0.35);
-  transition: color 0.2s ease, border-color 0.2s ease;
+  transition: color 0.2s ease;
 }
 
 .credit:hover {
   color: #b599f2;
-  border-color: #b599f2;
 }
 
 /* --- Responsive --- */

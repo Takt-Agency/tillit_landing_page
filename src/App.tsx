@@ -7,7 +7,6 @@ import Comparison from './components/Comparison/Comparison';
 import Benefits from './components/Benefits/Benefits';
 import HowItWorks from './components/HowItWorks/HowItWorks';
 import Pricing from './components/Pricing/Pricing';
-import Testimonials from './components/Testimonials/Testimonials';
 import FAQ from './components/FAQ/FAQ';
 import Contact from './components/Contact/Contact';
 import CTA from './components/CTA/CTA';
@@ -28,7 +27,6 @@ export default function App() {
         <Benefits />
         <HowItWorks />
         <Pricing />
-        <Testimonials />
         <FAQ />
         <Contact />
         <CTA />

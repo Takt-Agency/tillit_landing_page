@@ -6,7 +6,6 @@ const NAV_LINKS = [
   { href: '#probleme', label: 'Pourquoi TilliT', icon: 'fa-lightbulb' },
   { href: '#comment-ca-marche', label: 'Comment ça marche', icon: 'fa-list-check' },
   { href: '#tarifs', label: 'Tarifs', icon: 'fa-tag' },
-  { href: '#avis', label: 'Avis', icon: 'fa-comment-dots' },
   { href: '#faq', label: 'FAQ', icon: 'fa-circle-question' },
   { href: '#contact', label: 'Contact', icon: 'fa-envelope' },
 ];

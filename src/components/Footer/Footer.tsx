@@ -99,35 +99,8 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className={styles.disclaimers}>
-          <p className={styles.disclaimersTitle}>
-            <i className="fa-solid fa-circle-info" aria-hidden="true" />
-            Informations importantes
-          </p>
-          <ul>
-            <li>
-              TilliT n'est <strong>ni une banque</strong>, ni un organisme de crédit,
-              ni un établissement de paiement.
-            </li>
-            <li>
-              Les fonds ne transitent <strong>jamais</strong> par TilliT (virements
-              de compte à compte via Open Banking).
-            </li>
-            <li>
-              TilliT <strong>ne garantit pas</strong> le remboursement et n'évalue
-              pas la solvabilité des utilisateurs.
-            </li>
-            <li>
-              <strong>0 % d'intérêt, 0 commission</strong> sur la dette. La
-              monétisation repose uniquement sur les services de formalisation.
-            </li>
-          </ul>
-        </div>
-
         <div className={styles.bottom}>
-          <p className={styles.copyright}>
-            © 2026 TilliT — <em>Société en cours de création.</em>
-          </p>
+          <p className={styles.copyright}>© 2026 TilliT</p>
           <p className={styles.madeIn}>
             Développé par{' '}
             <a
