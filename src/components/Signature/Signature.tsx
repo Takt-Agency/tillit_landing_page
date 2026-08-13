@@ -42,17 +42,6 @@ export default function Signature() {
               pourquoi ce parcours en vaut la peine.
             </p>
 
-            <div className={styles.badge}>
-              <span className={styles.badgeIcon}>
-                <i className="fa-solid fa-check-double" aria-hidden="true" />
-              </span>
-              <div>
-                <p className={styles.badgeTitle}>Certifié eIDAS</p>
-                <p className={styles.badgeDesc}>
-                  Règlement européen n°910/2014 — niveau qualifié
-                </p>
-              </div>
-            </div>
           </div>
 
           <ul className={styles.points}>

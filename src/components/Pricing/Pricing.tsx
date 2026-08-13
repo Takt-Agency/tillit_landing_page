@@ -115,17 +115,6 @@ export default function Pricing() {
           </article>
         </div>
 
-        <div className={styles.ctaRow} data-reveal>
-          <a className={styles.ctaLight} href="#tarifs">
-            Tous les tarifs
-            <i className="fa-solid fa-arrow-right" aria-hidden="true" />
-          </a>
-          <a className={styles.ctaLight} href="#tarifs">
-            Découvrir tillit Zen
-            <i className="fa-solid fa-arrow-right" aria-hidden="true" />
-          </a>
-        </div>
-
         <p className={styles.disclaimer} data-reveal>
           <span className={styles.warn} aria-hidden="true">
             <i className="fa-solid fa-shield-halved" />

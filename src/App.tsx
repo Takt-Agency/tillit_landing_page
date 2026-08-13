@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { useScrollReveal } from './hooks/useScrollReveal';
 import Navbar from './components/Navbar/Navbar';
+import LegalModal, { type LegalTab } from './components/LegalModal/LegalModal';
 import Hero, { HeroSocialProof } from './components/Hero/Hero';
 import StatsBanner from './components/StatsBanner/StatsBanner';
 import Problem from './components/Problem/Problem';
@@ -17,6 +19,7 @@ import ChatAssistant from './components/ChatAssistant/ChatAssistant';
 
 export default function App() {
   useScrollReveal();
+  const [legalTab, setLegalTab] = useState<LegalTab | null>(null);
   return (
     <>
       <Navbar />
@@ -35,7 +38,12 @@ export default function App() {
         <Contact />
         <CTA />
       </main>
-      <Footer />
+      <Footer onOpenLegal={setLegalTab} />
+      <LegalModal
+        tab={legalTab}
+        onClose={() => setLegalTab(null)}
+        onSelectTab={setLegalTab}
+      />
       <ChatAssistant />
     </>
   );

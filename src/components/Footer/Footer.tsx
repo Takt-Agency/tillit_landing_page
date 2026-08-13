@@ -1,27 +1,27 @@
 import styles from './Footer.module.css';
 import Logo from '../Logo/Logo';
+import type { LegalTab } from '../LegalModal/LegalModal';
 
 const PRODUCT = [
-  { label: 'Fonctionnalités', href: '#fonctionnalites' },
+  { label: 'Pourquoi tillit', href: '#probleme' },
   { label: 'Comment ça marche', href: '#comment-ca-marche' },
+  { label: 'Signature électronique', href: '#signature' },
   { label: 'Tarifs', href: '#tarifs' },
   { label: 'FAQ', href: '#faq' },
-  { label: 'Sécurité', href: '#securite' },
 ];
 
 const COMPANY = [
-  { label: 'À propos', href: '#about' },
-  { label: 'Blog', href: '#blog' },
-  { label: 'Presse', href: '#press' },
-  { label: 'Contact', href: 'mailto:tillit@tillitapp.fr' },
+  { label: 'Nos partenaires', href: '#partenaires' },
+  { label: 'Contact', href: '#contact' },
+  { label: 'Télécharger l\'app', href: '#cta' },
 ];
 
-const LEGAL = [
-  { label: 'Mentions légales', href: '#legal' },
-  { label: 'CGU', href: '#cgu' },
-  { label: 'CGV', href: '#cgv' },
-  { label: 'Politique de confidentialité', href: '#privacy' },
-  { label: 'Cookies', href: '#cookies' },
+const LEGAL: { label: string; tab: LegalTab }[] = [
+  { label: 'Mentions légales', tab: 'mentions' },
+  { label: 'CGU', tab: 'cgu' },
+  { label: 'CGV', tab: 'cgv' },
+  { label: 'Confidentialité', tab: 'confidentialite' },
+  { label: 'Cookies', tab: 'cookies' },
 ];
 
 const SOCIAL = [
@@ -31,7 +31,11 @@ const SOCIAL = [
   { label: 'TikTok', href: '#', icon: 'fa-tiktok' },
 ];
 
-export default function Footer() {
+type Props = {
+  onOpenLegal: (tab: LegalTab) => void;
+};
+
+export default function Footer({ onOpenLegal }: Props) {
   return (
     <footer className={styles.footer}>
       <div className={styles.inner}>
@@ -90,8 +94,14 @@ export default function Footer() {
               <h4 className={styles.colTitle}>Légal</h4>
               <ul>
                 {LEGAL.map((l) => (
-                  <li key={l.href}>
-                    <a href={l.href}>{l.label}</a>
+                  <li key={l.tab}>
+                    <button
+                      type="button"
+                      className={styles.legalBtn}
+                      onClick={() => onOpenLegal(l.tab)}
+                    >
+                      {l.label}
+                    </button>
                   </li>
                 ))}
               </ul>
