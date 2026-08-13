@@ -84,7 +84,18 @@ export default function HowItWorks() {
         <div className={styles.showcase}>
           <div className={styles.left}>
             <header className={styles.head} data-reveal>
-              <span className={styles.eyebrow}>La solution</span>
+              <span className={styles.eyebrow}>
+                La solution
+                <span
+                  className={styles.eyebrowFlag}
+                  role="img"
+                  aria-label="Fabriqué en France"
+                >
+                  <span className={styles.flagBlue} />
+                  <span className={styles.flagWhite} />
+                  <span className={styles.flagRed} />
+                </span>
+              </span>
               <h2 id="how-title" className={styles.title}>
                 Quatre étapes.{' '}
                 <span className={styles.titleAccent}>Zéro malaise.</span>
