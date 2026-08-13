@@ -7,7 +7,7 @@ export default function PhoneMockup() {
       <div className={styles.glow} aria-hidden="true" />
       <img
         src={mockupUrl}
-        alt="Aperçu de l'application TilliT — écran d'accueil avec le solde à rembourser et la liste des prêts entre proches."
+        alt="Aperçu de l'application tillit — écran d'accueil avec le solde à rembourser et la liste des prêts entre proches."
         className={styles.image}
         loading="eager"
         decoding="async"

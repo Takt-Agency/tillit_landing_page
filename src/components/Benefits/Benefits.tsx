@@ -13,7 +13,7 @@ const BORROWER_ITEMS = [
   "Vous recevez un rappel avant d'oublier.",
   {
     text: 'Vous pouvez réaménager vos échéances sans avoir à être gêné, directement depuis l\'app.',
-    accent: 'TilliT trouvera les mots.',
+    accent: 'tillit trouvera les mots.',
   },
   'Vous montrez, sans rien dire, que vous tenez à la relation.',
 ];
@@ -59,7 +59,7 @@ export default function Benefits() {
           </h2>
           <p className={styles.lead}>
             Que vous prêtiez ou que vous remboursiez,{' '}
-            <span className={styles.leadAccent}>TilliT</span> fonctionne pour vous
+            <span className={styles.leadAccent}>tillit</span> fonctionne pour vous
             deux.
           </p>
         </header>

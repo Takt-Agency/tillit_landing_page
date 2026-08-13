@@ -13,10 +13,10 @@ export default function Contact() {
     e.preventDefault();
     if (!form.firstName.trim() || !form.email.trim()) return;
     const body = encodeURIComponent(
-      `Prénom : ${form.firstName}\nEmail : ${form.email}\n\nJe souhaite être prévenu·e du lancement de TilliT.`,
+      `Prénom : ${form.firstName}\nEmail : ${form.email}\n\nJe souhaite être prévenu·e du lancement de tillit.`,
     );
     window.location.href = `mailto:tillit@tillitapp.fr?subject=${encodeURIComponent(
-      'Waitlist TilliT — Prévenez-moi du lancement',
+      'Waitlist tillit — Prévenez-moi du lancement',
     )}&body=${body}`;
     setSent(true);
     setTimeout(() => setSent(false), 3200);
@@ -39,7 +39,7 @@ export default function Contact() {
             </span>
             <div className={styles.headText}>
               <h2 id="contact-title" className={styles.title}>
-                <span className={styles.brand}>TilliT</span> arrive bientôt.
+                <span className={styles.brand}>tillit</span> arrive bientôt.
               </h2>
               <p className={styles.lead}>
                 Nous construisons la manière la plus simple d'organiser un prêt

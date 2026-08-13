@@ -100,7 +100,7 @@ export default function Footer() {
         </div>
 
         <div className={styles.bottom}>
-          <p className={styles.copyright}>© 2026 TilliT</p>
+          <p className={styles.copyright}>© 2026 tillit</p>
           <p className={styles.madeIn}>
             Développé par{' '}
             <a

@@ -55,7 +55,7 @@ export default function Pricing() {
             style={{ ['--reveal-delay' as string]: '0ms' }}
           >
             <div className={styles.cardTopRow}>
-              <h3 className={styles.cardTitle}>TilliT Note</h3>
+              <h3 className={styles.cardTitle}>tillit Note</h3>
               <span className={styles.tag}>Le plus utilisé</span>
             </div>
 
@@ -89,7 +89,7 @@ export default function Pricing() {
             style={{ ['--reveal-delay' as string]: '150ms' }}
           >
             <div className={styles.cardTopRow}>
-              <h3 className={styles.cardTitle}>TilliT Zen</h3>
+              <h3 className={styles.cardTitle}>tillit Zen</h3>
               <span className={`${styles.tag} ${styles.tagSoon}`}>Bientôt</span>
             </div>
 
@@ -121,7 +121,7 @@ export default function Pricing() {
             <i className="fa-solid fa-arrow-right" aria-hidden="true" />
           </a>
           <a className={styles.ctaLight} href="#tarifs">
-            Découvrir TilliT Zen
+            Découvrir tillit Zen
             <i className="fa-solid fa-arrow-right" aria-hidden="true" />
           </a>
         </div>
@@ -131,7 +131,7 @@ export default function Pricing() {
             <i className="fa-solid fa-shield-halved" />
           </span>
           <span>
-            TilliT aide à réduire les risques de malentendus, mais ne garantit
+            tillit aide à réduire les risques de malentendus, mais ne garantit
             jamais qu'un prêt sera remboursé.
           </span>
         </p>

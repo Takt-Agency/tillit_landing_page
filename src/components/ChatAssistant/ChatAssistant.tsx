@@ -12,13 +12,13 @@ const QUICK_REPLIES = [
 
 const BOT_ANSWERS: Record<string, string> = {
   'comment ça marche':
-    'Tu crées un prêt en 2 minutes (montant, durée), ton proche accepte en un tap, et TilliT s\'occupe des rappels doux à ta place. La relation reste intacte 💜',
+    'Tu crées un prêt en 2 minutes (montant, durée), ton proche accepte en un tap, et tillit s\'occupe des rappels doux à ta place. La relation reste intacte 💜',
   gratuit:
     'Oui, la formule NOTE est 100 % gratuite pour les prêts jusqu\'à 1 500 € (échéancier, rappels, historique). Aucun intérêt, aucune commission sur la dette.',
   données:
-    'Tes données sont hébergées en Union européenne, conformes RGPD, et les fonds ne transitent jamais par TilliT — les virements se font de compte à compte.',
+    'Tes données sont hébergées en Union européenne, conformes RGPD, et les fonds ne transitent jamais par tillit — les virements se font de compte à compte.',
   default:
-    'Je transmets ça à l\'équipe TilliT. En attendant, tu peux essayer le prototype ou m\'écrire une autre question 🙂',
+    'Je transmets ça à l\'équipe tillit. En attendant, tu peux essayer le prototype ou m\'écrire une autre question 🙂',
 };
 
 function botReply(input: string): string {
@@ -37,7 +37,7 @@ export default function ChatAssistant() {
     {
       id: 1,
       role: 'bot',
-      text: 'Salut 👋 Je suis TilliT. Une question sur les prêts entre proches ?',
+      text: 'Salut 👋 Je suis tillit. Une question sur les prêts entre proches ?',
     },
   ]);
   const idRef = useRef(2);
@@ -92,7 +92,7 @@ export default function ChatAssistant() {
               setOpen(true);
             }
           }}
-          aria-label="Ouvrir l'assistant TilliT"
+          aria-label="Ouvrir l'assistant tillit"
         >
           <span className={styles.bubbleText}>Besoin d'aide ?</span>
           <span className={styles.bubbleSub}>Je suis là 💜</span>
@@ -124,14 +124,14 @@ export default function ChatAssistant() {
       <div
         className={`${styles.panel} ${open ? styles.panelOpen : ''}`}
         role="dialog"
-        aria-label="Assistant TilliT"
+        aria-label="Assistant tillit"
         aria-hidden={!open}
       >
         <header className={styles.header}>
           <div className={styles.headerLeft}>
             <img src={mascotUrl} alt="" className={styles.headerAvatar} />
             <div>
-              <p className={styles.headerTitle}>Assistant TilliT</p>
+              <p className={styles.headerTitle}>Assistant tillit</p>
               <p className={styles.headerSub}>
                 <span className={styles.dot} /> En ligne · réponse en quelques secondes
               </p>

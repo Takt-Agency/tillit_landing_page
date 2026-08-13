@@ -3,7 +3,7 @@ import styles from './Navbar.module.css';
 import Logo from '../Logo/Logo';
 
 const NAV_LINKS = [
-  { href: '#probleme', label: 'Pourquoi TilliT', icon: 'fa-lightbulb' },
+  { href: '#probleme', label: 'Pourquoi tillit', icon: 'fa-lightbulb' },
   { href: '#comment-ca-marche', label: 'Comment ça marche', icon: 'fa-list-check' },
   { href: '#tarifs', label: 'Tarifs', icon: 'fa-tag' },
   { href: '#faq', label: 'FAQ', icon: 'fa-circle-question' },
@@ -46,7 +46,7 @@ export default function Navbar() {
   return (
     <div className={styles.wrapper}>
       <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
-        <a href="#top" className={styles.brand} aria-label="TilliT — accueil">
+        <a href="#top" className={styles.brand} aria-label="tillit — accueil">
           <Logo />
         </a>
 

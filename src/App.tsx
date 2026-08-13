@@ -6,6 +6,8 @@ import Problem from './components/Problem/Problem';
 import Comparison from './components/Comparison/Comparison';
 import Benefits from './components/Benefits/Benefits';
 import HowItWorks from './components/HowItWorks/HowItWorks';
+import Signature from './components/Signature/Signature';
+import Partners from './components/Partners/Partners';
 import Pricing from './components/Pricing/Pricing';
 import FAQ from './components/FAQ/FAQ';
 import Contact from './components/Contact/Contact';
@@ -26,7 +28,9 @@ export default function App() {
         <Comparison />
         <Benefits />
         <HowItWorks />
+        <Signature />
         <Pricing />
+        <Partners />
         <FAQ />
         <Contact />
         <CTA />

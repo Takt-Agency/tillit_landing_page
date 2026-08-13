@@ -5,31 +5,31 @@ type Item = { q: string; a: string };
 
 const FAQ_ITEMS: Item[] = [
   {
-    q: "TilliT, c'est légal ?",
-    a: "Oui, complètement. TilliT s'appuie sur la reconnaissance de dette (article 1359 du Code civil français) et, dans la formule ZEN, sur la signature électronique qualifiée eIDAS. TilliT n'étant ni banque ni établissement de paiement, aucun agrément n'est requis — c'est l'utilisateur qui contractualise, TilliT fournit l'outil.",
+    q: "tillit, c'est légal ?",
+    a: "Oui, complètement. tillit s'appuie sur la reconnaissance de dette (article 1359 du Code civil français) et, dans la formule ZEN, sur la signature électronique qualifiée eIDAS. tillit n'étant ni banque ni établissement de paiement, aucun agrément n'est requis — c'est l'utilisateur qui contractualise, tillit fournit l'outil.",
   },
   {
     q: 'Que se passe-t-il si mon proche ne rembourse pas ?',
-    a: "TilliT ne garantit pas le remboursement — mais il rend les choses claires. En cas de retard, l'app envoie des rappels doux à ta place. Sur la formule ZEN, tu disposes déjà d'un dossier juridique complet, et l'option Sérénité permet de déclencher une mise en demeure via un partenaire juridique.",
+    a: "tillit ne garantit pas le remboursement — mais il rend les choses claires. En cas de retard, l'app envoie des rappels doux à ta place. Sur la formule ZEN, tu disposes déjà d'un dossier juridique complet, et l'option Sérénité permet de déclencher une mise en demeure via un partenaire juridique.",
   },
   {
     q: 'Mes données sont-elles sécurisées ?',
-    a: 'Oui. Toutes tes données sont hébergées en Union européenne, chiffrées, et conformes RGPD. Les fonds ne transitent jamais par TilliT — les virements se font directement de compte à compte via Open Banking.',
+    a: 'Oui. Toutes tes données sont hébergées en Union européenne, chiffrées, et conformes RGPD. Les fonds ne transitent jamais par tillit — les virements se font directement de compte à compte via Open Banking.',
   },
   {
-    q: 'Pourquoi payer pour TilliT ZEN ?',
+    q: 'Pourquoi payer pour tillit ZEN ?',
     a: "NOTE est parfait pour les prêts en toute confiance jusqu'à 1 500 €. ZEN, c'est pour les montants importants ou les situations sensibles : reconnaissance de dette officielle, signature eIDAS, KYC, dossier de preuves — au cas où la relation aurait besoin de plus qu'une confiance verbale.",
   },
   {
-    q: 'TilliT facture-t-il des intérêts ?',
-    a: 'Zéro intérêt. Zéro commission sur la dette. TilliT ne gagne jamais d\'argent sur les sommes prêtées. Le tarif ZEN correspond uniquement au service de formalisation juridique — un paiement unique, jamais lié au montant remboursé.',
+    q: 'tillit facture-t-il des intérêts ?',
+    a: 'Zéro intérêt. Zéro commission sur la dette. tillit ne gagne jamais d\'argent sur les sommes prêtées. Le tarif ZEN correspond uniquement au service de formalisation juridique — un paiement unique, jamais lié au montant remboursé.',
   },
   {
-    q: 'Quelle est la différence entre TilliT et une banque ?',
-    a: "Une banque prête son argent avec intérêts et gère les flux. TilliT ne prête rien : c'est toi qui prêtes à ton proche. Nous fournissons juste le cadre pour rendre ce geste clair, structuré, et sans malaise.",
+    q: 'Quelle est la différence entre tillit et une banque ?',
+    a: "Une banque prête son argent avec intérêts et gère les flux. tillit ne prête rien : c'est toi qui prêtes à ton proche. Nous fournissons juste le cadre pour rendre ce geste clair, structuré, et sans malaise.",
   },
   {
-    q: 'Mon proche doit-il déjà avoir TilliT ?',
+    q: 'Mon proche doit-il déjà avoir tillit ?',
     a: "Non. Quand tu crées un prêt, ton proche reçoit une invitation. Il télécharge l'app, s'inscrit en 2 minutes, et peut accepter, négocier ou refuser directement. Aucun frais pour lui.",
   },
   {
@@ -62,7 +62,7 @@ export default function FAQ() {
               />
             </h2>
             <p className={styles.lead}>
-              Tout ce qu'il faut savoir sur TilliT — sans jargon, sans zone d'ombre.
+              Tout ce qu'il faut savoir sur tillit — sans jargon, sans zone d'ombre.
             </p>
 
             <div className={styles.moreHelp}>
@@ -72,7 +72,7 @@ export default function FAQ() {
               <div>
                 <p className={styles.moreTitle}>Une autre question ?</p>
                 <p className={styles.moreDesc}>
-                  Notre assistant TilliT est là pour t'aider, en bas à droite.
+                  Notre assistant tillit est là pour t'aider, en bas à droite.
                 </p>
               </div>
               <a className={styles.moreCta} href="mailto:tillit@tillitapp.fr">

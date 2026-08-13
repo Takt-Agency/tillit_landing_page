@@ -8,7 +8,7 @@ export default function CTA() {
       <div className={styles.inner}>
         <div className={styles.content} data-reveal="left">
           <h2 id="cta-title" className={styles.title}>
-            Téléchargez TilliT
+            Téléchargez tillit
           </h2>
           <p className={styles.lead}>
             Disponible sur iOS et Android — gérez vos prêts entre proches en toute

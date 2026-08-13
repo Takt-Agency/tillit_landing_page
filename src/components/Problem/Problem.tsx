@@ -82,7 +82,7 @@ export default function Problem() {
             Et pourtant, il existe une façon simple d'éviter tout ça.
           </p>
           <a href="#comment-ca-marche" className={styles.outroCta}>
-            Pourquoi TilliT
+            Pourquoi tillit
             <i className="fa-solid fa-arrow-right" aria-hidden="true" />
           </a>
         </div>

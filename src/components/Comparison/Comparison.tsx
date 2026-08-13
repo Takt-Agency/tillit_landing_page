@@ -42,7 +42,7 @@ export default function Comparison() {
             data-reveal
             style={{ ['--reveal-delay' as string]: '220ms' }}
           >
-            <p className={styles.cardLabel}>TilliT répond à la suivante :</p>
+            <p className={styles.cardLabel}>tillit répond à la suivante :</p>
             <p className={styles.cardQuestion}>
               Comment ce montant sera remboursé ?
             </p>

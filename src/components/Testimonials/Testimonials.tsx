@@ -35,7 +35,7 @@ const TESTIMONIALS: Testimonial[] = [
     initial: 'S',
     quote: (
       <>
-        TilliT m'a permis d'emprunter rapidement auprès de mes proches sans aucune
+        tillit m'a permis d'emprunter rapidement auprès de mes proches sans aucune
         gêne. Tout est <H>clair</H>, <H>simple et sécurisé</H>.
       </>
     ),
@@ -85,7 +85,7 @@ const TESTIMONIALS: Testimonial[] = [
     verified: true,
     quote: (
       <>
-        J'ai utilisé TilliT ZEN pour un prêt important. Le dossier{' '}
+        J'ai utilisé tillit ZEN pour un prêt important. Le dossier{' '}
         <H>eIDAS et le suivi</H> m'ont totalement rassuré.
       </>
     ),
@@ -144,7 +144,7 @@ export default function Testimonials() {
             Ce que disent <span className={styles.titleAccent}>nos utilisateurs</span>
           </h2>
           <p className={styles.lead}>
-            Des milliers de personnes ont déjà rejoint TilliT pour prêter, emprunter
+            Des milliers de personnes ont déjà rejoint tillit pour prêter, emprunter
             et gérer leur argent en toute confiance.
           </p>
         </header>

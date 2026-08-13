@@ -37,7 +37,7 @@ const STEPS: Step[] = [
   },
   {
     n: '03',
-    title: 'TilliT suit tout',
+    title: 'tillit suit tout',
     desc: 'Les rappels arrivent en douceur, à la bonne date. Plus jamais à relancer soi-même.',
     duration: 'Automatique',
     accent: 'blue',
