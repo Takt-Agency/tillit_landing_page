@@ -16,6 +16,9 @@ export default function Hero() {
       <div className={styles.inner}>
         <div className={styles.content}>
           <span className={styles.eyebrow}>
+            <span className={styles.eyebrowIcon} aria-hidden="true">
+              <i className="fa-solid fa-heart" />
+            </span>
             Simple entre nous
             <span className={styles.eyebrowShine} aria-hidden="true" />
           </span>
