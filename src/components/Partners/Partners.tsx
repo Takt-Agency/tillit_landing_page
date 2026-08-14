@@ -3,6 +3,8 @@ import styles from './Partners.module.css';
 import goodflagLogo from '../../logo-goodflag.svg';
 import nexiaLogo from '../../nexia digital.png';
 import numixsLogo from '../../station-numixs-logo-DN9Ujo5B.png';
+import franceIdentityLogo from '../../logo-france-identity.png';
+import mieuxLogo from '../../mieuxentreprendre.svg';
 
 type Partner = {
   name: string;
@@ -10,10 +12,10 @@ type Partner = {
 };
 
 const PARTNERS: Partner[] = [
-  { name: 'France Identité' },
+  { name: 'France Identité', logo: franceIdentityLogo },
   { name: 'Goodflag', logo: goodflagLogo },
   { name: 'Station Numixs', logo: numixsLogo },
-  { name: 'Mieux Entreprendre' },
+  { name: 'Mieux Entreprendre', logo: mieuxLogo },
   { name: 'Nexia Digital', logo: nexiaLogo },
 ];
 
