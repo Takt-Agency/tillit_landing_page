@@ -74,9 +74,15 @@ export default function Pricing() {
               ))}
             </ul>
 
-            <p className={styles.cardFoot}>
-              Gratuit dès le premier jour. Pour toujours.
-            </p>
+            <div className={`${styles.cardFoot} ${styles.footNote}`}>
+              <span className={styles.footIcon} aria-hidden="true">
+                <i className="fa-solid fa-infinity" />
+              </span>
+              <div className={styles.footText}>
+                <p className={styles.footTitle}>Gratuit dès le premier jour</p>
+                <p className={styles.footSub}>Pour toujours.</p>
+              </div>
+            </div>
           </article>
 
           {/* ZEN */}
@@ -108,7 +114,15 @@ export default function Pricing() {
               ))}
             </ul>
 
-            <p className={styles.cardFoot}>Bientôt disponible</p>
+            <div className={`${styles.cardFoot} ${styles.footZen}`}>
+              <span className={styles.footIcon} aria-hidden="true">
+                <i className="fa-solid fa-hourglass-start" />
+              </span>
+              <div className={styles.footText}>
+                <p className={styles.footTitle}>Bientôt disponible</p>
+                <p className={styles.footSub}>Rejoins la liste d'attente.</p>
+              </div>
+            </div>
           </article>
         </div>
 

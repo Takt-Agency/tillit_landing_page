@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from './ChatAssistant.module.css';
-import mascotUrl from '../../mascott.png';
+import mascotUrl from '../../mascotte-besoin-aide.png';
 
 type Message = { id: number; role: 'bot' | 'user'; text: string };
 

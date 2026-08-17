@@ -267,10 +267,63 @@
 
 .cardFoot {
   margin-top: auto;
-  padding-top: 8px;
-  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  border: 1px dashed;
+}
+
+.footNote {
+  background: linear-gradient(135deg, rgba(30, 138, 76, 0.06), rgba(78, 193, 138, 0.1));
+  border-color: rgba(30, 138, 76, 0.28);
+}
+
+.footZen {
+  background: linear-gradient(135deg, rgba(139, 99, 232, 0.06), rgba(183, 152, 242, 0.1));
+  border-color: rgba(139, 99, 232, 0.32);
+}
+
+.footIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(20, 12, 60, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.footNote .footIcon {
+  background: linear-gradient(135deg, #d9f2e4, #b6e5ca);
+  color: var(--color-green);
+}
+
+.footZen .footIcon {
+  background: linear-gradient(135deg, #ede7fb, #d6c9f8);
+  color: var(--color-violet);
+}
+
+.footText {
+  min-width: 0;
+  line-height: 1.3;
+}
+
+.footTitle {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--color-ink);
+}
+
+.footSub {
+  font-size: 0.78rem;
   color: var(--color-ink-mute);
-  font-style: italic;
+  margin-top: 2px;
 }
 
 /* --- CTA row (buttons at bottom) --- */

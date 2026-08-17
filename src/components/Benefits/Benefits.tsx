@@ -1,42 +1,57 @@
 import styles from './Benefits.module.css';
 
-const LENDER_ITEMS = [
-  'Vous savez exactement combien il reste.',
-  'Vous voyez les prochaines échéances.',
-  "Vous n'avez plus besoin de relancer.",
-  "Vous conservez l'historique.",
+type LenderItem = { icon: string; text: string };
+type BorrowerItem =
+  | { icon: string; text: string }
+  | { icon: string; text: string; accent: string };
+
+const LENDER_ITEMS: LenderItem[] = [
+  { icon: 'fa-calculator', text: 'Vous savez exactement combien il reste.' },
+  { icon: 'fa-calendar-days', text: 'Vous voyez les prochaines échéances.' },
+  { icon: 'fa-bell-slash', text: "Vous n'avez plus besoin de relancer." },
+  { icon: 'fa-clock-rotate-left', text: "Vous conservez l'historique." },
 ];
 
-const BORROWER_ITEMS = [
-  'Vous savez exactement ce que vous devez.',
-  'Vous voyez toutes vos échéances.',
-  "Vous recevez un rappel avant d'oublier.",
+const BORROWER_ITEMS: BorrowerItem[] = [
   {
-    text: 'Vous pouvez réaménager vos échéances sans avoir à être gêné, directement depuis l\'app.',
+    icon: 'fa-file-invoice-dollar',
+    text: 'Vous savez exactement ce que vous devez.',
+  },
+  { icon: 'fa-list-check', text: 'Vous voyez toutes vos échéances.' },
+  { icon: 'fa-bell', text: "Vous recevez un rappel avant d'oublier." },
+  {
+    icon: 'fa-arrows-rotate',
+    text: "Vous pouvez réaménager vos échéances sans avoir à être gêné, directement depuis l'app.",
     accent: 'tillit trouvera les mots.',
   },
-  'Vous montrez, sans rien dire, que vous tenez à la relation.',
+  {
+    icon: 'fa-heart',
+    text: 'Vous montrez, sans rien dire, que vous tenez à la relation.',
+  },
 ];
 
 const FEATURES = [
   {
+    icon: 'fa-wand-magic-sparkles',
     title: 'Les rappels sont automatiques',
-    desc: 'Plus besoin d\'écrire : « Tu as pensé au virement ? »',
+    desc: "Plus besoin d'écrire : « Tu as pensé au virement ? »",
   },
   {
+    icon: 'fa-chart-line',
     title: 'Vous savez où vous en êtes',
     desc: 'Le montant restant est mis à jour après chaque remboursement.',
   },
   {
+    icon: 'fa-flag-checkered',
     title: 'Une date de fin claire',
     desc: 'Dès le départ, chacun sait quand le prêt sera terminé.',
   },
 ];
 
-function Check() {
+function ItemIcon({ icon }: { icon: string }) {
   return (
-    <span className={styles.check} aria-hidden="true">
-      <i className="fa-solid fa-check" />
+    <span className={styles.itemIcon} aria-hidden="true">
+      <i className={`fa-solid ${icon}`} />
     </span>
   );
 }
@@ -78,16 +93,16 @@ export default function Benefits() {
             </div>
             <ul className={styles.list}>
               {LENDER_ITEMS.map((item) => (
-                <li key={item}>
-                  <Check />
-                  <span>{item}</span>
+                <li key={item.text}>
+                  <ItemIcon icon={item.icon} />
+                  <span>{item.text}</span>
                 </li>
               ))}
             </ul>
           </article>
 
           <article
-            className={styles.side}
+            className={`${styles.side} ${styles.sideZen}`}
             data-reveal="right"
             style={{ ['--reveal-delay' as string]: '200ms' }}
           >
@@ -100,13 +115,12 @@ export default function Benefits() {
             <ul className={styles.list}>
               {BORROWER_ITEMS.map((item, i) => (
                 <li key={i}>
-                  <Check />
+                  <ItemIcon icon={item.icon} />
                   <span>
-                    {typeof item === 'string' ? (
-                      item
-                    ) : (
+                    {item.text}
+                    {'accent' in item && (
                       <>
-                        {item.text}{' '}
+                        {' '}
                         <span className={styles.itemAccent}>{item.accent}</span>
                       </>
                     )}
@@ -140,6 +154,9 @@ export default function Benefits() {
               data-reveal
               style={{ ['--reveal-delay' as string]: `${i * 100}ms` }}
             >
+              <span className={styles.featureIcon} aria-hidden="true">
+                <i className={`fa-solid ${f.icon}`} />
+              </span>
               <h4 className={styles.featureTitle}>{f.title}</h4>
               <p className={styles.featureDesc}>{f.desc}</p>
             </article>
