@@ -1,31 +1,28 @@
 import styles from './Pricing.module.css';
 
-const NOTE_FEATURES = [
-  'Création de prêt guidée en 2 minutes',
-  'Échéancier partagé clair',
-  'Rappels bienveillants automatiques',
-  'Historique partagé du prêt',
-  'Passeport de fiabilité',
+type Feature = { icon: string; label: string };
+
+const NOTE_FEATURES: Feature[] = [
+  { icon: 'fa-pen-to-square', label: 'Création de prêt guidée en 2 minutes' },
+  { icon: 'fa-calendar-days', label: 'Échéancier partagé clair' },
+  { icon: 'fa-bell', label: 'Rappels bienveillants automatiques' },
+  { icon: 'fa-clock-rotate-left', label: 'Historique partagé du prêt' },
+  { icon: 'fa-id-badge', label: 'Passeport de fiabilité' },
 ];
 
-const ZEN_FEATURES = [
-  'Tout ce qui est inclus dans Note',
-  'Reconnaissance de dette électronique',
-  'Signature électronique',
-  "Vérification d'identité",
-  "Conservation sécurisée de l'acte",
-  'Guide pas à pas en cas de recours',
+const ZEN_FEATURES: Feature[] = [
+  { icon: 'fa-star', label: 'Tout ce qui est inclus dans Note' },
+  { icon: 'fa-file-signature', label: 'Reconnaissance de dette électronique' },
+  { icon: 'fa-signature', label: 'Signature électronique' },
+  { icon: 'fa-user-shield', label: "Vérification d'identité" },
+  { icon: 'fa-shield-halved', label: "Conservation sécurisée de l'acte" },
+  { icon: 'fa-scale-balanced', label: 'Guide pas à pas en cas de recours' },
 ];
 
-function Check({ tone }: { tone: 'green' | 'violet' }) {
+function FeatureIcon({ icon }: { icon: string }) {
   return (
-    <span
-      className={`${styles.check} ${
-        tone === 'violet' ? styles.checkViolet : styles.checkGreen
-      }`}
-      aria-hidden="true"
-    >
-      <i className="fa-solid fa-check" />
+    <span className={styles.featureIcon} aria-hidden="true">
+      <i className={`fa-solid ${icon}`} />
     </span>
   );
 }
@@ -70,9 +67,9 @@ export default function Pricing() {
 
             <ul className={styles.features}>
               {NOTE_FEATURES.map((f) => (
-                <li key={f}>
-                  <Check tone="violet" />
-                  <span>{f}</span>
+                <li key={f.label}>
+                  <FeatureIcon icon={f.icon} />
+                  <span>{f.label}</span>
                 </li>
               ))}
             </ul>
@@ -104,9 +101,9 @@ export default function Pricing() {
 
             <ul className={styles.features}>
               {ZEN_FEATURES.map((f) => (
-                <li key={f}>
-                  <Check tone="violet" />
-                  <span>{f}</span>
+                <li key={f.label}>
+                  <FeatureIcon icon={f.icon} />
+                  <span>{f.label}</span>
                 </li>
               ))}
             </ul>

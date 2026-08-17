@@ -1,4 +1,5 @@
 import styles from './Problem.module.css';
+import mascotUrl from '../../millions-mascotte.png';
 
 type Accent = 'violet' | 'coral' | 'blue';
 
@@ -34,6 +35,33 @@ const CARDS: Card[] = [
   },
 ];
 
+const TAGS = [
+  {
+    label: 'Clarté',
+    icon: 'fa-magnifying-glass',
+    accent: 'violet',
+    position: 'tag1',
+  },
+  {
+    label: 'Sérénité',
+    icon: 'fa-face-smile',
+    accent: 'coral',
+    position: 'tag2',
+  },
+  {
+    label: 'Confiance',
+    icon: 'fa-shield-halved',
+    accent: 'blue',
+    position: 'tag3',
+  },
+  {
+    label: 'Respect',
+    icon: 'fa-heart',
+    accent: 'green',
+    position: 'tag4',
+  },
+];
+
 export default function Problem() {
   return (
     <section className={styles.section} id="probleme" aria-labelledby="probleme-title">
@@ -45,6 +73,40 @@ export default function Problem() {
           </h2>
           <p className={styles.lead}>C'est le flou autour.</p>
         </header>
+
+        <div className={styles.stage} data-reveal>
+          <div className={styles.confetti} aria-hidden="true">
+            <span className={styles.c1} />
+            <span className={styles.c2} />
+            <span className={styles.c3} />
+            <span className={styles.c4} />
+            <span className={styles.c5} />
+            <span className={styles.c6} />
+            <span className={styles.c7} />
+            <span className={styles.c8} />
+          </div>
+
+          {TAGS.map((tag) => (
+            <span
+              key={tag.label}
+              className={`${styles.tag} ${styles[tag.position]} ${
+                styles[`tagAccent_${tag.accent}`]
+              }`}
+              aria-hidden="true"
+            >
+              <span className={styles.tagText}>{tag.label}</span>
+              <span className={styles.tagIcon}>
+                <i className={`fa-solid ${tag.icon}`} />
+              </span>
+            </span>
+          ))}
+
+          <img
+            src={mascotUrl}
+            alt="Mascotte tillit célébrant"
+            className={styles.mascot}
+          />
+        </div>
 
         <div className={styles.grid}>
           {CARDS.map((card, i) => (
@@ -62,16 +124,11 @@ export default function Problem() {
               </div>
               <h3 className={styles.cardTitle}>{card.title}</h3>
               <div className={styles.cardQuoteWrap}>
+                <p className={styles.cardQuote}>{card.quote}</p>
                 <i
                   className={`fa-solid fa-quote-right ${styles.quoteMark}`}
                   aria-hidden="true"
                 />
-                <p className={styles.cardQuote}>{card.quote}</p>
-              </div>
-              <div className={styles.cardConnector} aria-hidden="true">
-                {i < CARDS.length - 1 && (
-                  <i className="fa-solid fa-arrow-right-long" />
-                )}
               </div>
             </article>
           ))}

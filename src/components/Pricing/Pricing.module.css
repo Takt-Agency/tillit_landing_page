@@ -225,33 +225,44 @@
 
 .features li {
   display: flex;
-  align-items: flex-start;
-  gap: 12px;
+  align-items: center;
+  gap: 14px;
   font-size: 0.94rem;
   line-height: 1.5;
   color: var(--color-ink);
+  transition: transform 0.25s ease;
 }
 
-.check {
-  width: 22px;
-  height: 22px;
+.features li:hover {
+  transform: translateX(4px);
+}
+
+.features li:hover .featureIcon {
+  transform: scale(1.08);
+  box-shadow: 0 8px 18px rgba(139, 99, 232, 0.28);
+}
+
+.featureIcon {
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  margin-top: 1px;
-  color: #fff;
-  font-size: 11px;
+  background: linear-gradient(135deg, #ede7fb 0%, #d6c9f8 100%);
+  color: var(--color-violet);
+  font-size: 15px;
+  box-shadow: 0 4px 12px rgba(139, 99, 232, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1),
+    box-shadow 0.25s ease;
 }
 
-.checkViolet {
-  background: var(--color-violet);
-  box-shadow: 0 4px 10px rgba(139, 99, 232, 0.28);
-}
-
-.checkGreen {
-  background: var(--color-green);
+.cardZen .featureIcon {
+  background: linear-gradient(135deg, #ffffff 0%, #f0e8ff 100%);
+  box-shadow: 0 4px 12px rgba(139, 99, 232, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 .cardFoot {

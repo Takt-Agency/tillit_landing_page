@@ -53,40 +53,11 @@
   overflow: hidden;
   width: 100%;
   padding: 8px 0;
-  mask-image: linear-gradient(
-    90deg,
-    transparent 0%,
-    #000 8%,
-    #000 92%,
-    transparent 100%
-  );
-  -webkit-mask-image: linear-gradient(
-    90deg,
-    transparent 0%,
-    #000 8%,
-    #000 92%,
-    transparent 100%
-  );
 }
 
 .fadeLeft,
 .fadeRight {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 80px;
-  z-index: 2;
-  pointer-events: none;
-}
-
-.fadeLeft {
-  left: 0;
-  background: linear-gradient(90deg, var(--color-cream), transparent);
-}
-
-.fadeRight {
-  right: 0;
-  background: linear-gradient(270deg, var(--color-cream), transparent);
+  display: none;
 }
 
 .track {

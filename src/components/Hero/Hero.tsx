@@ -1,28 +1,55 @@
 import styles from './Hero.module.css';
-import PhoneMockup from './PhoneMockup';
+import coupleUrl from '../../../src/couple-hero.png';
 
 const AVATARS = ['A', 'M', 'S', 'K', 'L'];
+
+type Loan = {
+  name: string;
+  date: string;
+  amount: string;
+  status: string;
+  tone: 'success' | 'warning' | 'progress';
+  initial: string;
+  color: string;
+};
+
+const LOANS: Loan[] = [
+  {
+    name: 'Thomas',
+    date: 'Prêt le 12 mars 2024',
+    amount: '150,00 €',
+    status: 'Remboursé',
+    tone: 'success',
+    initial: 'T',
+    color: '#4ec18a',
+  },
+  {
+    name: 'Sarah',
+    date: 'Remboursement avant le 30 juin',
+    amount: '80,00 €',
+    status: 'En attente',
+    tone: 'warning',
+    initial: 'S',
+    color: '#ef8068',
+  },
+  {
+    name: 'Pape',
+    date: 'Prêt le 10 avril 2024',
+    amount: '120,00 €',
+    status: 'Remboursement à venir',
+    tone: 'progress',
+    initial: 'P',
+    color: '#a785f0',
+  },
+];
 
 export default function Hero() {
   return (
     <section className={styles.hero} id="top">
       <div className={styles.pattern} aria-hidden="true" />
-      <div className={styles.orbits} aria-hidden="true">
-        <span />
-        <span />
-        <span />
-      </div>
 
       <div className={styles.inner}>
         <div className={styles.content}>
-          <span className={styles.eyebrow}>
-            <span className={styles.eyebrowIcon} aria-hidden="true">
-              <i className="fa-solid fa-heart" />
-            </span>
-            Simple entre nous
-            <span className={styles.eyebrowShine} aria-hidden="true" />
-          </span>
-
           <h1 className={styles.title}>
             Prêter{' '}
             <span className={styles.titleAccent}>sereinement.</span>
@@ -30,11 +57,17 @@ export default function Hero() {
 
           <p className={styles.subtitle}>
             Entre proches, un prêt devrait rester un geste simple. Pas une raison
-            de s'éviter.
+            de s'éviter, ni de compter deux fois. <strong>tillit</strong> pose un
+            cadre clair entre vous : montant, échéances, rappels bienveillants —
+            sans que personne n'ait à relancer.
           </p>
-          <p className={styles.subtitleStrong}>
-            On ne remplace pas la confiance.{' '}
-            <strong>On lui donne un cadre.</strong>
+
+          <p className={styles.subtitleLight}>
+            Vous gardez la confiance,{' '}
+            <span className={styles.subtitleAccent}>
+              on s'occupe des détails
+            </span>
+            .
           </p>
 
           <div className={styles.ctas}>
@@ -47,22 +80,73 @@ export default function Hero() {
               <i className="fa-solid fa-arrow-right" aria-hidden="true" />
             </a>
           </div>
-
         </div>
 
         <div className={styles.visual}>
-          <PhoneMockup />
-          <div className={styles.notifCard} aria-hidden="true">
-            <span className={styles.notifIcon}>
-              <i className="fa-solid fa-bell" />
-            </span>
-            <div className={styles.notifText}>
-              <p className={styles.notifLabel}>Rappel envoyé</p>
-              <p className={styles.notifDesc}>
-                Plus besoin de relancer vous-même.
-              </p>
+          <img
+            src={coupleUrl}
+            alt="Deux proches consultant l'application tillit avec la mascotte"
+            className={styles.couple}
+            loading="eager"
+            decoding="async"
+          />
+
+          <div className={styles.loanCard} aria-hidden="true">
+            <div className={styles.balance}>
+              <div>
+                <p className={styles.balanceLabel}>Solde à me rembourser</p>
+                <p className={styles.balanceAmount}>250,00 €</p>
+              </div>
+              <span className={styles.balanceIcon}>
+                <i className="fa-solid fa-user-group" />
+              </span>
             </div>
+
+            <div className={styles.loansHeader}>
+              <p className={styles.loansTitle}>Mes prêts</p>
+              <span className={styles.loansAll}>Voir tout</span>
+            </div>
+
+            <ul className={styles.loanList}>
+              {LOANS.map((l) => (
+                <li key={l.name} className={styles.loan}>
+                  <span
+                    className={styles.loanAvatar}
+                    style={{ background: l.color }}
+                  >
+                    {l.initial}
+                  </span>
+                  <div className={styles.loanInfo}>
+                    <p className={styles.loanName}>{l.name}</p>
+                    <p className={styles.loanDate}>{l.date}</p>
+                  </div>
+                  <div className={styles.loanRight}>
+                    <p
+                      className={`${styles.loanAmount} ${
+                        styles[`amount_${l.tone}`]
+                      }`}
+                    >
+                      {l.amount}
+                    </p>
+                    <span
+                      className={`${styles.loanStatus} ${
+                        styles[`status_${l.tone}`]
+                      }`}
+                    >
+                      {l.status}
+                    </span>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
+
+          <span className={`${styles.sparkle} ${styles.sparkle1}`} aria-hidden="true">
+            <i className="fa-solid fa-sparkles" />
+          </span>
+          <span className={`${styles.sparkle} ${styles.sparkle2}`} aria-hidden="true">
+            <i className="fa-solid fa-sparkles" />
+          </span>
         </div>
       </div>
 
