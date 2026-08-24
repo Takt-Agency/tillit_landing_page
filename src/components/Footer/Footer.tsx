@@ -3,11 +3,11 @@ import Logo from '../Logo/Logo';
 import type { LegalTab } from '../LegalModal/LegalModal';
 
 const PRODUCT = [
-  { label: 'Pourquoi tillit', href: '#probleme' },
-  { label: 'Comment ça marche', href: '#comment-ca-marche' },
-  { label: 'Signature électronique', href: '#signature' },
-  { label: 'Tarifs', href: '#tarifs' },
-  { label: 'FAQ', href: '#faq' },
+  { label: 'Pourquoi tillit', href: '/#probleme' },
+  { label: 'Comment ça marche', href: '/#comment-ca-marche' },
+  { label: 'Signature électronique', href: '/#signature' },
+  { label: 'Tarifs', href: '/tarifs' },
+  { label: 'FAQ', href: '/#faq' },
 ];
 
 const COMPANY = [

@@ -11,6 +11,8 @@ export default function PhoneMockup() {
         className={styles.image}
         loading="eager"
         decoding="async"
+        width={320}
+        height={640}
       />
     </div>
   );

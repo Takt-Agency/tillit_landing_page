@@ -1,9 +1,16 @@
 import { useState } from 'react';
 import styles from './FAQ.module.css';
 
-type Item = { q: string; a: string };
+export type FAQItem = { q: string; a: string };
 
-const FAQ_ITEMS: Item[] = [
+type Props = {
+  items?: FAQItem[];
+  eyebrow?: string;
+  title?: React.ReactNode;
+  lead?: string;
+};
+
+const FAQ_ITEMS: FAQItem[] = [
   {
     q: "tillit, c'est légal ?",
     a: "Oui, complètement. tillit s'appuie sur la reconnaissance de dette (article 1359 du Code civil français) et, dans la formule ZEN, sur la signature électronique qualifiée eIDAS. tillit n'étant ni banque ni établissement de paiement, aucun agrément n'est requis — c'est l'utilisateur qui contractualise, tillit fournit l'outil.",
@@ -38,10 +45,25 @@ const FAQ_ITEMS: Item[] = [
   },
 ];
 
-export default function FAQ() {
+export default function FAQ({
+  items = FAQ_ITEMS,
+  eyebrow = 'FAQ',
+  title,
+  lead = "Tout ce qu'il faut savoir sur tillit — sans jargon, sans zone d'ombre.",
+}: Props = {}) {
   const [open, setOpen] = useState<number | null>(0);
 
   const toggle = (i: number) => setOpen((current) => (current === i ? null : i));
+
+  const renderedTitle = title ?? (
+    <>
+      Questions <span className={styles.titleAccent}>fréquentes</span>
+      <i
+        className={`fa-solid fa-circle-question ${styles.titleIcon}`}
+        aria-hidden="true"
+      />
+    </>
+  );
 
   return (
     <section className={styles.section} id="faq" aria-labelledby="faq-title">
@@ -52,18 +74,11 @@ export default function FAQ() {
       <div className={styles.inner}>
         <div className={styles.layout}>
           <header className={styles.head} data-reveal>
-            <span className={styles.eyebrow}>FAQ</span>
+            <span className={styles.eyebrow}>{eyebrow}</span>
             <h2 id="faq-title" className={styles.title}>
-              Questions{' '}
-              <span className={styles.titleAccent}>fréquentes</span>
-              <i
-                className={`fa-solid fa-circle-question ${styles.titleIcon}`}
-                aria-hidden="true"
-              />
+              {renderedTitle}
             </h2>
-            <p className={styles.lead}>
-              Tout ce qu'il faut savoir sur tillit — sans jargon, sans zone d'ombre.
-            </p>
+            <p className={styles.lead}>{lead}</p>
 
             <div className={styles.moreHelp}>
               <span className={styles.moreIcon} aria-hidden="true">
@@ -82,7 +97,7 @@ export default function FAQ() {
           </header>
 
           <ul className={styles.list} role="list">
-          {FAQ_ITEMS.map((item, i) => {
+          {items.map((item, i) => {
             const isOpen = open === i;
             return (
               <li

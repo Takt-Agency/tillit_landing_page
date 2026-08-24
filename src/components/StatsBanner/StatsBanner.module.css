@@ -4,6 +4,7 @@
   background: linear-gradient(180deg, #f5f1fe 0%, #ede7fb 100%);
   padding: clamp(72px, 10vw, 120px) 0 clamp(88px, 12vw, 130px);
   isolation: isolate;
+  margin-top: 0;
 }
 
 .section::before,

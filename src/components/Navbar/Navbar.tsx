@@ -1,19 +1,29 @@
 import { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import styles from './Navbar.module.css';
 import Logo from '../Logo/Logo';
 
-const NAV_LINKS = [
-  { href: '#probleme', label: 'Pourquoi tillit', icon: 'fa-lightbulb' },
-  { href: '#comment-ca-marche', label: 'Comment ça marche', icon: 'fa-list-check' },
-  { href: '#tarifs', label: 'Tarifs', icon: 'fa-tag' },
-  { href: '#faq', label: 'FAQ', icon: 'fa-circle-question' },
-  { href: '#contact', label: 'Contact', icon: 'fa-envelope' },
+type NavLink = {
+  href: string;
+  label: string;
+  icon: string;
+  route?: string;
+};
+
+const NAV_LINKS: NavLink[] = [
+  { href: '/#probleme', label: 'Pourquoi tillit', icon: 'fa-lightbulb' },
+  { href: '/#comment-ca-marche', label: 'Comment ça marche', icon: 'fa-list-check' },
+  { href: '/tarifs', label: 'Tarifs', icon: 'fa-tag', route: '/tarifs' },
+  { href: '/#faq', label: 'FAQ', icon: 'fa-circle-question' },
+  { href: '/#contact', label: 'Contact', icon: 'fa-envelope' },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string>('');
+  const location = useLocation();
+  const isHome = location.pathname === '/';
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -23,7 +33,13 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    const ids = NAV_LINKS.map((l) => l.href.slice(1));
+    if (!isHome) {
+      setActive('');
+      return;
+    }
+    const ids = NAV_LINKS.filter((l) => l.href.startsWith('/#')).map((l) =>
+      l.href.slice(2),
+    );
     const targets = ids
       .map((id) => document.getElementById(id))
       .filter((el): el is HTMLElement => el !== null);
@@ -34,21 +50,21 @@ export default function Navbar() {
         const visible = entries
           .filter((e) => e.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible) setActive('#' + visible.target.id);
+        if (visible) setActive('/#' + visible.target.id);
       },
       { rootMargin: '-30% 0px -55% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] },
     );
 
     targets.forEach((t) => observer.observe(t));
     return () => observer.disconnect();
-  }, []);
+  }, [isHome, location.pathname]);
 
   return (
     <div className={styles.wrapper}>
       <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
-        <a href="#top" className={styles.brand} aria-label="tillit — accueil">
+        <Link to="/" className={styles.brand} aria-label="tillit — accueil">
           <Logo />
-        </a>
+        </Link>
 
         <nav
           className={`${styles.nav} ${open ? styles.navOpen : ''}`}
@@ -56,27 +72,43 @@ export default function Navbar() {
         >
           <ul className={styles.navList}>
             {NAV_LINKS.map((link) => {
-              const isActive = active === link.href;
+              const isRoute = Boolean(link.route);
+              const isActive = isRoute
+                ? location.pathname === link.route
+                : active === link.href;
+              const commonProps = {
+                className: `${styles.navLink} ${
+                  isActive ? styles.navLinkActive : ''
+                }`,
+                onClick: () => setOpen(false),
+                'aria-current': (isActive ? 'true' : undefined) as
+                  | 'true'
+                  | undefined,
+              };
+              const inner = (
+                <>
+                  <i
+                    className={`fa-solid ${link.icon} ${styles.navIcon}`}
+                    aria-hidden="true"
+                  />
+                  <span>{link.label}</span>
+                  <i
+                    className={`fa-solid fa-chevron-right ${styles.navArrow}`}
+                    aria-hidden="true"
+                  />
+                </>
+              );
               return (
                 <li key={link.href}>
-                  <a
-                    href={link.href}
-                    className={`${styles.navLink} ${
-                      isActive ? styles.navLinkActive : ''
-                    }`}
-                    onClick={() => setOpen(false)}
-                    aria-current={isActive ? 'true' : undefined}
-                  >
-                    <i
-                      className={`fa-solid ${link.icon} ${styles.navIcon}`}
-                      aria-hidden="true"
-                    />
-                    <span>{link.label}</span>
-                    <i
-                      className={`fa-solid fa-chevron-right ${styles.navArrow}`}
-                      aria-hidden="true"
-                    />
-                  </a>
+                  {isRoute ? (
+                    <Link to={link.route!} {...commonProps}>
+                      {inner}
+                    </Link>
+                  ) : (
+                    <a href={link.href} {...commonProps}>
+                      {inner}
+                    </a>
+                  )}
                 </li>
               );
             })}
@@ -86,7 +118,7 @@ export default function Navbar() {
         <div className={styles.actions}>
           <a
             className={styles.cta}
-            href="#cta"
+            href={isHome ? '#cta' : '/#cta'}
             aria-label="Télécharger l'app"
           >
             <i className="fa-solid fa-download" aria-hidden="true" />

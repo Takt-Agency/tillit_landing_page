@@ -1,0 +1,445 @@
+.section {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f5f1fe 0%, #ede7fb 100%);
+  padding: clamp(72px, 10vw, 120px) 0 clamp(88px, 12vw, 130px);
+  isolation: isolate;
+}
+
+.decorTop,
+.decorBottom {
+  position: absolute;
+  border-radius: 50%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+.decorTop {
+  width: 460px;
+  height: 460px;
+  top: -160px;
+  right: -140px;
+  background: radial-gradient(closest-side, #d6c9f8, transparent);
+}
+
+.decorBottom {
+  width: 420px;
+  height: 420px;
+  bottom: -160px;
+  left: -140px;
+  background: radial-gradient(closest-side, #ffd6c9, transparent);
+  opacity: 0.35;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 var(--container-pad);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+}
+
+/* --- Content column --- */
+.content {
+  max-width: 560px;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: var(--color-violet);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: clamp(2rem, 4.6vw, 3.2rem);
+  color: var(--color-ink);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  font-family: var(--font-heading);
+  font-weight: 700;
+}
+
+.titleAccent {
+  color: var(--color-ink);
+}
+
+.list {
+  margin-top: clamp(28px, 3.5vw, 40px);
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 22px 14px 14px;
+  background: var(--color-white);
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(31, 26, 61, 0.05);
+  box-shadow: 0 8px 22px rgba(31, 26, 61, 0.05);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.item:hover {
+  transform: translateX(4px);
+  box-shadow: 0 14px 30px rgba(31, 26, 61, 0.09);
+}
+
+.itemNum {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--color-violet-light);
+  color: var(--color-violet);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.itemText {
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: var(--color-ink-soft);
+}
+
+.itemText strong {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+/* --- Visual column --- */
+.visual {
+  position: relative;
+  min-height: 460px;
+}
+
+.mascotStage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3.4;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: linear-gradient(135deg, #efe6fd 0%, #d6c9f8 100%);
+  box-shadow: 0 30px 60px rgba(139, 99, 232, 0.24);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.mascotBlob {
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  bottom: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 255, 255, 0.4) 0%,
+    transparent 65%
+  );
+  pointer-events: none;
+}
+
+.mascot {
+  position: relative;
+  z-index: 1;
+  width: 95%;
+  max-width: 480px;
+  height: auto;
+  margin-bottom: -6%;
+  filter: drop-shadow(0 24px 34px rgba(20, 12, 60, 0.28));
+  animation: mascotFloat 5s ease-in-out infinite;
+}
+
+@keyframes mascotFloat {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(2deg);
+  }
+}
+
+/* Ama demande card (bottom-left) */
+.demandeCard {
+  position: absolute;
+  bottom: 6%;
+  left: -6%;
+  width: min(280px, 68%);
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: 14px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 24px 48px rgba(20, 12, 60, 0.24);
+  z-index: 3;
+  animation: floatCard 6s ease-in-out infinite;
+}
+
+.demandeHead {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.demandeAvatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ef8068, #db6a52);
+  color: var(--color-white);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.demandeInfo {
+  min-width: 0;
+}
+
+.demandeName {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--color-ink);
+  line-height: 1.15;
+}
+
+.demandeSub {
+  font-size: 0.72rem;
+  color: var(--color-ink-mute);
+  margin-top: 2px;
+}
+
+.demandeAmount {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--color-ink);
+  text-align: right;
+}
+
+.demandeActions {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+}
+
+.btnPrimary,
+.btnGhost,
+.btnSoft {
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.78rem;
+  border: none;
+  cursor: default;
+  white-space: nowrap;
+}
+
+.btnPrimary {
+  grid-column: span 3;
+  background: linear-gradient(135deg, #8b63e8, #7a52d9);
+  color: var(--color-white);
+  box-shadow: 0 6px 14px rgba(139, 99, 232, 0.36);
+  padding: 10px;
+  margin-bottom: 4px;
+}
+
+.btnGhost {
+  background: rgba(31, 26, 61, 0.06);
+  color: var(--color-ink);
+  grid-column: span 2;
+}
+
+.btnSoft {
+  background: rgba(239, 128, 104, 0.12);
+  color: var(--color-coral);
+}
+
+/* Échéancier card (top-right) */
+.scheduleCard {
+  position: absolute;
+  top: 4%;
+  right: -8%;
+  width: min(240px, 60%);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: var(--radius-lg);
+  padding: 14px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 24px 48px rgba(20, 12, 60, 0.24);
+  z-index: 3;
+  animation: floatCard 6s ease-in-out 1.5s infinite;
+}
+
+.scheduleTitle {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: var(--color-ink);
+  margin-bottom: 10px;
+}
+
+.scheduleList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.scheduleList li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  background: rgba(139, 99, 232, 0.05);
+  font-size: 0.82rem;
+  color: var(--color-ink-soft);
+}
+
+.scheduleList strong {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--color-ink);
+  font-size: 0.88rem;
+}
+
+.scheduleFoot {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(139, 99, 232, 0.24);
+  font-size: 0.72rem;
+  color: var(--color-ink-mute);
+}
+
+.scheduleFoot span {
+  color: var(--color-violet);
+  font-weight: 700;
+}
+
+@keyframes floatCard {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mascot,
+  .demandeCard,
+  .scheduleCard {
+    animation: none;
+  }
+}
+
+/* --- Responsive --- */
+@media (max-width: 1023px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 44px;
+  }
+
+  .visual {
+    order: -1;
+    max-width: 520px;
+    margin: 0 auto;
+    min-height: 420px;
+  }
+}
+
+@media (max-width: 640px) {
+  .item {
+    padding: 12px 18px 12px 12px;
+    gap: 12px;
+  }
+
+  .itemText {
+    font-size: 0.88rem;
+  }
+
+  .mascotStage {
+    border-radius: var(--radius-lg);
+  }
+
+  .demandeCard {
+    bottom: 4%;
+    left: -2%;
+    width: min(220px, 68%);
+    padding: 12px;
+  }
+
+  .demandeAvatar {
+    width: 30px;
+    height: 30px;
+    font-size: 0.82rem;
+  }
+
+  .demandeName {
+    font-size: 0.85rem;
+  }
+
+  .scheduleCard {
+    top: 3%;
+    right: -3%;
+    width: min(180px, 55%);
+    padding: 12px;
+  }
+
+  .scheduleTitle {
+    font-size: 0.75rem;
+  }
+
+  .scheduleList li {
+    font-size: 0.72rem;
+    padding: 5px 8px;
+  }
+
+  .scheduleList strong {
+    font-size: 0.78rem;
+  }
+
+  .btnPrimary,
+  .btnGhost,
+  .btnSoft {
+    font-size: 0.7rem;
+    padding: 7px 8px;
+  }
+}

@@ -105,6 +105,10 @@ export default function Problem() {
             src={mascotUrl}
             alt="Mascotte tillit célébrant"
             className={styles.mascot}
+            loading="lazy"
+            decoding="async"
+            width={400}
+            height={400}
           />
         </div>
 

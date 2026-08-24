@@ -1,0 +1,220 @@
+.wrap {
+  --tl-anim-duration: 500ms;
+  --tl-anim-easing: cubic-bezier(0.2, 0.9, 0.3, 1);
+
+  position: relative;
+  /* height is set inline via `--steps × 100vh` on the container */
+}
+
+/* Sticky pin — fills viewport while section scrolls */
+.pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(20px, 3vh, 32px);
+  padding: clamp(80px, 12vh, 110px) 0 clamp(24px, 4vh, 40px);
+}
+
+/* Stage: [slot left] | [phone center] | [slot right] */
+.stage {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: clamp(28px, 5vw, 72px);
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1180px;
+  padding: 0 var(--container-pad);
+  flex: 1;
+  min-height: 0;
+}
+
+.slot {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.slotLeft {
+  justify-content: flex-end;
+}
+
+.slotRight {
+  justify-content: flex-start;
+}
+
+/* Visual (phone) — always in center */
+.visualWrap {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.visualSlot {
+  grid-area: 1 / 1;
+  opacity: 0;
+  transform: scale(0.96) translateY(6px);
+  transition: opacity var(--tl-anim-duration) var(--tl-anim-easing),
+    transform var(--tl-anim-duration) var(--tl-anim-easing);
+  pointer-events: none;
+}
+
+.visualSlot:not(:first-child) {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.visualWrap {
+  display: grid;
+  place-items: center;
+}
+
+.visualSlotActive {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  pointer-events: auto;
+}
+
+/* --- Step card (only one visible at a time) --- */
+.card {
+  max-width: 440px;
+  padding: clamp(24px, 3vw, 34px);
+  background: var(--color-white);
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 20px 44px rgba(31, 26, 61, 0.1);
+}
+
+.slotRight .card {
+  animation: slideFromLeft 0.55s var(--tl-anim-easing) both;
+}
+
+.slotLeft .card {
+  animation: slideFromRight 0.55s var(--tl-anim-easing) both;
+}
+
+@keyframes slideFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.stepNumber {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, #8b63e8, #7a52d9);
+  color: var(--color-white);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  margin-bottom: 16px;
+  box-shadow: 0 8px 18px rgba(139, 99, 232, 0.32);
+}
+
+.stepTitle {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(1.35rem, 2.6vw, 1.9rem);
+  color: var(--color-ink);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}
+
+.stepDesc {
+  font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+  line-height: 1.6;
+  color: var(--color-ink-soft);
+}
+
+/* --- Progress dots (visual indicator only) --- */
+.progress {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  padding: 8px 0;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(139, 99, 232, 0.28);
+  transition: background 0.3s ease, width 0.3s ease;
+}
+
+.dotActive {
+  background: var(--color-violet);
+  width: 26px;
+  border-radius: var(--radius-full);
+  box-shadow: 0 0 10px rgba(139, 99, 232, 0.4);
+}
+
+/* --- Reduced motion --- */
+@media (prefers-reduced-motion: reduce) {
+  .visualSlot,
+  .card {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+  .stage {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .slotLeft,
+  .slotRight {
+    justify-content: center;
+  }
+
+  .card {
+    max-width: 520px;
+  }
+}
+
+@media (max-width: 640px) {
+  .wrap {
+    height: auto !important;
+  }
+
+  .pin {
+    position: relative;
+    top: auto;
+    height: auto;
+    padding: 40px 0;
+    gap: 24px;
+  }
+}

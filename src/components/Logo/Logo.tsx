@@ -11,6 +11,9 @@ export default function Logo({ className }: LogoProps) {
       src={logoUrl}
       alt="tillit — Simple entre nous"
       className={`${styles.logo} ${className ?? ''}`}
+      decoding="async"
+      width={120}
+      height={40}
     />
   );
 }

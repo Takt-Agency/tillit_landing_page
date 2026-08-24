@@ -1,7 +1,11 @@
 import styles from './Hero.module.css';
 import coupleUrl from '../../../src/couple-hero.png';
 
-const AVATARS = ['A', 'M', 'S', 'K', 'L'];
+const TRUST_BADGES = [
+  { icon: 'fa-percent', label: "0 % d'intérêt" },
+  { icon: 'fa-credit-card', label: 'Sans abonnement' },
+  { icon: 'fa-check', label: "Gratuit jusqu'à 1 500 €" },
+];
 
 type Loan = {
   name: string;
@@ -80,6 +84,17 @@ export default function Hero() {
               <i className="fa-solid fa-arrow-right" aria-hidden="true" />
             </a>
           </div>
+
+          <ul className={styles.trustBadges}>
+            {TRUST_BADGES.map((badge) => (
+              <li key={badge.label} className={styles.trustBadge}>
+                <span className={styles.trustIcon} aria-hidden="true">
+                  <i className={`fa-solid ${badge.icon}`} />
+                </span>
+                <span className={styles.trustLabel}>{badge.label}</span>
+              </li>
+            ))}
+          </ul>
         </div>
 
         <div className={styles.visual}>
@@ -89,6 +104,9 @@ export default function Hero() {
             className={styles.couple}
             loading="eager"
             decoding="async"
+            fetchPriority="high"
+            width={720}
+            height={720}
           />
 
           <div className={styles.loanCard} aria-hidden="true">
@@ -150,42 +168,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <svg
-        className={styles.wave}
-        viewBox="0 0 1440 90"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-      >
-        <path
-          d="M0 60 C 240 90 480 90 720 60 S 1200 30 1440 60 L1440 90 L0 90 Z"
-          fill="var(--color-cream)"
-        />
-      </svg>
     </section>
   );
 }
 
-export function HeroSocialProof() {
-  return (
-    <div className={styles.socialProof}>
-      <div className={styles.socialProofInner}>
-        <p className={styles.proofLabel}>Déjà adopté par des milliers de personnes</p>
-        <div className={styles.proofRight}>
-          <div className={styles.avatars} aria-hidden="true">
-            {AVATARS.map((letter, i) => (
-              <span key={i} className={styles.avatar} data-i={i}>
-                {letter}
-              </span>
-            ))}
-          </div>
-          <div className={styles.rating}>
-            <span className={styles.stars} aria-hidden="true">
-              ★★★★★
-            </span>
-            <span className={styles.ratingText}>4,9/5 sur plus de 1 800 avis</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}

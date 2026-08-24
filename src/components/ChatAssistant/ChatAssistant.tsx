@@ -117,7 +117,15 @@ export default function ChatAssistant() {
         aria-label={open ? "Fermer l'assistant" : "Ouvrir l'assistant"}
         aria-expanded={open}
       >
-        <img src={mascotUrl} alt="" className={styles.mascot} />
+        <img
+          src={mascotUrl}
+          alt=""
+          className={styles.mascot}
+          loading="lazy"
+          decoding="async"
+          width={56}
+          height={56}
+        />
         <span className={styles.pulse} aria-hidden="true" />
       </button>
 
@@ -129,7 +137,15 @@ export default function ChatAssistant() {
       >
         <header className={styles.header}>
           <div className={styles.headerLeft}>
-            <img src={mascotUrl} alt="" className={styles.headerAvatar} />
+            <img
+              src={mascotUrl}
+              alt=""
+              className={styles.headerAvatar}
+              loading="lazy"
+              decoding="async"
+              width={36}
+              height={36}
+            />
             <div>
               <p className={styles.headerTitle}>Assistant tillit</p>
               <p className={styles.headerSub}>

@@ -54,7 +54,15 @@ export default function Partners() {
           {MARQUEE_ITEMS.map((p, i) => (
             <li key={`${p.name}-${i}`} className={styles.item}>
               {p.logo ? (
-                <img src={p.logo} alt={p.name} className={styles.logo} />
+                <img
+                  src={p.logo}
+                  alt={p.name}
+                  className={styles.logo}
+                  loading="lazy"
+                  decoding="async"
+                  width={160}
+                  height={60}
+                />
               ) : (
                 <span className={styles.placeholder}>{p.name}</span>
               )}
