@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styles from './Pricing.module.css';
 
 type Feature = { icon: string; label: string };
@@ -124,6 +125,44 @@ export default function Pricing() {
               </div>
             </div>
           </article>
+        </div>
+
+        <div className={styles.extras} data-reveal>
+          <Link to="/confiance" className={styles.extraBtn}>
+            <span className={styles.extraIcon} aria-hidden="true">
+              <i className="fa-solid fa-id-badge" />
+            </span>
+            <span className={styles.extraText}>
+              <span className={styles.extraTitle}>
+                Passeport de Confiance
+              </span>
+              <span className={styles.extraSub}>
+                Ton historique de prêts remboursés, visible d'un coup d'œil.
+              </span>
+            </span>
+            <i
+              className={`fa-solid fa-arrow-right ${styles.extraArrow}`}
+              aria-hidden="true"
+            />
+          </Link>
+
+          <Link to="/recours" className={styles.extraBtn}>
+            <span className={styles.extraIcon} aria-hidden="true">
+              <i className="fa-solid fa-scale-balanced" />
+            </span>
+            <span className={styles.extraText}>
+              <span className={styles.extraTitle}>
+                Guide pas à pas en cas de recours
+              </span>
+              <span className={styles.extraSub}>
+                Que faire si la situation se complique — sans y aller seul.
+              </span>
+            </span>
+            <i
+              className={`fa-solid fa-arrow-right ${styles.extraArrow}`}
+              aria-hidden="true"
+            />
+          </Link>
         </div>
 
         <p className={styles.disclaimer} data-reveal>

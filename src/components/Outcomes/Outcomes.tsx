@@ -1,5 +1,13 @@
 import { useState } from 'react';
 import styles from './Outcomes.module.css';
+import avecTillit1 from '../../Avec tillit 1.png';
+import avecTillit2 from '../../Avec tillit 2.jpg';
+import avecTillit3 from '../../avec tillit 3.png';
+import avecTillit4 from '../../avec tillit 4.png';
+import sansTillit1 from '../../sans tillit 1.png';
+import sansTillit2 from '../../sans tillit 2.png';
+import sansTillit3 from '../../sans tillit 3.png';
+import sansTillit4 from '../../sans tillit 4.png';
 
 type Card = {
   chip: string;
@@ -15,9 +23,6 @@ type Path = {
   cards: Card[];
 };
 
-const IMG = (id: string) =>
-  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=900&q=80`;
-
 const PATHS: Path[] = [
   {
     key: 'avec',
@@ -26,29 +31,29 @@ const PATHS: Path[] = [
       {
         chip: 'Lundi',
         title: 'Le besoin',
-        img: IMG('photo-1611944212129-29977ae1398c'),
+        img: avecTillit1,
         imgAlt: "Deux proches sur un canapé, l'un explique un besoin",
         caption: "« J'aurais besoin de 500 €… »",
       },
       {
         chip: 'Mardi',
         title: "L'accord",
-        img: IMG('photo-1600880292203-757bb62b4baf'),
-        imgAlt: "Poignée de main entre deux personnes après un accord",
+        img: avecTillit2,
+        imgAlt: 'Prêt formalisé dans tillit, accepté par les deux parties',
         caption: 'Prêt entre proches · 500 € · Accepté',
       },
       {
         chip: 'Le 5 du mois',
         title: 'Le rappel',
-        img: IMG('photo-1512428559087-560fa5ceab42'),
-        imgAlt: "Notification sur un téléphone",
+        img: avecTillit3,
+        imgAlt: 'Notification tillit — remboursement enregistré',
         caption: 'Prêt terminé · Bravo ! 500 € remboursés',
       },
       {
         chip: 'Trois mois plus tard',
         title: 'Le sourire',
-        img: IMG('photo-1543269865-cbf427effbad'),
-        imgAlt: 'Deux proches heureux au café',
+        img: avecTillit4,
+        imgAlt: 'Deux proches heureux, la relation intacte',
         caption: 'La relation, intacte.',
       },
     ],
@@ -60,29 +65,29 @@ const PATHS: Path[] = [
       {
         chip: 'Lundi',
         title: 'Le besoin',
-        img: IMG('photo-1611944212129-29977ae1398c'),
-        imgAlt: 'Une personne demande un service',
+        img: sansTillit1,
+        imgAlt: 'Une personne demande un service à un proche',
         caption: "« J'aurais besoin de 500 €… »",
       },
       {
         chip: 'Mardi',
         title: "L'accord",
-        img: IMG('photo-1521791136064-7986c2920216'),
+        img: sansTillit2,
         imgAlt: 'Un billet passé de la main à la main',
         caption: 'On se fait confiance 💜',
       },
       {
         chip: 'Le 5 du mois',
         title: 'Le rappel',
-        img: IMG('photo-1512428559087-560fa5ceab42'),
+        img: sansTillit3,
         imgAlt: 'Téléphone avec des appels manqués',
         caption: 'Appels manqués · Silence radio',
       },
       {
         chip: 'Trois mois plus tard',
         title: 'La distance',
-        img: IMG('photo-1476900164809-ff19b8ae5968'),
-        imgAlt: "Personne seule dans une rue d'automne",
+        img: sansTillit4,
+        imgAlt: "Le lien s'est effacé, sans un mot",
         caption: 'Le lien s\'est effacé, sans un mot.',
       },
     ],

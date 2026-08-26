@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import styles from './Roles.module.css';
 
 type SlideBase = { type: 'photo' | 'why' };
@@ -263,22 +263,44 @@ function Slide({ slide, role }: { slide: Slide; role: Role }) {
 }
 
 function Carousel({ role }: { role: Role }) {
-  // Duplicate slides for seamless loop
-  const loopSlides = [...role.slides, ...role.slides];
-  const duration = role.slides.length * 6;
+  const viewportRef = useRef<HTMLDivElement>(null);
+
+  const scrollByDir = useCallback((dir: 1 | -1) => {
+    const el = viewportRef.current;
+    if (!el) return;
+    const first = el.querySelector<HTMLElement>(`.${styles.slide}`);
+    const gap = 16;
+    const step = (first?.offsetWidth ?? 340) + gap;
+    el.scrollBy({ left: step * dir, behavior: 'smooth' });
+  }, []);
 
   return (
     <div className={styles.carousel}>
-      <div className={styles.viewport}>
-        <div
-          className={styles.track}
-          style={{ animationDuration: `${duration}s` }}
-        >
-          {loopSlides.map((slide, i) => (
+      <button
+        type="button"
+        className={`${styles.navBtn} ${styles.navBtnPrev}`}
+        onClick={() => scrollByDir(-1)}
+        aria-label="Slide précédente"
+      >
+        <i className="fa-solid fa-chevron-left" aria-hidden="true" />
+      </button>
+
+      <div className={styles.viewport} ref={viewportRef}>
+        <div className={styles.track}>
+          {role.slides.map((slide, i) => (
             <Slide key={i} slide={slide} role={role} />
           ))}
         </div>
       </div>
+
+      <button
+        type="button"
+        className={`${styles.navBtn} ${styles.navBtnNext}`}
+        onClick={() => scrollByDir(1)}
+        aria-label="Slide suivante"
+      >
+        <i className="fa-solid fa-chevron-right" aria-hidden="true" />
+      </button>
 
       <div className={styles.nav}>
         <span className={styles.navHint}>

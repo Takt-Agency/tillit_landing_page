@@ -1,3 +1,4 @@
+import { useCallback, useRef } from 'react';
 import styles from './Situations.module.css';
 
 type Badge =
@@ -150,6 +151,17 @@ function BadgeRender({ badge }: { badge: Badge }) {
 }
 
 export default function Situations() {
+  const viewportRef = useRef<HTMLDivElement>(null);
+
+  const scrollByDir = useCallback((dir: 1 | -1) => {
+    const el = viewportRef.current;
+    if (!el) return;
+    const first = el.querySelector<HTMLElement>(`.${styles.card}`);
+    const gap = 20;
+    const step = (first?.offsetWidth ?? 360) + gap;
+    el.scrollBy({ left: step * dir, behavior: 'smooth' });
+  }, []);
+
   return (
     <section
       className={styles.section}
@@ -172,37 +184,54 @@ export default function Situations() {
           </p>
         </header>
 
-        <div className={styles.marquee}>
-          <div
-            className={styles.track}
-            style={{ animationDuration: `${SITUATIONS.length * 8}s` }}
+        <div className={styles.carousel}>
+          <button
+            type="button"
+            className={`${styles.navBtn} ${styles.navBtnPrev}`}
+            onClick={() => scrollByDir(-1)}
+            aria-label="Situation précédente"
           >
-            {[...SITUATIONS, ...SITUATIONS].map((s, i) => (
-              <article
-                key={`${s.title}-${i}`}
-                className={`${styles.card} ${styles[`accent_${s.accent}`]}`}
-              >
-                <div className={styles.imageWrap}>
-                  <img
-                    src={s.img}
-                    alt={s.imgAlt}
-                    loading="lazy"
-                    decoding="async"
-                    width={900}
-                    height={600}
-                  />
-                  <div className={styles.badgeOverlay}>
-                    <BadgeRender badge={s.badge} />
+            <i className="fa-solid fa-chevron-left" aria-hidden="true" />
+          </button>
+
+          <div className={styles.marquee} ref={viewportRef}>
+            <div className={styles.track}>
+              {SITUATIONS.map((s, i) => (
+                <article
+                  key={`${s.title}-${i}`}
+                  className={`${styles.card} ${styles[`accent_${s.accent}`]}`}
+                >
+                  <div className={styles.imageWrap}>
+                    <img
+                      src={s.img}
+                      alt={s.imgAlt}
+                      loading="lazy"
+                      decoding="async"
+                      width={900}
+                      height={600}
+                    />
+                    <div className={styles.badgeOverlay}>
+                      <BadgeRender badge={s.badge} />
+                    </div>
                   </div>
-                </div>
-                <div className={styles.body}>
-                  <span className={styles.cardKicker}>{s.kicker}</span>
-                  <h3 className={styles.cardTitle}>{s.title}</h3>
-                  <p className={styles.cardDesc}>{s.desc}</p>
-                </div>
-              </article>
-            ))}
+                  <div className={styles.body}>
+                    <span className={styles.cardKicker}>{s.kicker}</span>
+                    <h3 className={styles.cardTitle}>{s.title}</h3>
+                    <p className={styles.cardDesc}>{s.desc}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
           </div>
+
+          <button
+            type="button"
+            className={`${styles.navBtn} ${styles.navBtnNext}`}
+            onClick={() => scrollByDir(1)}
+            aria-label="Situation suivante"
+          >
+            <i className="fa-solid fa-chevron-right" aria-hidden="true" />
+          </button>
         </div>
       </div>
     </section>

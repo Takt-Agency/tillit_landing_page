@@ -6,6 +6,8 @@ import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home';
 
 const Tarifs = lazy(() => import('./pages/Tarifs'));
+const Confiance = lazy(() => import('./pages/Confiance'));
+const Recours = lazy(() => import('./pages/Recours'));
 
 export default function App() {
   return (
@@ -16,6 +18,8 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/tarifs" element={<Tarifs />} />
+          <Route path="/confiance" element={<Confiance />} />
+          <Route path="/recours" element={<Recours />} />
         </Routes>
       </Suspense>
       <ChatAssistant />

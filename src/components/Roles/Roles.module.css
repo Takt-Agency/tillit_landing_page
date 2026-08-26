@@ -148,39 +148,96 @@
 }
 
 .viewport {
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
   margin: 0 calc(-1 * var(--container-pad));
-  padding: 0;
+  padding: 4px var(--container-pad) 16px;
   position: relative;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--container-pad);
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.viewport::-webkit-scrollbar {
+  display: none;
 }
 
 .track {
   display: flex;
   gap: 16px;
   width: max-content;
-  padding: 4px 0 16px;
-  will-change: transform;
-  animation: marquee linear infinite;
 }
 
-@keyframes marquee {
-  from {
-    transform: translate3d(0, 0, 0);
+.slide {
+  scroll-snap-align: start;
+}
+
+/* Prev / Next arrows */
+.navBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 4;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: var(--color-white);
+  color: #7a52d9;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 14px 32px rgba(20, 12, 60, 0.45),
+    0 0 0 3px rgba(255, 255, 255, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, color 0.2s ease,
+    background 0.2s ease;
+}
+
+.navBtn:hover {
+  background: #7a52d9;
+  color: var(--color-white);
+  transform: translateY(-50%) scale(1.08);
+  box-shadow: 0 18px 40px rgba(20, 12, 60, 0.5),
+    0 0 0 4px rgba(255, 255, 255, 0.45);
+}
+
+.navBtn:active {
+  transform: translateY(-50%) scale(0.94);
+}
+
+.navBtn:focus-visible {
+  outline: 3px solid #ffd7c9;
+  outline-offset: 3px;
+}
+
+.navBtnPrev {
+  left: -24px;
+}
+
+.navBtnNext {
+  right: -24px;
+}
+
+@media (max-width: 900px) {
+  .navBtnPrev {
+    left: 6px;
   }
-  to {
-    transform: translate3d(-50%, 0, 0);
+
+  .navBtnNext {
+    right: 6px;
   }
 }
 
-.carousel:hover .track,
-.slide:hover ~ .track,
-.track:hover {
-  animation-play-state: paused;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .track {
-    animation: none;
+@media (max-width: 720px) {
+  .navBtn {
+    width: 44px;
+    height: 44px;
+    font-size: 0.9rem;
+    box-shadow: 0 10px 22px rgba(20, 12, 60, 0.4);
   }
 }
 

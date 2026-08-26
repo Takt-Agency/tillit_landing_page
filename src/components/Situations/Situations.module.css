@@ -83,39 +83,100 @@
   line-height: 1.6;
 }
 
-/* --- Marquee --- */
+/* --- Carousel --- */
+.carousel {
+  position: relative;
+}
+
 .marquee {
   position: relative;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
   margin: 0 calc(-1 * var(--container-pad));
-  padding: 8px var(--container-pad);
+  padding: 8px var(--container-pad) 20px;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--container-pad);
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.marquee::-webkit-scrollbar {
+  display: none;
 }
 
 .track {
   display: flex;
-  gap: clamp(16px, 2vw, 24px);
+  gap: clamp(16px, 2vw, 20px);
   width: max-content;
-  padding: 4px 0 16px;
-  will-change: transform;
-  animation: situationsMarquee linear infinite;
 }
 
-@keyframes situationsMarquee {
-  from {
-    transform: translate3d(0, 0, 0);
+.card {
+  scroll-snap-align: start;
+}
+
+/* --- Prev / Next arrows --- */
+.navBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 4;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: var(--color-white);
+  color: #7a52d9;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 14px 32px rgba(31, 26, 61, 0.18),
+    0 0 0 1px rgba(31, 26, 61, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, color 0.2s ease,
+    background 0.2s ease;
+}
+
+.navBtn:hover {
+  background: #7a52d9;
+  color: var(--color-white);
+  transform: translateY(-50%) scale(1.08);
+  box-shadow: 0 20px 40px rgba(122, 82, 217, 0.35);
+}
+
+.navBtn:active {
+  transform: translateY(-50%) scale(0.94);
+}
+
+.navBtn:focus-visible {
+  outline: 3px solid #a785f0;
+  outline-offset: 3px;
+}
+
+.navBtnPrev {
+  left: -24px;
+}
+
+.navBtnNext {
+  right: -24px;
+}
+
+@media (max-width: 900px) {
+  .navBtnPrev {
+    left: 6px;
   }
-  to {
-    transform: translate3d(-50%, 0, 0);
+
+  .navBtnNext {
+    right: 6px;
   }
 }
 
-.marquee:hover .track {
-  animation-play-state: paused;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .track {
-    animation: none;
+@media (max-width: 720px) {
+  .navBtn {
+    width: 44px;
+    height: 44px;
+    font-size: 0.9rem;
   }
 }
 
