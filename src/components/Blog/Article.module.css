@@ -74,16 +74,6 @@
   color: var(--color-ink-soft);
 }
 
-.meta {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 16px;
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--color-ink-mute);
-}
-
 .cover {
   margin: calc(-1 * clamp(70px, 10vw, 120px)) 0 0;
   border-radius: 28px;
@@ -331,16 +321,3 @@
   outline-color: var(--color-white);
 }
 
-.back {
-  margin-top: 28px;
-  text-align: center;
-}
-
-.back a {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--font-heading);
-  font-weight: 700;
-  color: var(--color-violet);
-}

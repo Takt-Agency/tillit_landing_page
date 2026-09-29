@@ -2,43 +2,32 @@ import { useEffect, useRef, useState } from 'react';
 import styles from './ChatAssistant.module.css';
 import mascotUrl from '../../mascotte-besoin-aide.png';
 import { ASK_ASSISTANT_EVENT } from '../../lib/assistant';
+import { charger, repondre } from './knowledge';
+import { useLang } from '../../i18n';
 
 type Message = { id: number; role: 'bot' | 'user'; text: string };
 
 const QUICK_REPLIES = [
-  'Comment ça marche ?',
-  'Est-ce vraiment gratuit ?',
-  'Mes données sont-elles protégées ?',
+  'Comment ça marche ?',
+  'Est-ce vraiment gratuit ?',
+  'Mes données sont-elles protégées ?',
 ];
 
-const BOT_ANSWERS: Record<string, string> = {
-  'comment ça marche':
-    'Tu crées un prêt en 2 minutes (montant, durée), ton proche accepte en un tap, et tillit s\'occupe des rappels doux à ta place. La relation reste intacte 💜',
-  gratuit:
-    'Oui, la formule NOTE est 100 % gratuite pour les prêts jusqu\'à 1 500 € (échéancier, rappels, historique). Aucun intérêt, aucune commission sur la dette.',
-  données:
-    'Tes données sont hébergées en Union européenne, conformes RGPD, et les fonds ne transitent jamais par tillit — les virements se font de compte à compte.',
-  default:
-    'Je transmets ça à l\'équipe tillit. En attendant, tu peux essayer le prototype ou m\'écrire une autre question 🙂',
-};
-
-function botReply(input: string): string {
-  const lower = input.toLowerCase();
-  for (const key of Object.keys(BOT_ANSWERS)) {
-    if (key !== 'default' && lower.includes(key)) return BOT_ANSWERS[key];
-  }
-  return BOT_ANSWERS.default;
+// The English reference site has no assistant: it only shows on French pages.
+export default function ChatAssistantGate() {
+  return useLang() === 'fr' ? <ChatAssistant /> : null;
 }
 
-export default function ChatAssistant() {
+function ChatAssistant() {
   const [open, setOpen] = useState(false);
   const [bubble, setBubble] = useState(false);
   const [input, setInput] = useState('');
+  const [thinking, setThinking] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
       role: 'bot',
-      text: 'Salut 👋 Je suis tillit. Une question sur les prêts entre proches ?',
+      text: 'Salut 👋 Je suis TilliT. Une question sur les prêts entre proches ?',
     },
   ]);
   const idRef = useRef(2);
@@ -53,6 +42,7 @@ export default function ChatAssistant() {
 
   useEffect(() => {
     if (open) {
+      charger(); // read the FAQ ahead, before the first question
       setBubble(false);
       setTimeout(() => inputRef.current?.focus(), 250);
     }
@@ -63,7 +53,7 @@ export default function ChatAssistant() {
       top: scrollRef.current.scrollHeight,
       behavior: 'smooth',
     });
-  }, [messages]);
+  }, [messages, thinking]);
 
   const send = (text: string) => {
     const value = text.trim();
@@ -71,12 +61,15 @@ export default function ChatAssistant() {
     const userMsg: Message = { id: idRef.current++, role: 'user', text: value };
     setMessages((m) => [...m, userMsg]);
     setInput('');
-    setTimeout(() => {
-      setMessages((m) => [
-        ...m,
-        { id: idRef.current++, role: 'bot', text: botReply(value) },
-      ]);
-    }, 650);
+    setThinking(true);
+    // Wait for the FAQ to be read, then a delay proportional to the answer length.
+    charger().then(() => {
+      const text = repondre(value);
+      setTimeout(() => {
+        setThinking(false);
+        setMessages((m) => [...m, { id: idRef.current++, role: 'bot', text }]);
+      }, Math.min(1500, 480 + text.length * 3.2));
+    });
   };
 
   const sendRef = useRef(send);
@@ -105,10 +98,10 @@ export default function ChatAssistant() {
               setOpen(true);
             }
           }}
-          aria-label="Ouvrir l'assistant tillit"
+          aria-label="Ouvrir l’assistant"
         >
-          <span className={styles.bubbleText}>Besoin d'aide ?</span>
-          <span className={styles.bubbleSub}>Je suis là 💜</span>
+          <span className={styles.bubbleText}>Besoin d’aide&nbsp;?</span>
+          <span className={styles.bubbleSub}>Je suis là</span>
           <button
             type="button"
             className={styles.bubbleClose}
@@ -145,7 +138,7 @@ export default function ChatAssistant() {
       <div
         className={`${styles.panel} ${open ? styles.panelOpen : ''}`}
         role="dialog"
-        aria-label="Assistant tillit"
+        aria-label="Assistant"
         aria-hidden={!open}
       >
         <header className={styles.header}>
@@ -160,9 +153,9 @@ export default function ChatAssistant() {
               height={36}
             />
             <div>
-              <p className={styles.headerTitle}>Assistant tillit</p>
+              <p className={styles.headerTitle}>Assistant TilliT</p>
               <p className={styles.headerSub}>
-                <span className={styles.dot} /> En ligne · réponse en quelques secondes
+                Je cherche dans la FAQ et je te réponds
               </p>
             </div>
           </div>
@@ -187,6 +180,14 @@ export default function ChatAssistant() {
               {m.text}
             </div>
           ))}
+
+          {thinking && (
+            <div className={styles.typing} aria-label="En train de répondre">
+              <i />
+              <i />
+              <i />
+            </div>
+          )}
 
           {messages.length === 1 && (
             <div className={styles.quickReplies}>

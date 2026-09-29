@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import styles from './PageHero.module.css';
-import { fr } from '../../lib/typo';
+import { typo, useLang } from '../../i18n';
 
 type Props = {
   eyebrow: string;
@@ -10,6 +10,7 @@ type Props = {
 };
 
 export default function PageHero({ eyebrow, title, lead, children }: Props) {
+  const lang = useLang();
   return (
     <header className={styles.hero}>
       <span className={styles.arches} aria-hidden="true" />
@@ -17,8 +18,8 @@ export default function PageHero({ eyebrow, title, lead, children }: Props) {
       <span className={styles.glowB} aria-hidden="true" />
       <div className={styles.inner} data-reveal>
         <span className={styles.eyebrow}>{eyebrow}</span>
-        <h1 className={styles.title}>{typeof title === 'string' ? fr(title) : title}</h1>
-        <p className={styles.lead}>{fr(lead)}</p>
+        <h1 className={styles.title}>{typeof title === 'string' ? typo(title, lang) : title}</h1>
+        <p className={styles.lead}>{typo(lead, lang)}</p>
         {children}
       </div>
     </header>

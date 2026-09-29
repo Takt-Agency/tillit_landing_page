@@ -23,7 +23,7 @@
 .heroSummary li {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 0;
   padding: 8px 16px 8px 8px;
   border-radius: var(--radius-full);
   background: rgba(255, 255, 255, 0.12);
@@ -570,62 +570,13 @@
   grid-column: 1 / -1;
 }
 
-.hypoSplit {
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-  gap: 22px;
-  align-items: center;
-}
-
-.hypoSplit .rates {
-  margin-bottom: 0;
-}
-
 .hypoCardWarn .hypoHead i {
   background: var(--color-coral-pale);
   color: var(--color-coral);
 }
 
-.rates {
-  width: 100%;
-  margin-bottom: 12px;
-  border-collapse: separate;
-  border-spacing: 0 6px;
-  font-size: 0.86rem;
-}
-
-.rates th,
-.rates td {
-  padding: 8px 10px;
-  text-align: center;
-}
-
-.rates thead th {
-  padding: 0 10px;
-  font-family: var(--font-heading);
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--color-ink-mute);
-}
-
-.rates tbody th {
-  text-align: left;
-  font-family: var(--font-heading);
-  font-weight: 700;
-  color: var(--color-ink);
-  background: #f7f5fe;
-  border-radius: 10px 0 0 10px;
-}
-
-.rates tbody td {
-  font-family: var(--font-heading);
-  font-weight: 700;
-  color: var(--color-coral);
-  background: #f7f5fe;
-}
-
-.rates tbody td:last-child {
-  border-radius: 0 10px 10px 0;
+.nowrap {
+  white-space: nowrap;
 }
 
 /* --- Price FAQ --- */
@@ -919,8 +870,7 @@
 @media (max-width: 640px) {
   .wayPair,
   .waysDetail,
-  .hypoGrid,
-  .hypoSplit {
+  .hypoGrid {
     grid-template-columns: 1fr;
   }
 

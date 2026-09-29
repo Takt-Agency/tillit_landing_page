@@ -593,6 +593,16 @@
   color: rgba(255, 255, 255, 0.92);
 }
 
+/* English only: second reassurance line, right under the first */
+.noteNext {
+  margin-top: 8px;
+  font-weight: 600;
+}
+
+.noteNext b {
+  font-weight: 800;
+}
+
 .note i {
   font-size: 0.75rem;
   color: rgba(255, 255, 255, 0.75);

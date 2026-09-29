@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
+import { localize } from '../../i18n';
 
 export type Role = 'p' | 'e';
 
@@ -260,4 +261,254 @@ export const THEMES: FaqTheme[] = [
         },
       ],
     },
+];
+
+/** English links: the French path, mapped to the English slug. */
+const en = (frHref: string) => localize(frHref, 'en');
+
+/**
+ * English version of THEMES: same shape, same theme and item ids, same roles,
+ * same order. Copy taken verbatim from the English site (/en/faq).
+ */
+export const THEMES_EN: FaqTheme[] = [
+  {
+    id: 'faq-theme-essentiel',
+    title: 'The essentials',
+    icon: 'fa-star',
+    items: [
+      {
+        id: '01',
+        roles: BOTH,
+        q: 'Is TilliT a bank or a credit provider?',
+        a: 'No. TilliT is not a bank or a credit provider. TilliT will help you organise a loan between friends and family: the agreement, the schedule, the tracking, the reminders and, with Zen, an acknowledgement of debt. The money doesn’t pass through TilliT and no interest is charged.',
+      },
+      {
+        id: '15',
+        roles: BOTH,
+        q: 'Can you charge interest?',
+        a: 'No. With TilliT, a loan is at 0% interest: the person you lent to gives you back the amount you lent, on the dates you set together. The only possible cost is TilliT Zen, paid once. The lender or the borrower can pay it: you choose together.',
+      },
+      {
+        id: '02',
+        roles: BOTH,
+        q: 'How does the money move?',
+        a: 'Directly between you, by ordinary bank transfer. The lender will send the money to the borrower from their own bank, and the repayments will take the same route.',
+      },
+      {
+        id: '11',
+        roles: BOTH,
+        q: 'Can I use it with my family?',
+        a: 'Yes. A parent fronting the money for a driving licence, a sister helping out at the end of the month, a cousin lending for a ticket. TilliT will keep the subject from coming back at every family meal.',
+      },
+      {
+        id: '10',
+        roles: BOTH,
+        q: 'Is my data shared?',
+        a: (
+          <>
+            The app isn’t out yet. Your loan information will be visible only to you and to the
+            person concerned. It will never be sold on, or used for advertising. Your data will be
+            handled under the GDPR: you’ll be able to see it, correct it, export it or ask for it to
+            be deleted. For the website, the detail is on the{' '}
+            <Link to={en('/confidentialite')}>Privacy page</Link>. You’ll also be able to lodge a
+            complaint with the CNIL.
+          </>
+        ),
+        legal: 'To be validated by our legal counsel',
+      },
+      {
+        id: '16',
+        roles: ['p'],
+        q: 'Is my loan reported to a credit provider?',
+        a: (
+          <>
+            No. TilliT is not a bank or a credit provider. Your Carnet de prêt, your loan record
+            book, isn’t shared without your agreement. It’s never passed to a credit provider, or to
+            any commercial third party. And a refusal to lend doesn’t appear in it: saying no to
+            someone stays your right. <Link to={en('/confiance#carnet')}>The Carnet de prêt</Link>
+          </>
+        ),
+      },
+      {
+        id: '19',
+        roles: ['e'],
+        q: 'Can this get me listed by the Banque de France?',
+        a: 'No. TilliT is not a bank or a credit provider, and grants no credit: the money comes from someone close to you, by bank transfer, from one bank to the other. Your Carnet de prêt, your loan record book, isn’t shared without your agreement. It’s never passed to a credit provider, or to any commercial third party. And a refusal to lend doesn’t appear in it.',
+        legal: 'To be validated by our legal counsel',
+      },
+      {
+        id: '18',
+        roles: ['e'],
+        q: 'What does the other person see about me?',
+        a: (
+          <>
+            The loan you organise together: the amount, the instalments and the repayments already
+            confirmed, in the same place for you both. Nothing else: your loan information will be
+            visible only to you and to the person concerned. Your Carnet de prêt isn’t shared
+            without your agreement. <Link to={en('/confiance#carnet')}>The Carnet de prêt</Link>
+          </>
+        ),
+      },
+    ],
+  },
+  {
+    id: 'faq-theme-prix',
+    title: 'Price and plans',
+    icon: 'fa-tag',
+    items: [
+      {
+        id: '03',
+        roles: BOTH,
+        q: 'What does the price of Zen cover?',
+        a: 'The price of Zen covers drawing up, signing electronically and securely keeping the acknowledgement of debt. Signing with France Identité: included. Signing with FranceConnect: +€1.50 per signatory who uses it. The price depends on the amount lent and is paid once, with no subscription. The lender or the borrower can pay for TilliT Zen: you choose together.',
+      },
+      {
+        id: '20',
+        roles: ['e'],
+        q: 'As the borrower, do I pay anything?',
+        a: (
+          <>
+            With Note, you pay nothing for a loan of up to €1,500. With Zen, the price is paid once,
+            with no subscription, and you choose together who pays: if it’s the other person, you
+            have nothing to pay. One exception: if you choose FranceConnect to sign, that route
+            costs €1.50 more, paid only by the person who chooses it. Either way, the loan stays at
+            0% interest. <Link to={en('/tarifs')}>See the plans</Link>
+          </>
+        ),
+      },
+      {
+        id: '04',
+        roles: BOTH,
+        q: 'Why does €1,500 keep coming up?',
+        a: 'It’s the evidence threshold set by French law. For small amounts, messages, a bank transfer or a witness can help prove the loan. Keeping something in writing is still useful, to pin down the amount and the repayment agreed. Above that, you need something in writing. That’s exactly why Note stops at €1,500 per loan and Zen takes over, with a signed document.',
+        legal: 'Article 1359 of the Code civil · to be validated by our legal counsel',
+      },
+    ],
+  },
+  {
+    id: 'faq-theme-pendant',
+    title: 'During the loan',
+    icon: 'fa-calendar-days',
+    items: [
+      {
+        id: '14',
+        roles: BOTH,
+        q: 'Can the repayment dates be changed?',
+        a: 'The app isn’t out yet. One of you will propose a new schedule. The other will be able to accept it, propose something else or say no. The change will apply once you’ve both accepted it.',
+      },
+      {
+        id: '21',
+        roles: ['e'],
+        q: 'What if I can’t pay one month?',
+        a: (
+          <>
+            Say so before the due date, and propose other dates. The other person can accept,
+            propose something else or say no. Once you’ve both accepted, the new schedule replaces
+            the old one. Speaking up early is already taking care of the other person.{' '}
+            <Link to={en('/article-imprevu-echeancier')}>
+              When someone can no longer keep to the schedule
+            </Link>
+          </>
+        ),
+      },
+      {
+        id: '17',
+        roles: BOTH,
+        q: 'Can the loan be repaid early?',
+        a: (
+          <>
+            Yes, in part or in full. Paying early settles the next instalments; the others keep
+            their amount and their date. Repaying early costs nothing more: the loan is at 0%
+            interest, and Zen is paid once.{' '}
+            <Link to={en('/comment-ca-marche')}>How a loan runs</Link>
+          </>
+        ),
+      },
+      {
+        id: '08',
+        roles: ['p'],
+        q: 'What happens if the other person doesn’t repay?',
+        a: (
+          <>
+            TilliT does not guarantee repayment, and does not do debt collection. What you have in
+            hand is your file: the amount, the schedule you both accepted, every confirmed
+            repayment, the dates and your messages. With Zen, the signed acknowledgement of debt is
+            added to it. So you’ll have the essentials if you have to take it further. What comes
+            next is written out step by step, from the registered letter to the judge. TilliT
+            doesn’t replace a lawyer. <Link to={en('/recours')}>The steps to follow</Link>
+          </>
+        ),
+        legal: 'To be validated by our legal counsel',
+      },
+      {
+        id: '09',
+        roles: ['p'],
+        q: 'Does TilliT guarantee repayment?',
+        a: (
+          <>
+            No, and we’ll never claim it does. TilliT will help the lender keep evidence of the
+            debt, if repayment doesn’t come or there’s a dispute. It will also cut the risk of
+            misunderstandings, of forgetting, of things left unsaid. We don’t replace trust. We give
+            it a frame. If the conversation stops,{' '}
+            <Link to={en('/confiance#temoin')}>the trusted third party</Link> can help you pick it
+            up again.
+          </>
+        ),
+        legal: 'To be validated by our legal counsel',
+      },
+    ],
+  },
+  {
+    id: 'faq-theme-loi',
+    title: 'Law and tax',
+    icon: 'fa-scale-balanced',
+    items: [
+      {
+        id: '05',
+        roles: BOTH,
+        q: 'Do I have to declare the loan to the tax office?',
+        a: 'Yes, as soon as the total goes over the €5,000 declaration threshold within the same calendar year. You add up all the loans of the year: none of them has to reach €5,000 on its own. Two loans of €3,000, and both are to be declared, even if they go to different people. A single loan of €5,000 doesn’t go over the threshold on its own. Several loans made within the year with the same person can go over it in total, and trigger the declaration. The rule works both ways, for what you lend as for what you borrow. It’s a simple declaration (the formulaire n° 2062), to attach to your income tax return; it falls to the borrower, unless you have lent several people amounts each under the threshold, in which case it falls to you. This declaration informs the tax authorities: declaring the loan doesn’t, in itself, create tax to pay.',
+        legal:
+          'Article 49 B of Annexe III to the CGI · arrêté of 23 September 2020 · to be validated by our legal counsel',
+      },
+      {
+        id: '06',
+        roles: BOTH,
+        q: 'Can a loan be reclassified as a gift?',
+        a: (
+          <>
+            A late payment doesn’t turn a loan into a gift. The question comes up if the lender ends
+            up giving up on repayment: the sum can then be counted as a donation, a gift in tax
+            terms, and the person who received the money can be taxed on it, depending on how the
+            two of you are related. Putting the loan in writing from the start makes clear that the
+            sum is to be repaid. A loan repaid then leaves a trace in{' '}
+            <Link to={en('/confiance#carnet')}>your Carnet de prêt</Link>.
+          </>
+        ),
+        legal: 'To be validated by our legal counsel',
+      },
+      {
+        id: '07',
+        roles: ['p'],
+        q: 'How long do I have to claim repayment?',
+        a: 'The time limit to act is five years. It runs from the date the repayment was due. If the loan is repaid in instalments, each instalment has its own time limit, running from its own date. So the oldest ones can fall out of time before the others. Don’t wait for the end of the schedule. It’s one more reason to set dated instalments rather than a vague “whenever you can”.',
+        legal:
+          'Articles 2224 and 2233 of the Code civil · Cour de cassation, 1re civ., 11 February 2016, n° 14-28.383 · to be validated by our legal counsel',
+      },
+      {
+        id: '12',
+        roles: BOTH,
+        q: 'What happens if someone dies?',
+        a: 'As a rule, the loan doesn’t disappear. If the lender dies, their heirs take over the right to be repaid. If it’s the borrower, the debt goes into their estate. What their heirs have to pay depends on their choice: accepting the estate, accepting it up to what it contains, or turning it down. Either way, a written document keeps the subject from landing on people who weren’t there at the start.',
+        legal: 'To be validated by our legal counsel',
+      },
+      {
+        id: '13',
+        roles: BOTH,
+        q: 'Is the Zen acknowledgement of debt enough in a dispute?',
+        a: 'It provides evidence relating to the agreement and what it contains. It is not a titre exécutoire, a document that on its own allows enforcement. Going all the way still means going before a judge.',
+        legal: 'To be validated by our legal counsel',
+      },
+    ],
+  },
 ];

@@ -1,17 +1,53 @@
 import { useMemo, useState, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './FaqFull.module.css';
-import { THEMES, type Role } from './faqData';
+import { THEMES, THEMES_EN, type Role } from './faqData';
 import { askAssistant } from '../../lib/assistant';
-import { fr } from '../../lib/typo';
+import { typo, useLang, useLocalize } from '../../i18n';
+
+const COPY = {
+  fr: {
+    rolesLabel: 'Ton rôle',
+    roles: { p: 'Je prête', e: 'J’emprunte' },
+    themesLabel: 'Thèmes de la FAQ',
+    emptyError: 'Écris ta question avant de l’envoyer.',
+    askTitle: 'Une autre question\u00a0?',
+    askText: 'Notre assistant TilliT est là pour t’aider.',
+    askLabel: 'Ta question',
+    askSend: 'Envoyer',
+    askMail: 'Nous écrire',
+    finalTitle: 'Deux formules pour organiser ton prêt',
+    finalText:
+      'Avec Note, tu ne paies rien pour un prêt jusqu’à 1\u00a0500\u00a0€. Zen ajoute une reconnaissance de dette signée.',
+    finalBtn: 'Découvrir les formules',
+  },
+  en: {
+    rolesLabel: 'Your role',
+    roles: { p: 'I’m lending', e: 'I’m borrowing' },
+    themesLabel: 'FAQ themes',
+    emptyError: 'Write your question before sending it.',
+    askTitle: 'Another question?',
+    askText: 'Our TilliT assistant answers in French, on the French version of this page.',
+    askLabel: 'Your question',
+    askSend: 'Send',
+    askMail: 'Write to us',
+    finalTitle: 'Two plans to organise your loan',
+    finalText:
+      'With Note, you pay nothing for a loan of up to €1,500. Zen adds a signed acknowledgement of debt.',
+    finalBtn: 'Discover the plans',
+  },
+};
 
 export default function FaqFull() {
+  const lang = useLang();
+  const l = useLocalize();
+  const t = COPY[lang];
   const [role, setRole] = useState<Role>('p');
   const [open, setOpen] = useState<Set<string>>(() => new Set());
   const [question, setQuestion] = useState('');
   const [error, setError] = useState('');
 
-  const themes = THEMES;
+  const themes = lang === 'en' ? THEMES_EN : THEMES;
 
   const visible = useMemo(() => {
     let n = 0;
@@ -34,7 +70,7 @@ export default function FaqFull() {
   const submit = (e: FormEvent) => {
     e.preventDefault();
     if (!question.trim()) {
-      setError('Écris ta question avant de l’envoyer.');
+      setError(t.emptyError);
       return;
     }
     setError('');
@@ -47,7 +83,7 @@ export default function FaqFull() {
       <span className={styles.arches} aria-hidden="true" />
       <div className={styles.container}>
         <div className={styles.controls} data-reveal>
-          <div className={styles.roles} role="tablist" aria-label="Ton rôle">
+          <div className={styles.roles} role="tablist" aria-label={t.rolesLabel}>
             <span
               className={`${styles.roleThumb} ${role === 'e' ? styles.roleThumbRight : ''}`}
               aria-hidden="true"
@@ -66,19 +102,19 @@ export default function FaqFull() {
                   className={`fa-solid ${r === 'p' ? 'fa-hand-holding-heart' : 'fa-hand-holding-dollar'}`}
                   aria-hidden="true"
                 />
-                {r === 'p' ? 'Je prête' : 'J’emprunte'}
+                {t.roles[r]}
               </button>
             ))}
           </div>
 
-          <nav className={styles.themesNav} aria-label="Thèmes de la FAQ">
+          <nav className={styles.themesNav} aria-label={t.themesLabel}>
             <ul>
-              {visible.map((t) => (
-                <li key={t.id}>
-                  <a href={`#${t.id}`} className={styles.themeChip}>
-                    <i className={`fa-solid ${t.icon}`} aria-hidden="true" />
-                    {t.title}
-                    <span className={styles.themeCount}>{t.items.length}</span>
+              {visible.map((th) => (
+                <li key={th.id}>
+                  <a href={`#${th.id}`} className={styles.themeChip}>
+                    <i className={`fa-solid ${th.icon}`} aria-hidden="true" />
+                    {th.title}
+                    <span className={styles.themeCount}>{th.items.length}</span>
                   </a>
                 </li>
               ))}
@@ -87,16 +123,16 @@ export default function FaqFull() {
         </div>
 
         <div id="faq-questions" role="tabpanel" className={styles.panel}>
-          {visible.map((t) => (
-            <div key={t.id} className={styles.theme}>
-              <h2 className={styles.themeTitle} id={t.id}>
+          {visible.map((th) => (
+            <div key={th.id} className={styles.theme}>
+              <h2 className={styles.themeTitle} id={th.id}>
                 <span className={styles.themeIcon} aria-hidden="true">
-                  <i className={`fa-solid ${t.icon}`} />
+                  <i className={`fa-solid ${th.icon}`} />
                 </span>
-                {t.title}
+                {th.title}
               </h2>
               <ol className={styles.list}>
-                {t.items.map((it) => {
+                {th.items.map((it) => {
                   const isOpen = open.has(it.id);
                   return (
                     <li key={it.id} className={`${styles.item} ${isOpen ? styles.itemOpen : ''}`}>
@@ -112,7 +148,7 @@ export default function FaqFull() {
                           <span className={styles.num} aria-hidden="true">
                             {it.n}
                           </span>
-                          <span className={styles.q}>{fr(it.q)}</span>
+                          <span className={styles.q}>{typo(it.q, lang)}</span>
                           <span className={styles.chev} aria-hidden="true">
                             <i className="fa-solid fa-chevron-down" />
                           </span>
@@ -147,47 +183,55 @@ export default function FaqFull() {
           <span className={styles.askIcon} aria-hidden="true">
             <i className="fa-solid fa-comments" />
           </span>
-          <h2 className={styles.askTitle}>Une autre question&nbsp;?</h2>
-          <p className={styles.askText}>Notre assistant TilliT est là pour t’aider.</p>
-          <form className={styles.askForm} onSubmit={submit} noValidate>
-            <label className="sr-only" htmlFor="faq-question">
-              Ta question
-            </label>
-            <div className={styles.askField}>
-              <input
-                id="faq-question"
-                type="text"
-                placeholder="Ta question"
-                autoComplete="off"
-                enterKeyHint="send"
-                value={question}
-                onChange={(e) => setQuestion(e.target.value)}
-                aria-describedby="faq-question-error"
-                aria-invalid={Boolean(error)}
-              />
-              <button type="submit" className={styles.askSend}>
-                Envoyer
-                <i className="fa-solid fa-paper-plane" aria-hidden="true" />
-              </button>
-            </div>
-            <p className={styles.askError} id="faq-question-error" role="status">
-              {error}
-            </p>
-          </form>
-          <a className={styles.askMail} href="mailto:tillit@tillitapp.fr">
-            <i className="fa-regular fa-envelope" aria-hidden="true" />
-            Nous écrire
-          </a>
+          <h2 className={styles.askTitle}>{t.askTitle}</h2>
+          <p className={styles.askText}>{t.askText}</p>
+          {/* English: the assistant is hidden on /en/ pages, so the card keeps only
+              its title and the contact link, as on the English reference site. */}
+          {lang === 'fr' && (
+            <form className={styles.askForm} onSubmit={submit} noValidate>
+              <label className="sr-only" htmlFor="faq-question">
+                {t.askLabel}
+              </label>
+              <div className={styles.askField}>
+                <input
+                  id="faq-question"
+                  type="text"
+                  placeholder={t.askLabel}
+                  autoComplete="off"
+                  enterKeyHint="send"
+                  value={question}
+                  onChange={(e) => setQuestion(e.target.value)}
+                  aria-describedby="faq-question-error"
+                  aria-invalid={Boolean(error)}
+                />
+                <button type="submit" className={styles.askSend}>
+                  {t.askSend}
+                  <i className="fa-solid fa-paper-plane" aria-hidden="true" />
+                </button>
+              </div>
+              <p className={styles.askError} id="faq-question-error" role="status">
+                {error}
+              </p>
+            </form>
+          )}
+          {lang === 'en' ? (
+            <Link className={styles.askMail} to={l('/contact#formulaire')}>
+              <i className="fa-regular fa-envelope" aria-hidden="true" />
+              {t.askMail}
+            </Link>
+          ) : (
+            <a className={styles.askMail} href="mailto:tillit@tillitapp.fr">
+              <i className="fa-regular fa-envelope" aria-hidden="true" />
+              {t.askMail}
+            </a>
+          )}
         </div>
 
         <div className={styles.final} data-reveal>
-          <h2>Deux formules pour organiser ton prêt</h2>
-          <p>
-            Avec Note, tu ne paies rien pour un prêt jusqu’à 1&nbsp;500&nbsp;€. Zen ajoute une
-            reconnaissance de dette signée.
-          </p>
-          <Link to="/tarifs" className={styles.finalBtn}>
-            Découvrir les formules
+          <h2>{t.finalTitle}</h2>
+          <p>{t.finalText}</p>
+          <Link to={l('/tarifs')} className={styles.finalBtn}>
+            {t.finalBtn}
             <i className="fa-solid fa-arrow-right" aria-hidden="true" />
           </Link>
         </div>

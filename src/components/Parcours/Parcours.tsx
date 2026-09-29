@@ -1,6 +1,7 @@
 import { useState, type ReactNode } from 'react';
 import styles from './Parcours.module.css';
 import mascotUrl from '../../mascotte-coup-de-coeur.webp';
+import { typo, useLang, type Lang } from '../../i18n';
 
 type Role = 'p' | 'e';
 type Variant = '' | 'difficile' | 'avance';
@@ -19,7 +20,9 @@ type Screen = {
 
 type View = { screen: Screen; benefit: string };
 
-const STEPS: { title: string; chip: string; desc: ReactNode; tone: string; icon: string }[] = [
+type Step = { title: string; chip: string; desc: ReactNode; tone: string; icon: string };
+
+const STEPS_FR: Step[] = [
   {
     title: 'On se met d’accord',
     chip: '≈ 2 min',
@@ -27,7 +30,7 @@ const STEPS: { title: string; chip: string; desc: ReactNode; tone: string; icon:
     icon: 'fa-handshake',
     desc: (
       <>
-        « 100 € par mois, ça te va ? » Vous fixez le montant et les dates de remboursement{' '}
+        «&nbsp;100&nbsp;€ par mois, ça te va&nbsp;?&nbsp;» Vous fixez le montant et les dates de remboursement{' '}
         <b>avant le virement</b>. Chacun peut proposer autre chose.
       </>
     ),
@@ -40,7 +43,7 @@ const STEPS: { title: string; chip: string; desc: ReactNode; tone: string; icon:
     desc: (
       <>
         Léonie confirme l’envoi, Thomas confirme la réception. L’argent va directement de{' '}
-        <b>banque à banque</b> : TilliT ne détient jamais les fonds.
+        <b>banque à banque</b>&nbsp;: TilliT ne détient jamais les fonds.
       </>
     ),
   },
@@ -70,7 +73,59 @@ const STEPS: { title: string; chip: string; desc: ReactNode; tone: string; icon:
   },
 ];
 
-const VIEWS: Record<string, View> = {
+const STEPS_EN: Step[] = [
+  {
+    title: 'You two agree',
+    chip: '≈ 2 min',
+    tone: 'violet',
+    icon: 'fa-handshake',
+    desc: (
+      <>
+        “€100 a month, does that work?” You set the amount and the repayment dates{' '}
+        <b>before the transfer</b>. Either of you can suggest something else.
+      </>
+    ),
+  },
+  {
+    title: 'The loan starts',
+    chip: 'Confirmed by both',
+    tone: 'coral',
+    icon: 'fa-building-columns',
+    desc: (
+      <>
+        Léonie confirms she’s sent it, Thomas confirms he’s received it. The money goes straight
+        from <b>bank to bank</b>: TilliT never holds the money.
+      </>
+    ),
+  },
+  {
+    title: 'It moves along',
+    chip: 'Automatic reminders',
+    tone: 'blue',
+    icon: 'fa-bell',
+    desc: (
+      <>
+        Thomas records <b>each repayment</b>, Léonie confirms it. You share the same tracking, and
+        TilliT takes care of the reminders.
+      </>
+    ),
+  },
+  {
+    title: 'Loan done',
+    chip: 'A thank you',
+    tone: 'green',
+    icon: 'fa-heart',
+    desc: (
+      <>
+        Once the last repayment is confirmed, the loan is marked as <b>repaid</b> for you both.
+      </>
+    ),
+  },
+];
+
+const STEPS: Record<Lang, Step[]> = { fr: STEPS_FR, en: STEPS_EN };
+
+const VIEWS_FR: Record<string, View> = {
   'p-0': {
     screen: {
       head: 'Thomas te demande 500 €',
@@ -237,7 +292,184 @@ const VIEWS: Record<string, View> = {
   },
 };
 
-const VARIANTS: { key: Exclude<Variant, ''>; title: string; text: string; icon: string; common: ReactNode }[] = [
+const VIEWS_EN: Record<string, View> = {
+  'p-0': {
+    screen: {
+      head: 'Thomas is asking you for €500',
+      sub: 'Nothing starts without your answer.',
+      amount: '€500.00',
+      rows: [
+        ['Pace', '5 × €100'],
+        ['First instalment', '12 April'],
+        ['Interest', '0%'],
+      ],
+      btns: [
+        { label: 'I accept' },
+        { label: 'Suggest something else', kind: 'ghost' },
+        { label: 'Decline', kind: 'danger' },
+      ],
+    },
+    benefit:
+      'Léonie gets a clear request: €500, in five instalments. She knows what she’s saying yes to.',
+  },
+  'p-1': {
+    screen: {
+      head: 'Has the money gone out?',
+      sub: 'The loan starts once you’ve both confirmed it.',
+      rows: [
+        ['Léonie → Thomas', '€500.00'],
+        ['Bank transfer', '12 March'],
+      ],
+      btns: [{ label: 'I’ve sent the €500' }],
+      note: 'TilliT never holds the money. The transfer goes from your bank to his.',
+    },
+    benefit: 'Léonie makes the transfer from her bank, as usual, then notes it in the app.',
+  },
+  'p-2': {
+    screen: {
+      head: 'Thomas has repaid €100',
+      sub: 'Can you confirm it’s arrived?',
+      amount: '€200.00',
+      amountSub: 'repaid of €500',
+      gauge: 40,
+      btns: [{ label: 'Yes, I confirm' }, { label: 'I haven’t seen it', kind: 'ghost' }],
+      note: 'Thomas got his reminder. You don’t have to bring it up yourself.',
+    },
+    benefit:
+      'Léonie never had to write “did you remember the transfer?”. The reminder went out on its own.',
+  },
+  'p-3': {
+    screen: {
+      head: 'Loan repaid!',
+      ok: true,
+      amount: '€500.00',
+      amountSub: 'repaid by Thomas · never late',
+      gauge: 100,
+      rows: [
+        ['Length', '5 months'],
+        ['Interest paid', '€0.00'],
+      ],
+      btns: [{ label: 'See the summary' }],
+    },
+    benefit: 'The reminders go out on their own. Léonie never had to bring it up.',
+  },
+  'p-2-difficile': {
+    screen: {
+      head: 'Thomas suggests moving a date',
+      sub: 'He tells you before the due date.',
+      rows: [
+        ['Planned', '€100 on 12 June'],
+        ['Suggested', '€50 on the 12th · €50 on the 25th'],
+      ],
+      btns: [{ label: 'I accept' }, { label: 'Suggest something else', kind: 'ghost' }],
+      note: 'The total doesn’t change. Only the calendar moves.',
+    },
+    benefit: 'Léonie hears about it in time. Nothing moves without her agreement.',
+  },
+  'p-2-avance': {
+    screen: {
+      head: 'Thomas has repaid €200',
+      sub: 'Two instalments ahead.',
+      amount: '€400.00',
+      amountSub: 'repaid of €500',
+      gauge: 80,
+      btns: [{ label: 'I confirm' }],
+      note: 'Next and last instalment: 12 August.',
+    },
+    benefit: 'Léonie sees the amount left to repay drop faster than planned.',
+  },
+  'e-0': {
+    screen: {
+      head: 'Ask Léonie',
+      sub: 'Say how much, and how you’ll repay.',
+      amount: '€500.00',
+      rows: [
+        ['How many instalments', '5 × €100'],
+        ['Starting', '12 April'],
+        ['Planned end', '12 August'],
+      ],
+      btns: [{ label: 'Send to Léonie' }],
+      note: 'Léonie can accept, decline or suggest something else.',
+    },
+    benefit:
+      'No more “er, I wanted to ask you something…”. Thomas sends the amount and the dates in one go.',
+  },
+  'e-1': {
+    screen: {
+      head: 'Léonie has sent the €500',
+      sub: 'Can you confirm it’s arrived?',
+      amount: '€500.00',
+      amountSub: 'received on 12 March',
+      btns: [{ label: 'Yes, it’s arrived' }, { label: 'Not yet', kind: 'ghost' }],
+      note: 'Until that’s confirmed, no instalment is running.',
+    },
+    benefit: '“It’s arrived.” Thomas confirms it, and the schedule starts.',
+  },
+  'e-2': {
+    screen: {
+      head: 'Loan in progress',
+      sub: 'Everything’s up to date.',
+      amount: '€200.00',
+      amountSub: 'repaid of €500',
+      gauge: 40,
+      rows: [
+        ['Next instalment', '12 June'],
+        ['Amount', '€100.00'],
+      ],
+      btns: [{ label: 'I’ve repaid' }, { label: 'It’s going to be tight', kind: 'ghost' }],
+    },
+    benefit: 'Thomas knows when to pay and how much is left. No surprises.',
+  },
+  'e-3': {
+    screen: {
+      head: 'Loan repaid!',
+      ok: true,
+      amount: '€500.00',
+      amountSub: 'repaid to Léonie, on time',
+      gauge: 100,
+      btns: [{ label: 'Send Léonie a thank you' }],
+      note: 'Your Carnet de prêt (loan record book) has just been updated.',
+    },
+    benefit: 'Thomas kept every date. He and Léonie have already moved on.',
+  },
+  'e-2-difficile': {
+    screen: {
+      head: 'This month is tight',
+      sub: 'Tell Léonie, and suggest another calendar.',
+      rows: [
+        ['Instalment due', '12 June'],
+        ['Amount', '€100.00'],
+      ],
+      btns: [{ label: 'Move this instalment' }, { label: 'Pay part of it', kind: 'ghost' }],
+      note: 'The change applies once you’ve both accepted it.',
+    },
+    benefit: 'Thomas speaks up in time, without the phone call everyone dreads.',
+  },
+  'e-2-avance': {
+    screen: {
+      head: 'Pay ahead',
+      sub: 'Your next instalments will be settled.',
+      rows: [
+        ['2 instalments', '€200.00'],
+        ['Next one after that', '12 August'],
+      ],
+      btns: [{ label: 'Pay €200' }, { label: 'Repay it all (€300)', kind: 'ghost' }],
+    },
+    benefit: 'Thomas gets ahead when he can, with nothing to renegotiate.',
+  },
+};
+
+const VIEWS: Record<Lang, Record<string, View>> = { fr: VIEWS_FR, en: VIEWS_EN };
+
+type VariantItem = {
+  key: Exclude<Variant, ''>;
+  title: string;
+  text: string;
+  icon: string;
+  common: ReactNode;
+};
+
+const VARIANTS_FR: VariantItem[] = [
   {
     key: 'difficile',
     title: 'Et si c’est tendu ce mois-ci ?',
@@ -259,14 +491,73 @@ const VARIANTS: { key: Exclude<Variant, ''>; title: string; text: string; icon: 
   },
 ];
 
-function PhoneScreen({ screen }: { screen: Screen }) {
+const VARIANTS_EN: VariantItem[] = [
+  {
+    key: 'difficile',
+    title: 'What if this month is tight?',
+    text: 'Say so before the due date, and suggest other dates.',
+    icon: 'fa-cloud-rain',
+    common: 'Speaking up early already looks after the other person. The rest you decide together.',
+  },
+  {
+    key: 'avance',
+    title: 'What if I can repay sooner?',
+    text: 'Settle several instalments at once, or repay it all.',
+    icon: 'fa-forward-fast',
+    common: (
+      <>
+        Paying sooner settles the <b>next instalments</b>. The others keep their amount and their
+        date.
+      </>
+    ),
+  },
+];
+
+const VARIANTS: Record<Lang, VariantItem[]> = { fr: VARIANTS_FR, en: VARIANTS_EN };
+
+const UI = {
+  fr: {
+    kicker: 'La solution',
+    bubble: '« Je te rends ça vite. »',
+    intro2: 'Avec TilliT, vous savez tous les deux où vous en êtes.',
+    hint: 'Choisis une étape, puis change de côté.',
+    stepsLabel: 'Les quatre moments du prêt',
+    rolesLabel: 'Voir le prêt côté prêteur ou côté emprunteur',
+    lender: 'Prêteur',
+    borrower: 'Emprunteur',
+    lenderWho: 'elle prête',
+    borrowerWho: 'il emprunte',
+    prev: 'Étape précédente',
+    next: 'Étape suivante',
+    stepOf: (n: number, total: number) => `Étape ${n} sur ${total}`,
+    variantsLabel: 'Deux cas particuliers de l’étape 3',
+  },
+  en: {
+    kicker: 'The solution',
+    bubble: '“I’ll pay you back soon.”',
+    intro2: 'With TilliT, you both know where things stand.',
+    hint: 'Pick a step, then switch sides.',
+    stepsLabel: 'The four moments of the loan',
+    rolesLabel: 'See the loan from the lender’s side or the borrower’s side',
+    lender: 'Lender',
+    borrower: 'Borrower',
+    lenderWho: 'she lends',
+    borrowerWho: 'he borrows',
+    prev: 'Previous step',
+    next: 'Next step',
+    stepOf: (n: number, total: number) => `Step ${n} of ${total}`,
+    variantsLabel: 'Two special cases in step 3',
+  },
+};
+
+function PhoneScreen({ screen, lang }: { screen: Screen; lang: Lang }) {
   return (
     <div className={styles.app}>
       {screen.ok && (
         <img src={mascotUrl} alt="" className={styles.appMascot} width={111} height={120} />
       )}
-      <p className={`${styles.appHead} ${screen.ok ? styles.appHeadOk : ''}`}>{screen.head}</p>
-      {screen.sub && <p className={styles.appSub}>{screen.sub}</p>}
+      <p className={`${styles.appHead} ${screen.ok ? styles.appHeadOk : ''}`}>{typo(screen.head, lang)}</p>
+      {screen.sub && <p className={styles.appSub}>{typo(screen.sub, lang)}</p>}
       {screen.amount && <p className={styles.appAmount}>{screen.amount}</p>}
       {screen.amountSub && <p className={styles.appSub}>{screen.amountSub}</p>}
       {screen.gauge !== undefined && (
@@ -290,24 +581,28 @@ function PhoneScreen({ screen }: { screen: Screen }) {
             key={b.label}
             className={`${styles.appBtn} ${b.kind ? styles[`appBtn_${b.kind}`] : ''}`}
           >
-            {b.label}
+            {typo(b.label, lang)}
           </span>
         ))}
       </div>
-      {screen.note && <p className={styles.appNote}>{screen.note}</p>}
+      {screen.note && <p className={styles.appNote}>{typo(screen.note, lang)}</p>}
     </div>
   );
 }
 
 export default function Parcours() {
+  const lang = useLang();
+  const t = UI[lang];
+  const steps = STEPS[lang];
+  const variants = VARIANTS[lang];
   const [step, setStep] = useState(0);
   const [role, setRole] = useState<Role>('p');
   const [variant, setVariant] = useState<Variant>('');
 
   const activeVariant = step === 2 ? variant : '';
   const key = `${role}-${step}${activeVariant ? `-${activeVariant}` : ''}`;
-  const view = VIEWS[key];
-  const common = VARIANTS.find((v) => v.key === activeVariant)?.common;
+  const view = VIEWS[lang][key];
+  const common = variants.find((v) => v.key === activeVariant)?.common;
 
   const selectStep = (i: number, reveal = false) => {
     setStep(i);
@@ -322,26 +617,26 @@ export default function Parcours() {
     <section className={styles.section} id="parcours" aria-labelledby="parcours-title">
       <div className={styles.inner}>
         <header className={styles.head} data-reveal>
-          <span className={styles.kicker}>La solution</span>
+          <span className={styles.kicker}>{t.kicker}</span>
           <h2 className={styles.intro} id="parcours-title">
-            <span className={styles.bubble}>« Je te rends ça vite. »</span>
+            <span className={styles.bubble}>{t.bubble}</span>
             <span className={styles.intro2}>
-              Avec TilliT, vous savez tous les deux où vous en êtes.
+              {t.intro2}
             </span>
           </h2>
           <p className={styles.hint}>
             <i className="fa-solid fa-hand-pointer" aria-hidden="true" />
-            Choisis une étape, puis change de côté.
+            {t.hint}
           </p>
         </header>
 
         <div className={styles.layout} data-reveal>
           <ol
             className={styles.steps}
-            aria-label="Les quatre moments du prêt"
-            style={{ ['--progress' as string]: step / (STEPS.length - 1) }}
+            aria-label={t.stepsLabel}
+            style={{ ['--progress' as string]: step / (steps.length - 1) }}
           >
-            {STEPS.map((s, i) => (
+            {steps.map((s, i) => (
               <li key={s.title}>
                 <button
                   type="button"
@@ -365,11 +660,11 @@ export default function Parcours() {
             ))}
           </ol>
 
-          <div className={`${styles.stage} ${styles[`tone_${STEPS[step].tone}`]}`}>
+          <div className={`${styles.stage} ${styles[`tone_${steps[step].tone}`]}`}>
             <div
               className={styles.roles}
               role="tablist"
-              aria-label="Voir le prêt côté prêteur ou côté emprunteur"
+              aria-label={t.rolesLabel}
             >
               <span
                 className={`${styles.roleThumb} ${role === 'e' ? styles.roleThumbRight : ''}`}
@@ -391,7 +686,7 @@ export default function Parcours() {
                   >
                     {r === 'p' ? 'L' : 'T'}
                   </span>
-                  {r === 'p' ? 'Prêteur' : 'Emprunteur'}
+                  {r === 'p' ? t.lender : t.borrower}
                 </button>
               ))}
             </div>
@@ -400,11 +695,11 @@ export default function Parcours() {
               <p className={styles.who}>
                 {role === 'p' ? (
                   <>
-                    <b>Léonie</b> · elle prête
+                    <b>Léonie</b> · {t.lenderWho}
                   </>
                 ) : (
                   <>
-                    <b>Thomas</b> · il emprunte
+                    <b>Thomas</b> · {t.borrowerWho}
                   </>
                 )}
               </p>
@@ -418,7 +713,7 @@ export default function Parcours() {
                 <div className={styles.phone}>
                   <span className={styles.notch} aria-hidden="true" />
                   <div className={styles.screen} key={key}>
-                    <PhoneScreen screen={view.screen} />
+                    <PhoneScreen screen={view.screen} lang={lang} />
                   </div>
                 </div>
               </div>
@@ -427,7 +722,7 @@ export default function Parcours() {
                 <span className={styles.benefitIcon} aria-hidden="true">
                   <i className="fa-solid fa-heart" />
                 </span>
-                <span>{view.benefit}</span>
+                <span>{typo(view.benefit, lang)}</span>
               </p>
             </div>
 
@@ -437,15 +732,15 @@ export default function Parcours() {
                 className={styles.navBtn}
                 onClick={() => selectStep(step - 1)}
                 disabled={step === 0}
-                aria-label="Étape précédente"
+                aria-label={t.prev}
               >
                 <i className="fa-solid fa-arrow-left" aria-hidden="true" />
               </button>
               <span className={styles.navDots} aria-live="polite">
                 <span className="sr-only">
-                  Étape {step + 1} sur {STEPS.length}
+                  {t.stepOf(step + 1, steps.length)}
                 </span>
-                {STEPS.map((s, i) => (
+                {steps.map((s, i) => (
                   <i
                     key={s.title}
                     aria-hidden="true"
@@ -453,15 +748,15 @@ export default function Parcours() {
                   />
                 ))}
                 <b aria-hidden="true">
-                  {step + 1} / {STEPS.length}
+                  {step + 1} / {steps.length}
                 </b>
               </span>
               <button
                 type="button"
                 className={styles.navBtn}
                 onClick={() => selectStep(step + 1)}
-                disabled={step === STEPS.length - 1}
-                aria-label="Étape suivante"
+                disabled={step === steps.length - 1}
+                aria-label={t.next}
               >
                 <i className="fa-solid fa-arrow-right" aria-hidden="true" />
               </button>
@@ -471,9 +766,9 @@ export default function Parcours() {
               <div
                 className={styles.variants}
                 role="group"
-                aria-label="Deux cas particuliers de l’étape 3"
+                aria-label={t.variantsLabel}
               >
-                {VARIANTS.map((v) => (
+                {variants.map((v) => (
                   <button
                     key={v.key}
                     type="button"
@@ -486,7 +781,7 @@ export default function Parcours() {
                       <i className={`fa-solid ${v.icon}`} />
                     </span>
                     <span className={styles.variantText}>
-                      <b>{v.title}</b>
+                      <b>{typo(v.title, lang)}</b>
                       <span>{v.text}</span>
                     </span>
                   </button>

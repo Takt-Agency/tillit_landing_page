@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type MouseEvent } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styles from './Navbar.module.css';
 import Logo from '../Logo/Logo';
+import { switchLang, useLang, useLocalize, type Lang } from '../../i18n';
 
 type DropdownItem = {
   href: string;
@@ -18,49 +19,121 @@ type NavLink = {
   dropdown?: DropdownItem[];
 };
 
-const RESOURCES_ITEMS: DropdownItem[] = [
-  {
-    href: '/confiance',
-    label: 'Carnet & Tiers de confiance',
-    icon: 'fa-address-book',
-    hasSubmenu: true,
-  },
-  {
-    href: '/difference',
-    label: 'Partage de dépenses ou TilliT ?',
-    icon: 'fa-scale-balanced',
-  },
-  { href: '/recours', label: 'Si ça coince', icon: 'fa-triangle-exclamation' },
-  { href: '/cas-usage', label: "Cas d'usage", icon: 'fa-lightbulb' },
-  { href: '/blog', label: 'Conseils', icon: 'fa-comments' },
-  {
-    href: '/prototype',
-    label: "Prototype de l'application",
-    icon: 'fa-mobile-screen',
-  },
-];
+type Copy = {
+  resources: DropdownItem[];
+  links: NavLink[];
+  home: string;
+  navLabel: string;
+  cta: string;
+  ctaShort: string;
+  menuNote: string;
+  openMenu: string;
+  closeMenu: string;
+  language: string;
+  skip: string;
+};
 
-const NAV_LINKS: NavLink[] = [
-  {
-    href: '/pourquoi-tillit',
-    label: 'Pourquoi TilliT ?',
-    icon: 'fa-lightbulb',
-    route: '/pourquoi-tillit',
+// Hrefs are FRENCH paths; they are localised with useLocalize() at render time.
+const COPY: Record<Lang, Copy> = {
+  fr: {
+    resources: [
+      {
+        href: '/confiance',
+        label: 'Carnet & Tiers de confiance',
+        icon: 'fa-address-book',
+        hasSubmenu: true,
+      },
+      {
+        href: '/difference',
+        label: 'Partage de dépenses ou TilliT ?',
+        icon: 'fa-scale-balanced',
+      },
+      { href: '/recours', label: 'Si ça coince', icon: 'fa-triangle-exclamation' },
+      { href: '/cas-usage', label: "Cas d'usage", icon: 'fa-lightbulb' },
+      { href: '/blog', label: 'Conseils', icon: 'fa-comments' },
+      {
+        href: '/prototype',
+        label: "Prototype de l'application",
+        icon: 'fa-mobile-screen',
+      },
+    ],
+    links: [
+      {
+        href: '/notre-histoire',
+        label: 'Pourquoi TilliT ?',
+        icon: 'fa-lightbulb',
+        route: '/notre-histoire',
+      },
+      {
+        href: '/comment-ca-marche',
+        label: 'Comment ça marche',
+        icon: 'fa-list-check',
+        route: '/comment-ca-marche',
+      },
+      { href: '/tarifs', label: 'Tarifs', icon: 'fa-tag', route: '/tarifs' },
+      { href: '#ressources', label: 'Ressources', icon: 'fa-book-open', dropdown: [] },
+      { href: '/faq', label: 'FAQ', icon: 'fa-circle-question', route: '/faq' },
+    ],
+    home: 'TilliT — accueil',
+    navLabel: 'Navigation principale',
+    cta: 'Être prévenu du lancement',
+    ctaShort: 'Être prévenu',
+    menuNote: 'TilliT arrive bientôt.',
+    openMenu: 'Ouvrir le menu',
+    closeMenu: 'Fermer le menu',
+    language: 'Langue',
+    skip: 'Aller au contenu',
   },
-  {
-    href: '/comment-ca-marche',
-    label: 'Comment ça marche',
-    icon: 'fa-list-check',
-    route: '/comment-ca-marche',
+  en: {
+    resources: [
+      {
+        href: '/confiance',
+        label: 'Carnet de prêt & trusted third party',
+        icon: 'fa-address-book',
+        hasSubmenu: true,
+      },
+      {
+        href: '/difference',
+        label: 'Expense splitting or TilliT?',
+        icon: 'fa-scale-balanced',
+      },
+      { href: '/recours', label: 'If it gets stuck', icon: 'fa-triangle-exclamation' },
+      { href: '/cas-usage', label: 'Use cases', icon: 'fa-lightbulb' },
+      { href: '/blog', label: 'Advice', icon: 'fa-comments' },
+      { href: '/prototype', label: 'App prototype', icon: 'fa-mobile-screen' },
+    ],
+    links: [
+      {
+        href: '/notre-histoire',
+        label: 'Why TilliT?',
+        icon: 'fa-lightbulb',
+        route: '/notre-histoire',
+      },
+      {
+        href: '/comment-ca-marche',
+        label: 'How it works',
+        icon: 'fa-list-check',
+        route: '/comment-ca-marche',
+      },
+      { href: '/tarifs', label: 'Pricing', icon: 'fa-tag', route: '/tarifs' },
+      { href: '#ressources', label: 'Resources', icon: 'fa-book-open', dropdown: [] },
+      { href: '/faq', label: 'FAQ', icon: 'fa-circle-question', route: '/faq' },
+    ],
+    home: 'TilliT — home',
+    navLabel: 'Main navigation',
+    cta: 'Get notified at launch',
+    ctaShort: 'Get notified',
+    menuNote: 'TilliT is on its way.',
+    openMenu: 'Open the menu',
+    closeMenu: 'Close the menu',
+    language: 'Language',
+    skip: 'Skip to content',
   },
-  { href: '/tarifs', label: 'Tarifs', icon: 'fa-tag', route: '/tarifs' },
-  {
-    href: '#ressources',
-    label: 'Ressources',
-    icon: 'fa-book-open',
-    dropdown: RESOURCES_ITEMS,
-  },
-  { href: '/faq', label: 'FAQ', icon: 'fa-circle-question', route: '/faq' },
+};
+
+const LANGS: { code: Lang; label: string; name: string }[] = [
+  { code: 'fr', label: 'FR', name: 'Français' },
+  { code: 'en', label: 'EN', name: 'English' },
 ];
 
 const DESKTOP_HOVER_QUERY = '(hover: hover) and (min-width: 1024px)';
@@ -87,10 +160,16 @@ export default function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const burgerRef = useRef<HTMLButtonElement | null>(null);
   const location = useLocation();
-  const isHome = location.pathname === '/';
+  const lang = useLang();
+  const l = useLocalize();
+  const t = COPY[lang];
+  const NAV_LINKS = t.links.map((link) =>
+    link.dropdown ? { ...link, dropdown: t.resources } : link,
+  );
+  const isHome = location.pathname === l('/') || location.pathname === '/en';
   const canHover = useMediaQuery(DESKTOP_HOVER_QUERY);
   const isMobile = useMediaQuery(MOBILE_QUERY);
-  const ctaHref = isHome ? '#cta' : '/#cta';
+  const ctaHref = isHome ? '#waitlist' : l('/#waitlist');
 
   const closeMenu = () => {
     setOpen(false);
@@ -163,6 +242,15 @@ export default function Navbar() {
     };
   }, [open]);
 
+  // Skip link: move keyboard focus to the page content, past the navigation.
+  const skipToContent = (e: MouseEvent) => {
+    const main = document.querySelector<HTMLElement>('main');
+    if (!main) return;
+    e.preventDefault();
+    main.setAttribute('tabindex', '-1');
+    main.focus();
+  };
+
   const hoverHandlers = canHover
     ? {
         onMouseEnter: () => setDropdownOpen(true),
@@ -172,6 +260,9 @@ export default function Navbar() {
 
   return (
     <div className={styles.wrapper}>
+      <a href="#contenu" className={styles.skip} onClick={skipToContent}>
+        {t.skip}
+      </a>
       <div
         className={`${styles.backdrop} ${open ? styles.backdropVisible : ''}`}
         onClick={closeMenu}
@@ -182,14 +273,14 @@ export default function Navbar() {
           open ? styles.headerMenuOpen : ''
         }`}
       >
-        <Link to="/" className={styles.brand} aria-label="tillit — accueil">
+        <Link to={l('/')} className={styles.brand} aria-label={t.home}>
           <Logo />
         </Link>
 
         <nav
           id="main-nav"
           className={`${styles.nav} ${open ? styles.navOpen : ''}`}
-          aria-label="Navigation principale"
+          aria-label={t.navLabel}
         >
           <ul className={styles.navList}>
             {NAV_LINKS.map((link, index) => {
@@ -239,8 +330,8 @@ export default function Navbar() {
                       <ul className={styles.dropdownList}>
                         {link.dropdown.map((item) => (
                           <li key={item.label}>
-                            <a
-                              href={item.href}
+                            <Link
+                              to={l(item.href)}
                               className={`${styles.dropdownItem} ${
                                 item.hasSubmenu ? styles.dropdownItemWithArrow : ''
                               }`}
@@ -257,7 +348,7 @@ export default function Navbar() {
                                 className={`fa-solid fa-chevron-right ${styles.dropdownArrow}`}
                                 aria-hidden="true"
                               />
-                            </a>
+                            </Link>
                           </li>
                         ))}
                       </ul>
@@ -267,7 +358,7 @@ export default function Navbar() {
               }
 
               const isActive = isRoute
-                ? location.pathname === link.route
+                ? location.pathname === l(link.route!)
                 : active === link.href;
               const commonProps = {
                 className: `${styles.navLink} ${
@@ -290,7 +381,7 @@ export default function Navbar() {
               return (
                 <li key={link.href} className={styles.navItem} style={itemStyle}>
                   {isRoute ? (
-                    <Link to={link.route!} {...commonProps}>
+                    <Link to={l(link.route!)} {...commonProps}>
                       {inner}
                     </Link>
                   ) : (
@@ -306,22 +397,40 @@ export default function Navbar() {
           <div className={styles.menuFooter}>
             <a className={styles.menuCta} href={ctaHref} onClick={closeMenu}>
               <i className="fa-solid fa-bell" aria-hidden="true" />
-              Être prévenu du lancement
+              {t.cta}
             </a>
-            <p className={styles.menuNote}>
-              tillit arrive bientôt — soyez parmi les premiers.
-            </p>
+            <p className={styles.menuNote}>{t.menuNote}</p>
           </div>
         </nav>
 
         <div className={styles.actions}>
+          <div className={styles.lang} role="group" aria-label={t.language}>
+            {LANGS.map((o) =>
+              o.code === lang ? (
+                <span key={o.code} className={styles.langOn} lang={o.code} aria-current="true">
+                  {o.label}
+                </span>
+              ) : (
+                <Link
+                  key={o.code}
+                  to={switchLang(location.pathname, location.hash, o.code)}
+                  className={styles.langLink}
+                  lang={o.code}
+                  hrefLang={o.code}
+                >
+                  {o.label}
+                  <span className="sr-only"> · {o.name}</span>
+                </Link>
+              ),
+            )}
+          </div>
           <a
             className={`${styles.cta} ${open ? styles.ctaHidden : ''}`}
             href={ctaHref}
-            aria-label="Être prévenu du lancement"
+            aria-label={t.cta}
           >
             <i className="fa-solid fa-bell" aria-hidden="true" />
-            <span className={styles.ctaText}>Être prévenu</span>
+            <span className={styles.ctaText}>{t.ctaShort}</span>
           </a>
           <button
             ref={burgerRef}
@@ -329,7 +438,7 @@ export default function Navbar() {
             className={`${styles.burger} ${open ? styles.burgerOpen : ''}`}
             aria-expanded={open}
             aria-controls="main-nav"
-            aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}
+            aria-label={open ? t.closeMenu : t.openMenu}
             onClick={() => (open ? closeMenu() : setOpen(true))}
           >
             <span />

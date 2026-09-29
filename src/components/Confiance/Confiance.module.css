@@ -619,35 +619,14 @@
 }
 
 .notRecourseLink {
-  align-self: flex-start;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 14px;
-  padding: 10px 16px;
-  border-radius: var(--radius-full);
-  background: var(--color-white);
-  border: 1px solid rgba(239, 128, 104, 0.3);
-  font-family: var(--font-heading);
   font-weight: 700;
-  font-size: 0.9rem;
   color: #c9442b;
-  box-shadow: 0 6px 16px rgba(239, 128, 104, 0.18);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.notRecourseLink i {
-  font-size: 0.78rem;
-  transition: transform 0.25s ease;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .notRecourseLink:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 22px rgba(239, 128, 104, 0.28);
-}
-
-.notRecourseLink:hover i {
-  transform: translateX(4px);
+  text-decoration-thickness: 2px;
 }
 
 /* --- Principle --- */

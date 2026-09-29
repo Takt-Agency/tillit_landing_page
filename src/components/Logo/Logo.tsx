@@ -9,7 +9,7 @@ export default function Logo({ className }: LogoProps) {
   return (
     <img
       src={logoUrl}
-      alt="tillit — Simple entre nous"
+      alt="TilliT"
       className={`${styles.logo} ${className ?? ''}`}
       decoding="async"
       width={120}

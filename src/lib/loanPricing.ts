@@ -65,18 +65,21 @@ export function instalments(amount: number, months: number) {
   return { monthly: monthlyCents / 100, last: lastCents / 100, rows };
 }
 
-export const eur = (v: number) =>
-  new Intl.NumberFormat('fr-FR', {
+// Pass lang = 'en' on English pages: €1,500.00 instead of 1 500,00 €.
+const LOCALE = { fr: 'fr-FR', en: 'en-GB' } as const;
+
+export const eur = (v: number, lang: 'fr' | 'en' = 'fr') =>
+  new Intl.NumberFormat(LOCALE[lang], {
     style: 'currency',
     currency: 'EUR',
     minimumFractionDigits: 2,
   }).format(v);
 
-export const eurWhole = (v: number) =>
-  new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 0 }).format(v);
+export const eurWhole = (v: number, lang: 'fr' | 'en' = 'fr') =>
+  new Intl.NumberFormat(LOCALE[lang], { maximumFractionDigits: 0 }).format(v);
 
-export const rateFmt = (v: number) =>
-  new Intl.NumberFormat('fr-FR', {
+export const rateFmt = (v: number, lang: 'fr' | 'en' = 'fr') =>
+  new Intl.NumberFormat(LOCALE[lang], {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }).format(v);

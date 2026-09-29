@@ -1,0 +1,127 @@
+/* Shared styles of the legal texts (used on the legal pages and in the legal modal). */
+
+.chapo {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(1.05rem, 2vw, 1.2rem);
+  line-height: 1.5;
+  color: var(--color-ink);
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+/* "À compléter par TilliT" */
+.todo {
+  margin-top: 16px;
+  padding: 16px 18px;
+  border-radius: 18px;
+  border: 1.5px dashed rgba(239, 128, 104, 0.55);
+  background: var(--color-coral-pale);
+}
+
+.todo ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
+}
+
+.todo li {
+  margin-top: 4px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--color-ink-soft);
+}
+
+.todo li::marker {
+  color: var(--color-coral);
+}
+
+.todo > p:not(.todoTitle) {
+  margin-top: 10px;
+  font-size: 0.92rem;
+}
+
+.todoTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 !important;
+  font-family: var(--font-heading);
+  font-size: 0.8rem !important;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.todoTitle,
+.todoTitle strong {
+  color: #c9573f !important;
+}
+
+/* The four data collections (Confidentialité) */
+.collect {
+  margin-top: 18px;
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: #faf8ff;
+  border: 1px solid rgba(139, 99, 232, 0.14);
+}
+
+.collect > strong {
+  display: block;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.collect ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
+}
+
+.collect li {
+  margin-top: 6px;
+  line-height: 1.65;
+  color: var(--color-ink-soft);
+}
+
+.collect li::marker {
+  color: var(--color-violet);
+}
+
+.seeAlso {
+  margin-top: 32px !important;
+  padding-top: 18px;
+  border-top: 1px dashed rgba(139, 99, 232, 0.25);
+  font-size: 0.95rem;
+}
+
+/* "Translation" notice (English pages): the French text is the binding one. */
+.translation {
+  margin-bottom: 20px;
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: #faf8ff;
+  border: 1px solid rgba(139, 99, 232, 0.18);
+}
+
+.translation > p:not(.translationTitle) {
+  margin-top: 8px;
+  font-size: 0.95rem;
+}
+
+.translationTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 !important;
+  font-family: var(--font-heading);
+  font-size: 0.8rem !important;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.translationTitle,
+.translationTitle strong {
+  color: var(--color-violet) !important;
+}

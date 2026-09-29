@@ -4,6 +4,12 @@ import nexiaLogo from '../../nexia digital.png';
 import numixsLogo from '../../station-numixs-logo-DN9Ujo5B.png';
 import franceIdentityLogo from '../../logo-france-identity.png';
 import mieuxLogo from '../../mieuxentreprendre.svg';
+import { useLang } from '../../i18n';
+
+const COPY = {
+  fr: { eyebrow: 'Nos partenaires', title: 'Ils nous accompagnent' },
+  en: { eyebrow: 'Our partners', title: 'Working with us' },
+};
 
 const PARTNERS = [
   { name: 'France Identité Numérique', logo: franceIdentityLogo, wide: false },
@@ -14,13 +20,14 @@ const PARTNERS = [
 ];
 
 export default function Partners() {
+  const t = COPY[useLang()];
   return (
     <section className={styles.section} id="partenaires" aria-labelledby="partners-title">
       <div className={styles.inner}>
         <header className={styles.head} data-reveal>
-          <span className={styles.eyebrow}>Nos partenaires</span>
+          <span className={styles.eyebrow}>{t.eyebrow}</span>
           <h2 id="partners-title" className={styles.title}>
-            Ils nous accompagnent
+            {t.title}
           </h2>
         </header>
 
