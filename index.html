@@ -43,26 +43,6 @@
     </noscript>
   </head>
   <body>
-    <!-- Netlify Forms detection: must mirror the fields of the React form in CTA.tsx -->
-    <form name="lancement" data-netlify="true" netlify-honeypot="bot-field" hidden>
-      <input type="text" name="prenom" />
-      <input type="email" name="email" />
-      <input type="text" name="bot-field" />
-    </form>
-    <!-- Netlify Forms detection: must mirror the fields sent by Questionnaire.tsx -->
-    <form name="questionnaire" data-netlify="true" netlify-honeypot="bot-field" hidden>
-      <input type="text" name="prenom" />
-      <input type="email" name="email" />
-      <input type="text" name="q1" />
-      <input type="text" name="q2" />
-      <input type="text" name="q3" />
-      <textarea name="q3_autre"></textarea>
-      <input type="text" name="q4" />
-      <textarea name="q4_autre"></textarea>
-      <input type="text" name="q5" />
-      <textarea name="q5_autre"></textarea>
-      <input type="text" name="bot-field" />
-    </form>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

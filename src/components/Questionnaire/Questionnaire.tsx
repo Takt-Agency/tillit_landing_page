@@ -8,17 +8,14 @@ import { fr } from '../../lib/typo';
 type Answers = Record<string, string[]>;
 type Others = Record<string, string>;
 
-type Props = { prenom: string; email: string };
-
 const LAST = QUESTIONS.length - 1;
 
-export default function Questionnaire({ prenom, email }: Props) {
+export default function Questionnaire() {
   const navigate = useNavigate();
   const [step, setStep] = useState<number | 'intro'>('intro');
   const [answers, setAnswers] = useState<Answers>({});
   const [others, setOthers] = useState<Others>({});
   const [announce, setAnnounce] = useState('');
-  const [sending, setSending] = useState(false);
   const dialogRef = useRef<HTMLDivElement>(null);
   const advanceTimer = useRef(0);
 
@@ -47,28 +44,6 @@ export default function Questionnaire({ prenom, email }: Props) {
   const goTo = (next: number) => {
     setAnnounce('');
     setStep(next);
-  };
-
-  const submit = async () => {
-    setSending(true);
-    const body = new URLSearchParams({ 'form-name': 'questionnaire', prenom, email });
-    for (const question of QUESTIONS) {
-      body.append(question.field, (answers[question.field] ?? []).join(' ; '));
-      if (question.otherField) {
-        const wantsOther = (answers[question.field] ?? []).includes('Autre');
-        body.append(question.otherField, wantsOther ? others[question.otherField] ?? '' : '');
-      }
-    }
-    try {
-      await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: body.toString(),
-      });
-    } catch {
-      // The sign-up is already saved; answers are optional, so never block the visitor.
-    }
-    leave();
   };
 
   const pickSingle = (value: string) => {
@@ -237,10 +212,10 @@ export default function Questionnaire({ prenom, email }: Props) {
                   <button
                     type="button"
                     className={styles.primary}
-                    disabled={!hasAnswer || sending}
-                    onClick={() => (step === LAST ? submit() : goTo((step as number) + 1))}
+                    disabled={!hasAnswer}
+                    onClick={() => (step === LAST ? leave() : goTo((step as number) + 1))}
                   >
-                    {step === LAST ? (sending ? 'Envoi…' : 'Terminer') : 'Continuer'}
+                    {step === LAST ? 'Terminer' : 'Continuer'}
                     {step !== LAST && <i className="fa-solid fa-arrow-right" aria-hidden="true" />}
                   </button>
                 </div>

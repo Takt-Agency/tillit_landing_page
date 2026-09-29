@@ -3,7 +3,7 @@ import styles from './CTA.module.css';
 import mascotUrl from '../../millions-mascotte.png';
 import Questionnaire from '../Questionnaire/Questionnaire';
 
-type Status = 'idle' | 'sending' | 'done' | 'error';
+type Status = 'idle' | 'done';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -13,39 +13,13 @@ export default function CTA() {
   const [status, setStatus] = useState<Status>('idle');
   const [error, setError] = useState('');
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  // Static site: nothing is sent to a server, the sign-up is only validated in the browser.
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const form = e.currentTarget;
     if (!prenom.trim()) return setError('Indique ton prénom.');
     if (!EMAIL_RE.test(email.trim())) return setError('Indique une adresse email valide.');
     setError('');
-    setStatus('sending');
-
-    // Netlify Forms only exists once deployed: locally, simulate success so the flow can be tested.
-    if (import.meta.env.DEV) {
-      setStatus('done');
-      return;
-    }
-
-    const body = new URLSearchParams({
-      'form-name': 'lancement',
-      prenom: prenom.trim(),
-      email: email.trim(),
-      'bot-field': (form.elements.namedItem('bot-field') as HTMLInputElement).value,
-    });
-
-    try {
-      const res = await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: body.toString(),
-      });
-      if (!res.ok) throw new Error(String(res.status));
-      setStatus('done');
-    } catch {
-      setStatus('error');
-      setError('L’inscription n’a pas pu être envoyée. Réessaie dans un instant.');
-    }
+    setStatus('done');
   };
 
   return (
@@ -76,22 +50,7 @@ export default function CTA() {
                 </div>
               </div>
             ) : (
-              <form
-                className={styles.form}
-                name="lancement"
-                method="POST"
-                data-netlify="true"
-                netlify-honeypot="bot-field"
-                onSubmit={handleSubmit}
-                noValidate
-              >
-                <input type="hidden" name="form-name" value="lancement" />
-                <p className={styles.honeypot} aria-hidden="true">
-                  <label>
-                    Ne pas remplir <input name="bot-field" tabIndex={-1} autoComplete="off" />
-                  </label>
-                </p>
-
+              <form className={styles.form} onSubmit={handleSubmit} noValidate>
                 <div className={styles.fields}>
                   <label className={styles.field}>
                     <span className="sr-only">Prénom</span>
@@ -120,15 +79,8 @@ export default function CTA() {
                   </label>
                 </div>
 
-                <button type="submit" className={styles.submit} disabled={status === 'sending'}>
-                  {status === 'sending' ? (
-                    <>
-                      <i className="fa-solid fa-circle-notch fa-spin" aria-hidden="true" />
-                      Envoi…
-                    </>
-                  ) : (
-                    'Me prévenir du lancement'
-                  )}
+                <button type="submit" className={styles.submit}>
+                  Me prévenir du lancement
                 </button>
 
                 <p className={styles.error} role="alert">
@@ -186,7 +138,7 @@ export default function CTA() {
           </div>
         </div>
       </div>
-      {status === 'done' && <Questionnaire prenom={prenom.trim()} email={email.trim()} />}
+      {status === 'done' && <Questionnaire />}
     </section>
   );
 }

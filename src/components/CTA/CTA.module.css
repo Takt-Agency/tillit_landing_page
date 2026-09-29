@@ -118,10 +118,6 @@
   margin-top: 28px;
 }
 
-.honeypot {
-  position: absolute;
-  left: -9999px;
-}
 
 .fields {
   display: grid;
