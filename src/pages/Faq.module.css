@@ -1,0 +1,14 @@
+.main {
+  background: #f3effd;
+}
+
+.note {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+  background: rgba(20, 12, 60, 0.22);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+}

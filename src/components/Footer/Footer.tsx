@@ -1,19 +1,21 @@
+import { Link } from 'react-router-dom';
 import styles from './Footer.module.css';
 import Logo from '../Logo/Logo';
-import type { LegalTab } from '../LegalModal/LegalModal';
+import { LEGAL_ROUTES, type LegalTab } from '../Legal/legalContent';
 
 const PRODUCT = [
-  { label: 'Pourquoi tillit', href: '/#probleme' },
-  { label: 'Comment ça marche', href: '/#comment-ca-marche' },
-  { label: 'Signature électronique', href: '/#signature' },
+  { label: 'Pourquoi TilliT', href: '/pourquoi-tillit' },
+  { label: 'Comment ça marche', href: '/comment-ca-marche' },
+  { label: 'Signature électronique', href: '/tarifs#signature' },
   { label: 'Tarifs', href: '/tarifs' },
-  { label: 'FAQ', href: '/#faq' },
+  { label: 'FAQ', href: '/faq' },
 ];
 
 const COMPANY = [
-  { label: 'Nos partenaires', href: '#partenaires' },
-  { label: 'Contact', href: '#contact' },
-  { label: 'Télécharger l\'app', href: '#cta' },
+  { label: 'Nos partenaires', href: '/#partenaires' },
+  { label: 'Conseils', href: '/blog' },
+  { label: 'Prototype de l’application', href: '/prototype' },
+  { label: 'Être prévenu du lancement', href: '/#cta' },
 ];
 
 const LEGAL: { label: string; tab: LegalTab }[] = [
@@ -75,7 +77,7 @@ export default function Footer({ onOpenLegal }: Props) {
               <ul>
                 {PRODUCT.map((l) => (
                   <li key={l.href}>
-                    <a href={l.href}>{l.label}</a>
+                    <Link to={l.href}>{l.label}</Link>
                   </li>
                 ))}
               </ul>
@@ -85,7 +87,7 @@ export default function Footer({ onOpenLegal }: Props) {
               <ul>
                 {COMPANY.map((l) => (
                   <li key={l.href}>
-                    <a href={l.href}>{l.label}</a>
+                    <Link to={l.href}>{l.label}</Link>
                   </li>
                 ))}
               </ul>
@@ -93,24 +95,31 @@ export default function Footer({ onOpenLegal }: Props) {
             <div className={styles.col}>
               <h4 className={styles.colTitle}>Légal</h4>
               <ul>
-                {LEGAL.map((l) => (
-                  <li key={l.tab}>
-                    <button
-                      type="button"
-                      className={styles.legalBtn}
-                      onClick={() => onOpenLegal(l.tab)}
-                    >
-                      {l.label}
-                    </button>
-                  </li>
-                ))}
+                {LEGAL.map((l) => {
+                  const route = LEGAL_ROUTES[l.tab];
+                  return (
+                    <li key={l.tab}>
+                      {route ? (
+                        <Link to={route}>{l.label}</Link>
+                      ) : (
+                        <button
+                          type="button"
+                          className={styles.legalBtn}
+                          onClick={() => onOpenLegal(l.tab)}
+                        >
+                          {l.label}
+                        </button>
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           </div>
         </div>
 
         <div className={styles.bottom}>
-          <p className={styles.copyright}>© 2026 tillit</p>
+          <p className={styles.copyright}>© 2026 TilliT</p>
           <p className={styles.madeIn}>
             Développé par{' '}
             <a

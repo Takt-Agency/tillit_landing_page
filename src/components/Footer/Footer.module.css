@@ -273,6 +273,6 @@
 
 @media (max-width: 420px) {
   .columns {
-    grid-template-columns: 1fr;
+    column-gap: 16px;
   }
 }

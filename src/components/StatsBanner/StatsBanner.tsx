@@ -1,14 +1,24 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import styles from './StatsBanner.module.css';
 
-type Stat = {
+export type Stat = {
   value: number;
   decimals: number;
   suffix: string;
   label: string;
   source: string;
+  sourceUrl?: string;
   accent: 'violet' | 'coral' | 'blue';
   icon: string;
+};
+
+type Props = {
+  stats?: Stat[];
+  id?: string;
+  eyebrow?: string;
+  title?: ReactNode;
+  lead?: string;
+  outro?: string;
 };
 
 const STATS: Stat[] = [
@@ -106,13 +116,33 @@ function StatCard({
       <p className={styles.label}>{stat.label}</p>
       <p className={styles.source}>
         <span className={styles.sourceDot} aria-hidden="true" />
-        Source · <em>{stat.source}</em>
+        Source ·{' '}
+        {stat.sourceUrl ? (
+          <a
+            href={stat.sourceUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.sourceLink}
+          >
+            <em>{stat.source}</em>
+            <span className="sr-only"> (s’ouvre dans un nouvel onglet)</span>
+          </a>
+        ) : (
+          <em>{stat.source}</em>
+        )}
       </p>
     </article>
   );
 }
 
-export default function StatsBanner() {
+export default function StatsBanner({
+  stats = STATS,
+  id = 'statistiques',
+  eyebrow,
+  title,
+  lead = 'Ce simple geste peut parfois fragiliser une relation.',
+  outro,
+}: Props = {}) {
   const sectionRef = useRef<HTMLElement>(null);
   const [active, setActive] = useState(false);
 
@@ -138,29 +168,38 @@ export default function StatsBanner() {
   return (
     <section
       className={styles.section}
-      id="statistiques"
+      id={id}
       ref={sectionRef}
-      aria-labelledby="statistiques-title"
+      aria-labelledby={`${id}-title`}
     >
       <div className={styles.inner}>
         <header className={styles.head} data-reveal>
-          <h2 id="statistiques-title" className={styles.title}>
-            Chaque année, des millions de personnes prêtent
-            <br />
-            <span className={styles.titleAccent}>
-              de l'argent à leurs proches.
-            </span>
+          {eyebrow && <span className={styles.eyebrow}>{eyebrow}</span>}
+          <h2 id={`${id}-title`} className={styles.title}>
+            {title ?? (
+              <>
+                Chaque année, des millions de personnes prêtent
+                <br />
+                <span className={styles.titleAccent}>
+                  de l'argent à leurs proches.
+                </span>
+              </>
+            )}
           </h2>
-          <p className={styles.lead}>
-            Ce simple geste peut parfois fragiliser une relation.
-          </p>
+          <p className={styles.lead}>{lead}</p>
         </header>
 
         <div className={styles.grid}>
-          {STATS.map((stat, i) => (
+          {stats.map((stat, i) => (
             <StatCard key={stat.source} stat={stat} active={active} index={i} />
           ))}
         </div>
+
+        {outro && (
+          <p className={styles.outro} data-reveal>
+            {outro}
+          </p>
+        )}
       </div>
     </section>
   );

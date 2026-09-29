@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import LegalModal, { type LegalTab } from '../components/LegalModal/LegalModal';
 import Recours from '../components/Recours/Recours';
-import CTA from '../components/CTA/CTA';
 import Footer from '../components/Footer/Footer';
 
 export default function RecoursPage() {
@@ -10,9 +9,8 @@ export default function RecoursPage() {
   const [legalTab, setLegalTab] = useState<LegalTab | null>(null);
   return (
     <>
-      <main>
+      <main style={{ background: 'var(--color-white)' }}>
         <Recours />
-        <CTA />
       </main>
       <Footer onOpenLegal={setLegalTab} />
       <LegalModal

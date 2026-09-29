@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import LegalModal, { type LegalTab } from '../components/LegalModal/LegalModal';
 import Hero from '../components/Hero/Hero';
+import SplitVsTillit from '../components/SplitVsTillit/SplitVsTillit';
 import StatsBanner from '../components/StatsBanner/StatsBanner';
 import Roles from '../components/Roles/Roles';
 import Problem from '../components/Problem/Problem';
@@ -12,10 +13,14 @@ import Signature from '../components/Signature/Signature';
 import Partners from '../components/Partners/Partners';
 import Solution from '../components/Solution/Solution';
 import Pricing from '../components/Pricing/Pricing';
-import FAQ from '../components/FAQ/FAQ';
+import Comparateur from '../components/Comparateur/Comparateur';
+import FaqTeaser from '../components/FaqTeaser/FaqTeaser';
 import Contact from '../components/Contact/Contact';
 import CTA from '../components/CTA/CTA';
 import Footer from '../components/Footer/Footer';
+
+// Temporarily hidden sections — set to true to show them again.
+const SHOW_HIDDEN_SECTIONS = false;
 
 export default function Home() {
   useScrollReveal();
@@ -24,19 +29,25 @@ export default function Home() {
     <>
       <main>
         <Hero />
-        <StatsBanner />
-        <Roles />
+        <SplitVsTillit />
         <Problem />
         <FourThings />
-        <Situations />
-        <Outcomes />
         <Pricing />
-        <Signature />
+        <Comparateur />
         <Partners />
-        <Solution />
-        <FAQ />
-        <Contact />
+        <FaqTeaser />
         <CTA />
+        {SHOW_HIDDEN_SECTIONS && (
+          <>
+            <StatsBanner />
+            <Roles />
+            <Situations />
+            <Outcomes />
+            <Signature />
+            <Solution />
+            <Contact />
+          </>
+        )}
       </main>
       <Footer onOpenLegal={setLegalTab} />
       <LegalModal

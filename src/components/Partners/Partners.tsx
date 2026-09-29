@@ -1,4 +1,3 @@
-import { motion } from 'motion/react';
 import styles from './Partners.module.css';
 import goodflagLogo from '../../logo-goodflag.svg';
 import nexiaLogo from '../../nexia digital.png';
@@ -6,77 +5,44 @@ import numixsLogo from '../../station-numixs-logo-DN9Ujo5B.png';
 import franceIdentityLogo from '../../logo-france-identity.png';
 import mieuxLogo from '../../mieuxentreprendre.svg';
 
-type Partner = {
-  name: string;
-  logo?: string;
-};
-
-const PARTNERS: Partner[] = [
-  { name: 'France Identité', logo: franceIdentityLogo },
-  { name: 'Goodflag', logo: goodflagLogo },
-  { name: 'Station Numixs', logo: numixsLogo },
-  { name: 'Mieux Entreprendre', logo: mieuxLogo },
-  { name: 'Nexia Digital', logo: nexiaLogo },
+const PARTNERS = [
+  { name: 'France Identité Numérique', logo: franceIdentityLogo, wide: false },
+  { name: 'Goodflag', logo: goodflagLogo, wide: true },
+  { name: 'Station Numixs', logo: numixsLogo, wide: false },
+  { name: 'Mieux Entreprendre', logo: mieuxLogo, wide: false },
+  { name: 'Nexia Digital', logo: nexiaLogo, wide: true },
 ];
-
-// Duplicate the list so the marquee loop is seamless (translate -50% shows the copy)
-const MARQUEE_ITEMS = [...PARTNERS, ...PARTNERS];
 
 export default function Partners() {
   return (
-    <section
-      className={styles.section}
-      id="partenaires"
-      aria-labelledby="partners-title"
-    >
+    <section className={styles.section} id="partenaires" aria-labelledby="partners-title">
       <div className={styles.inner}>
         <header className={styles.head} data-reveal>
           <span className={styles.eyebrow}>Nos partenaires</span>
           <h2 id="partners-title" className={styles.title}>
-            Nos <span className={styles.titleAccent}>partenaires</span> de confiance
+            Ils nous accompagnent
           </h2>
         </header>
-      </div>
 
-      <div className={styles.marquee} aria-hidden="true">
-        <div className={styles.fadeLeft} />
-        <div className={styles.fadeRight} />
-
-        <motion.ul
-          className={styles.track}
-          animate={{ x: ['0%', '-50%'] }}
-          transition={{
-            duration: 28,
-            ease: 'linear',
-            repeat: Infinity,
-          }}
-        >
-          {MARQUEE_ITEMS.map((p, i) => (
-            <li key={`${p.name}-${i}`} className={styles.item}>
-              {p.logo ? (
-                <img
-                  src={p.logo}
-                  alt={p.name}
-                  className={styles.logo}
-                  loading="lazy"
-                  decoding="async"
-                  width={160}
-                  height={60}
-                />
-              ) : (
-                <span className={styles.placeholder}>{p.name}</span>
-              )}
+        <ul className={styles.list}>
+          {PARTNERS.map((p, i) => (
+            <li
+              key={p.name}
+              className={`${styles.item} ${p.wide ? styles.itemWide : ''}`}
+              data-reveal
+              style={{ ['--reveal-delay' as string]: `${i * 70}ms` }}
+            >
+              <img
+                src={p.logo}
+                alt={p.name}
+                className={styles.logo}
+                loading="lazy"
+                decoding="async"
+              />
             </li>
           ))}
-        </motion.ul>
+        </ul>
       </div>
-
-      {/* Accessible list (visually hidden) */}
-      <ul className={styles.srList}>
-        {PARTNERS.map((p) => (
-          <li key={p.name}>{p.name}</li>
-        ))}
-      </ul>
     </section>
   );
 }

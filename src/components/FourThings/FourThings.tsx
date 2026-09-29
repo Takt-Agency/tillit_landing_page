@@ -1,130 +1,146 @@
+import { Link } from 'react-router-dom';
 import styles from './FourThings.module.css';
-import mascotUrl from '../../mascott.png';
+import mascotUrl from '../../millions-mascotte.png';
 
-const ITEMS = [
+type Accent = 'violet' | 'coral' | 'blue' | 'green';
+
+type Item = {
+  n: number;
+  tag: string;
+  tagIcon: string;
+  icon: string;
+  accent: Accent;
+  strong: string;
+  text: string;
+};
+
+const LEFT: Item[] = [
   {
-    n: '1',
+    n: 1,
+    tag: 'Clarté',
+    tagIcon: 'fa-magnifying-glass',
+    icon: 'fa-file-invoice',
+    accent: 'violet',
     strong: 'Le montant.',
     text: 'Ce qui est prêté, écrit noir sur blanc.',
   },
   {
-    n: '2',
+    n: 3,
+    tag: 'Sérénité',
+    tagIcon: 'fa-face-smile',
+    icon: 'fa-calendar-days',
+    accent: 'coral',
+    strong: 'Jusqu’à quand.',
+    text: 'Les dates exactes, et surtout celle de la fin.',
+  },
+];
+
+const RIGHT: Item[] = [
+  {
+    n: 2,
+    tag: 'Confiance',
+    tagIcon: 'fa-shield-halved',
+    icon: 'fa-coins',
+    accent: 'blue',
     strong: 'Combien par mois.',
     text: 'Et donc en combien de fois.',
   },
   {
-    n: '3',
-    strong: "Jusqu'à quand.",
-    text: 'Les dates exactes, et surtout celle de la fin.',
-  },
-  {
-    n: '4',
+    n: 4,
+    tag: 'Respect',
+    tagIcon: 'fa-heart',
+    icon: 'fa-list-check',
+    accent: 'green',
     strong: 'Le suivi.',
     text: 'Au même endroit, visible par vous deux.',
   },
 ];
 
-const SCHEDULE = [
-  { month: 'Mars', amount: '200 €' },
-  { month: 'Avril', amount: '200 €' },
-  { month: 'Mai', amount: '200 €' },
-];
+function Card({ item, side }: { item: Item; side: 'left' | 'right' }) {
+  return (
+    <div
+      className={`${styles.cardWrap} ${styles[`side_${side}`]} ${
+        styles[`accent_${item.accent}`]
+      }`}
+      data-reveal={side}
+      style={{
+        ['--reveal-delay' as string]: `${(item.n - 1) * 110}ms`,
+        order: item.n,
+      }}
+    >
+      <article className={styles.card}>
+        <span className={styles.cardNum} aria-hidden="true">
+          {item.n}
+        </span>
+        <span className={styles.cardIcon} aria-hidden="true">
+          <i className={`fa-solid ${item.icon}`} />
+        </span>
+        <div className={styles.cardBody}>
+          <span className={styles.tag}>
+            {item.tag}
+            <span className={styles.tagIcon} aria-hidden="true">
+              <i className={`fa-solid ${item.tagIcon}`} />
+            </span>
+          </span>
+          <p className={styles.cardText}>
+            <strong>{item.strong}</strong> {item.text}
+          </p>
+        </div>
+      </article>
+    </div>
+  );
+}
 
 export default function FourThings() {
   return (
-    <section
-      className={styles.section}
-      id="fourthings"
-      aria-labelledby="fourthings-title"
-    >
-      <div className={styles.decorTop} aria-hidden="true" />
-      <div className={styles.decorBottom} aria-hidden="true" />
-
+    <section className={styles.section} id="solution" aria-labelledby="solution-title">
       <div className={styles.inner}>
-        <div className={styles.grid}>
-          <div className={styles.content} data-reveal="left">
-            <span className={styles.eyebrow}>
-              La façon simple d'éviter tout ça
-            </span>
-            <h2 id="fourthings-title" className={styles.title}>
-              Quatre choses
-              <br />
-              <span className={styles.titleAccent}>à se dire.</span>
-            </h2>
+        <header className={styles.head} data-reveal>
+          <span className={styles.eyebrow}>La solution</span>
+          <h2 id="solution-title" className={styles.title}>
+            Quatre choses <span className={styles.titleAccent}>à se dire.</span>
+          </h2>
+        </header>
 
-            <ul className={styles.list}>
-              {ITEMS.map((item, i) => (
-                <li
-                  key={item.n}
-                  className={styles.item}
-                  style={{ ['--reveal-delay' as string]: `${i * 90}ms` }}
-                  data-reveal
-                >
-                  <span className={styles.itemNum}>{item.n}</span>
-                  <span className={styles.itemText}>
-                    <strong>{item.strong}</strong> {item.text}
-                  </span>
-                </li>
+        <div className={styles.layout}>
+          <div className={styles.column}>
+            {LEFT.map((item) => (
+              <Card key={item.tag} item={item} side="left" />
+            ))}
+          </div>
+
+          <div className={styles.center} data-reveal="zoom">
+            <span className={styles.orbit} aria-hidden="true" />
+            <span className={styles.platform} aria-hidden="true" />
+            <div className={styles.confetti} aria-hidden="true">
+              {Array.from({ length: 10 }, (_, i) => (
+                <span key={i} className={styles[`c${i + 1}`]} />
               ))}
-            </ul>
+            </div>
+            <img
+              src={mascotUrl}
+              alt=""
+              aria-hidden="true"
+              className={styles.mascot}
+              loading="lazy"
+              decoding="async"
+              width={400}
+              height={400}
+            />
           </div>
 
-          <div className={styles.visual} data-reveal="right">
-            <div className={styles.mascotStage}>
-              <div className={styles.mascotBlob} aria-hidden="true" />
-              <img
-                src={mascotUrl}
-                alt=""
-                aria-hidden="true"
-                className={styles.mascot}
-                loading="lazy"
-                decoding="async"
-                width={400}
-                height={400}
-              />
-            </div>
-
-            {/* Card 1 — Ama demande */}
-            <div className={styles.demandeCard}>
-              <div className={styles.demandeHead}>
-                <span className={styles.demandeAvatar}>A</span>
-                <div className={styles.demandeInfo}>
-                  <p className={styles.demandeName}>Ama</p>
-                  <p className={styles.demandeSub}>
-                    te demande · billet d'avion
-                  </p>
-                </div>
-                <p className={styles.demandeAmount}>600,00 €</p>
-              </div>
-              <div className={styles.demandeActions}>
-                <button type="button" className={styles.btnPrimary}>
-                  Accepter
-                </button>
-                <button type="button" className={styles.btnGhost}>
-                  Proposer
-                </button>
-                <button type="button" className={styles.btnSoft}>
-                  Refuser
-                </button>
-              </div>
-            </div>
-
-            {/* Card 2 — Échéancier proposé */}
-            <div className={styles.scheduleCard}>
-              <p className={styles.scheduleTitle}>Échéancier proposé</p>
-              <ul className={styles.scheduleList}>
-                {SCHEDULE.map((row) => (
-                  <li key={row.month}>
-                    <span>{row.month}</span>
-                    <strong>{row.amount}</strong>
-                  </li>
-                ))}
-              </ul>
-              <p className={styles.scheduleFoot}>
-                Terminé le 5 mai · <span>0 % d'intérêt</span>
-              </p>
-            </div>
+          <div className={styles.column}>
+            {RIGHT.map((item) => (
+              <Card key={item.tag} item={item} side="right" />
+            ))}
           </div>
+        </div>
+
+        <div className={styles.ctaWrap} data-reveal>
+          <Link to="/comment-ca-marche" className={styles.cta}>
+            Voir comment ça marche
+            <i className="fa-solid fa-arrow-right" aria-hidden="true" />
+          </Link>
         </div>
       </div>
     </section>

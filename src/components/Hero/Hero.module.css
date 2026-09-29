@@ -53,56 +53,25 @@
 }
 
 .titleAccent {
-  position: relative;
-  color: #98e6ff;
-  font-style: italic;
-  font-weight: 600;
   display: inline-block;
-}
-
-.titleAccent::after {
-  content: '';
-  position: absolute;
-  left: 4px;
-  right: 12px;
-  bottom: 6px;
-  height: 10px;
-  background: linear-gradient(
-    90deg,
-    rgba(152, 230, 255, 0.34),
-    rgba(152, 230, 255, 0.1)
-  );
-  border-radius: 6px;
-  z-index: -1;
-  transform: skewX(-4deg);
+  background: linear-gradient(90deg, #ffe1d6 0%, #ffd0c0 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: none;
 }
 
 .subtitle {
   margin-top: 26px;
-  font-size: clamp(1.02rem, 1.4vw, 1.16rem);
-  line-height: 1.65;
+  font-size: clamp(1.02rem, 1.4vw, 1.2rem);
+  line-height: 1.6;
   color: rgba(255, 255, 255, 0.88);
-  max-width: 520px;
+  max-width: 560px;
 }
 
 .subtitle strong {
   color: var(--color-white);
   font-weight: 700;
-}
-
-.subtitleLight {
-  margin-top: 14px;
-  font-size: clamp(0.98rem, 1.3vw, 1.1rem);
-  line-height: 1.55;
-  color: rgba(255, 255, 255, 0.72);
-  max-width: 520px;
-  font-style: italic;
-}
-
-.subtitleAccent {
-  color: #a8e4d3;
-  font-weight: 600;
-  font-style: normal;
 }
 
 /* --- Features --- */
@@ -148,10 +117,10 @@
 
 /* --- CTAs --- */
 .ctas {
-  margin-top: 26px;
+  margin-top: 32px;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 12px;
 }
 
 .ctaPrimary,
@@ -159,20 +128,14 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 10px 18px;
+  min-height: 58px;
+  padding: 0 26px;
   border-radius: var(--radius-full);
   font-family: var(--font-heading);
   font-weight: 700;
-  font-size: 0.85rem;
+  font-size: 1rem;
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease,
     color 0.2s ease, border-color 0.2s ease;
-}
-
-.ctaPrimary i,
-.ctaSecondary i {
-  font-size: 0.75rem;
-  transition: transform 0.25s ease;
 }
 
 .ctaPrimary {
@@ -188,15 +151,10 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
-.ctaPrimary:hover i,
-.ctaSecondary:hover i {
-  transform: translateX(4px);
-}
-
 .ctaSecondary {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.16);
   color: var(--color-white);
-  border: 1.5px solid rgba(255, 255, 255, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.28);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 }
@@ -261,49 +219,15 @@
   margin-right: 0;
 }
 
-/* Sparkles */
-.sparkle {
-  position: absolute;
-  color: #a8e4d3;
-  font-size: 20px;
-  z-index: 2;
-  animation: sparkle 2.4s ease-in-out infinite;
-}
-
-.sparkle1 {
-  top: 6%;
-  left: 45%;
-}
-
-.sparkle2 {
-  top: 20%;
-  right: 8%;
-  color: #ffd6c9;
-  font-size: 16px;
-  animation-delay: 1s;
-}
-
-@keyframes sparkle {
-  0%,
-  100% {
-    transform: scale(1) rotate(0);
-    opacity: 0.9;
-  }
-  50% {
-    transform: scale(1.3) rotate(15deg);
-    opacity: 1;
-  }
-}
-
 /* --- Loan card overlay --- */
 .loanCard {
   position: absolute;
   right: -8%;
-  bottom: 10%;
+  bottom: 8%;
   z-index: 3;
-  width: min(260px, 50%);
+  width: min(282px, 54%);
   background: var(--color-white);
-  border-radius: var(--radius-md);
+  border-radius: 20px;
   padding: 12px;
   box-shadow: 0 24px 50px rgba(20, 12, 60, 0.36),
     0 0 0 1px rgba(255, 255, 255, 0.6) inset;
@@ -325,37 +249,87 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 12px;
+  padding: 14px 14px;
   background: linear-gradient(135deg, #8b63e8 0%, #7a52d9 100%);
   color: var(--color-white);
-  border-radius: var(--radius-sm);
-  margin-bottom: 10px;
+  border-radius: 14px;
+  margin-bottom: 12px;
   box-shadow: 0 6px 16px rgba(139, 99, 232, 0.28);
+  transition: background 0.35s ease, color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.balanceBorrow {
+  background: linear-gradient(135deg, #fbb49c 0%, #ef8068 100%);
+  color: var(--color-ink);
+  box-shadow: 0 6px 16px rgba(239, 128, 104, 0.3);
 }
 
 .balanceLabel {
-  font-size: 0.62rem;
-  color: rgba(255, 255, 255, 0.86);
-  font-weight: 500;
+  font-size: 0.7rem;
+  opacity: 0.9;
+  font-weight: 600;
 }
 
 .balanceAmount {
   margin-top: 2px;
   font-family: var(--font-heading);
   font-weight: 700;
-  font-size: 1.15rem;
+  font-size: 1.3rem;
 }
 
 .balanceIcon {
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
-  color: var(--color-white);
+  background: rgba(255, 255, 255, 0.25);
+  color: currentColor;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   font-size: 11px;
+}
+
+.modeSwitch {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 4px;
+  border-radius: var(--radius-full);
+  background: var(--color-violet-light);
+}
+
+.modeBtn {
+  min-height: 34px;
+  border: none;
+  border-radius: var(--radius-full);
+  background: transparent;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.72rem;
+  color: var(--color-ink-soft);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.modeBtn:hover {
+  color: var(--color-violet);
+}
+
+.modeBtnActive {
+  background: var(--color-white);
+  color: var(--color-violet);
+  box-shadow: 0 2px 8px rgba(31, 26, 61, 0.12);
+}
+
+.modeBtnBorrow.modeBtnActive,
+.modeBtnBorrow:hover {
+  color: var(--color-coral);
+}
+
+.modeBtn:focus-visible {
+  outline: 2px solid var(--color-violet);
+  outline-offset: 2px;
 }
 
 .loansHeader {
@@ -386,6 +360,18 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+  animation: listSwap 0.35s ease both;
+}
+
+@keyframes listSwap {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .loan {
@@ -402,8 +388,8 @@
 }
 
 .loanAvatar {
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   color: #fff;
   font-family: var(--font-heading);
@@ -423,12 +409,12 @@
 .loanName {
   font-family: var(--font-heading);
   font-weight: 700;
-  font-size: 0.75rem;
+  font-size: 0.82rem;
   color: var(--color-ink);
 }
 
 .loanDate {
-  font-size: 0.6rem;
+  font-size: 0.66rem;
   color: var(--color-ink-mute);
   margin-top: 1px;
   white-space: nowrap;
@@ -448,7 +434,7 @@
 .loanAmount {
   font-family: var(--font-heading);
   font-weight: 700;
-  font-size: 0.75rem;
+  font-size: 0.82rem;
 }
 
 .amount_success {
@@ -462,9 +448,9 @@
 }
 
 .loanStatus {
-  font-size: 0.55rem;
+  font-size: 0.6rem;
   font-weight: 700;
-  padding: 2px 5px;
+  padding: 2px 7px;
   border-radius: var(--radius-full);
   white-space: nowrap;
 }
@@ -486,53 +472,130 @@
 .trustBadges {
   list-style: none;
   padding: 0;
-  margin: 24px 0 0;
-  display: flex;
+  margin: 30px 0 0;
+  display: grid;
+  grid-template-columns: auto auto 1fr;
   gap: 10px;
-  flex-wrap: wrap;
+  max-width: 600px;
 }
 
 .trustBadge {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 6px 18px 6px 6px;
-  border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  color: var(--color-white);
-  font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: 0.85rem;
+  gap: 12px;
+  padding: 12px 16px 12px 12px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  color: var(--color-white);
   transition: transform 0.25s ease, background 0.25s ease,
     border-color 0.25s ease;
 }
 
 .trustBadge:hover {
   transform: translateY(-2px);
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.36);
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 .trustIcon {
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: var(--color-white);
-  color: var(--color-violet);
+  position: relative;
+  width: 38px;
+  height: 38px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 11px;
   flex-shrink: 0;
-  box-shadow: 0 4px 10px rgba(20, 12, 60, 0.2);
+  color: #5a2f86;
+  font-size: 13px;
+}
+
+.trustIcon::before {
+  content: '\f0a3';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  font-size: 38px;
+  line-height: 1;
+  color: #f79c80;
+  z-index: 0;
+}
+
+.trustIcon i {
+  position: relative;
+  z-index: 1;
+}
+
+.trustText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.trustValue {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.3rem;
+  line-height: 1.1;
+  color: #ffe1d6;
+  white-space: nowrap;
+}
+
+.trustValueAccent {
+  color: #ffd0c0;
 }
 
 .trustLabel {
-  padding: 0 2px;
-  white-space: nowrap;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.8rem;
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.infoDot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  margin-left: 2px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+  color: var(--color-white);
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: 0.7rem;
+  vertical-align: middle;
+  transition: background 0.2s ease;
+}
+
+.infoDot:hover,
+.infoDot:focus-visible {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.note {
+  margin-top: 22px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.note i {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.75);
 }
 
 .wave {
@@ -670,8 +733,49 @@
 
   .ctaPrimary,
   .ctaSecondary {
-    padding: 9px 14px;
-    font-size: 0.78rem;
+    flex: 1 1 auto;
+    min-height: 50px;
+    padding: 0 18px;
+    font-size: 0.92rem;
+  }
+
+  .trustBadges {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .trustBadgeWide {
+    grid-column: 1 / -1;
+  }
+
+  .trustBadge {
+    padding: 10px 12px 10px 10px;
+    gap: 10px;
+    border-radius: 16px;
+  }
+
+  .trustIcon,
+  .trustIcon::before {
+    width: 34px;
+    height: 34px;
+    font-size: 12px;
+  }
+
+  .trustIcon::before {
+    font-size: 34px;
+  }
+
+  .trustValue {
+    font-size: 1.15rem;
+  }
+
+  .trustLabel {
+    font-size: 0.76rem;
+  }
+
+  .modeBtn {
+    min-height: 28px;
+    font-size: 0.62rem;
   }
 
   .proofRight {

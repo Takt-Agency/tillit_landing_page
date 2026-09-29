@@ -24,11 +24,6 @@
       rel="stylesheet"
     />
     <link
-      rel="preload"
-      as="style"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    />
-    <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
       integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
@@ -48,6 +43,26 @@
     </noscript>
   </head>
   <body>
+    <!-- Netlify Forms detection: must mirror the fields of the React form in CTA.tsx -->
+    <form name="lancement" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="prenom" />
+      <input type="email" name="email" />
+      <input type="text" name="bot-field" />
+    </form>
+    <!-- Netlify Forms detection: must mirror the fields sent by Questionnaire.tsx -->
+    <form name="questionnaire" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="prenom" />
+      <input type="email" name="email" />
+      <input type="text" name="q1" />
+      <input type="text" name="q2" />
+      <input type="text" name="q3" />
+      <textarea name="q3_autre"></textarea>
+      <input type="text" name="q4" />
+      <textarea name="q4_autre"></textarea>
+      <input type="text" name="q5" />
+      <textarea name="q5_autre"></textarea>
+      <input type="text" name="bot-field" />
+    </form>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

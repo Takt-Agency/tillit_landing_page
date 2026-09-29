@@ -1,0 +1,131 @@
+.main {
+  background: #f6f2fe;
+}
+
+.check {
+  width: 68px;
+  height: 68px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 26px;
+  border-radius: 50%;
+  background: var(--color-white);
+  color: var(--color-green);
+  font-size: 1.6rem;
+  box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.18), 0 18px 36px rgba(20, 12, 60, 0.3);
+  animation: pop 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.4) 0.2s both;
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+
+.section {
+  padding: clamp(48px, 6vw, 80px) var(--container-pad) clamp(72px, 9vw, 110px);
+}
+
+.card {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: clamp(26px, 4vw, 44px);
+  border-radius: 32px;
+  background: var(--color-white);
+  border: 1px solid rgba(139, 99, 232, 0.12);
+  box-shadow: 0 24px 60px rgba(76, 52, 160, 0.1);
+}
+
+.chapo {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  line-height: 1.45;
+  color: var(--color-ink);
+}
+
+.title {
+  margin-top: 28px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-violet);
+}
+
+.links {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: #faf8ff;
+  border: 1px solid rgba(139, 99, 232, 0.14);
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.link:hover {
+  background: var(--color-violet-light);
+  border-color: rgba(139, 99, 232, 0.35);
+  transform: translateX(4px);
+}
+
+.linkIcon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 13px;
+  background: linear-gradient(135deg, #a785f0 0%, #6941d5 100%);
+  color: var(--color-white);
+  font-size: 0.9rem;
+}
+
+.linkLabel {
+  flex: 1;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.arrow {
+  color: var(--color-violet);
+  font-size: 0.85rem;
+}
+
+.back {
+  margin-top: 24px;
+}
+
+.back a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--color-ink-soft);
+}
+
+.back a:hover {
+  color: var(--color-violet);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .check {
+    animation: none;
+  }
+}

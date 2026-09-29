@@ -1,0 +1,266 @@
+/* ==========================================================================
+   TilliT · TOKENS
+   Le fichier unique des valeurs de base du site. Il est chargé en premier,
+   avant polices.css, styles.css, blog.css et coulee.css.
+
+   Trois couches, dans cet ordre :
+     1. Primitives : les valeurs brutes (couleurs, espacements, tailles de
+        texte, rayons, ombres, mouvement, police, mise en page).
+     2. Sémantique : des rôles qui pointent vers une primitive.
+     3. Composant : les réglages globaux d'un composant précis.
+
+   Échelle fine : ce fichier ne change rien à l'affichage. Dans les
+   feuilles, une valeur écrite en dur n'a été remplacée par un token que si
+   sa valeur calculée est strictement la même. Aucune valeur voisine n'a
+   été fusionnée : .78rem et .8rem restent deux tokens, 99px n'est pas
+   devenu --r-full.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. PRIMITIVES
+   -------------------------------------------------------------------------- */
+:root {
+  /* Violet : échelle construite autour du #8b63e8 de la charte */
+  --violet-800: #5330ab;
+  --violet-700: #6d3fd6;
+  --violet-600: #7a52d9;
+  --violet:     #8b63e8;   /* violet principal */
+  --violet-400: #a480f0;
+  --violet-300: #c0a8f5;
+  --violet-200: #ddd0fa;
+  --violet-100: #ede7fb;   /* violet pastel */
+  --violet-50:  #f7f4fe;
+
+  /* Accents : le corail du développeur. Depuis le 17 septembre 2026, il
+     remplace l'orange partout ; --orange garde son nom pour les feuilles
+     qui l'appellent, et vaut le corail. */
+  --coral:      #ef8068;
+  --coral-deep: #e0523c;   /* « Refuser », esprit Airbnb */
+  --coral-pale: #fdf1ec;
+  --orange:     #ef8068;
+
+  /* Le code couleur du développeur, relevé le 16 septembre 2026
+     (dev/couleurs/couleurs.json). Aucune valeur inventée. */
+  --coral-light:  #f4a68e;   /* corail clair : départ de sa bande corail */
+  --peach-50:     #fff2ec;   /* pêche très pâle : haut de son hero Recours */
+  --peach-100:    #ffe5db;   /* pêche : bas de son hero Recours */
+  --peach-accent: #ffe0d3;   /* le mot accentué de ses titres sur violet */
+  --mint-100:     #dff7ea;   /* vert très pâle : il n'a pas de menthe claire plus proche */
+  --blue-pale:    #a9d8ef;   /* bleu pâle : il n'a pas de bleu plus clair */
+  --blue-100:     #e3f3fa;   /* son bleu pâle à 32 % dans du blanc : écart entre canaux 23, comme la menthe (24) et la lavande (20) */
+
+  /* Ses dégradés, recopiés tels quels : ses sections violettes, son hero,
+     sa bande corail. */
+  --violet-degrade:        radial-gradient(120% 90% at 10% 0%, #9a7bef, #7a52d9 55%, #5a37c1);
+  --violet-degrade-hero:   radial-gradient(140% 90% at 90% -10%, #9a7bef, #7a52d9 55%, #6941d5);
+  --coral-degrade:         radial-gradient(120% 90% at 90% 10%, #f4a68e, #ef8068 55%, #db6a52);
+
+  --green:      #1e8a4c;
+  --green-pale: #e8f5ed;
+  --green-deep: #1f6b53;   /* vert sapin du développeur, son vert de texte */
+
+  --ink:        #1f1a3d;
+  --ink-soft:   #4a4570;
+  --ink-mute:   #645f8a;   /* était #7a7599 : 3.46 sur lavande, sous le seuil de 4.5 */
+  --cream:      #fbf7f2;
+  --white:      #ffffff;
+
+  /* La série --or-*. Jusqu'au 16 septembre 2026, l'orange de Bricks.
+     Depuis le 17, le corail du développeur, noms
+     inchangés pour ne pas toucher aux feuilles qui les appellent :
+       --or / --or-clair   pastilles, fonds de badges, barres, pictogrammes
+       --or-degrade        ses deux corails, le clair puis le franc
+       --or-chiffre / --or-titre  #DB6A52, son corail soutenu : grand texte
+                           seulement (3,4:1 sur blanc)
+       --or-texte / --or-sombre   le petit texte. Aucun corail du développeur
+                           n'y tient 4,5:1 : ils reprennent le corail foncé
+                           déjà employé par les cartes corail de ce site.
+     Sur un fond corail, le texte et les pictogrammes sont à l'encre : le
+     blanc n'y tient que 2,6:1. */
+  --or: #ef8068; --or-clair: #f4a68e;
+  --or-degrade: linear-gradient(135deg, #f4a68e, #ef8068);
+  --or-chiffre: #db6a52; --or-titre: #db6a52; --or-texte: #b4482f; --or-sombre: #7c3a28;
+
+  /* La coulée : une ancre de couleur par section, dans l'ordre de lecture
+     (coulee.css, sections 1 et 2). Le hero garde son dégradé interne :
+     c'est son identité. Il finit sur --z-hero-fin, qui est le point de
+     départ du premier fondu. */
+  --z-hero-haut:  #6d3fd6;
+  --z-hero-coeur: #8b63e8;
+  --z-hero-fin:   #533aa6;
+
+  /* Les fonds clairs reprennent ceux du développeur depuis le 17 septembre
+     2026, en couleur unie : lavande #ede7fb, crème #fbf7f2. */
+  --z-lavande:      #ede7fb;   /* les offres, la liste d'attente */
+  --z-lavande-dense:#e6dffb;   /* le parcours : un cran plus dense */
+  --z-neige:        #f7f4fe;   /* fonds de cartes ; .section--white peint le blanc */
+  --z-creme:        #fbf7f2;   /* le problème, les partenaires */
+  --z-nuit:         #1d1740;   /* la comparaison */
+  --z-nuit-fin:     #171232;   /* la liste d'attente et le pied de page */
+  --z-violet:       #6b44cf;   /* la réassurance */
+  --z-violet-clair: #8055e0;   /* le haut de la réassurance */
+  --z-corail-haut:  #ef8068;   /* la bande de clôture : son angle clair */
+  --z-corail:       #db6a52;   /* son cœur */
+  --z-corail-fin:   #c25a43;   /* son bord ; le blanc y tient 4,34 pour 1 */
+
+  /* Surfaces */
+  --hairline:        rgba(31, 26, 61, 0.08);
+  --glass-bg-strong: rgba(255, 255, 255, 0.86);
+  --glass-blur:      saturate(180%) blur(24px);
+  --glass-edge:      inset 0 1px 0 rgba(255, 255, 255, 0.85);
+
+  /* Espacements : échelle fine en px, calquée sur les valeurs déjà écrites
+     dans les padding, margin et gap. Le nombre du nom est la valeur en px.
+     Seuls les pas réellement employés existent : 48, 64, 72, 80 et 96px
+     n'apparaissent que dans des clamp(), dont les bornes restent en dur,
+     comme les valeurs hors échelle (22, 26, 30, 34px...). */
+  --space-2:  2px;
+  --space-4:  4px;
+  --space-6:  6px;
+  --space-8:  8px;
+  --space-10: 10px;
+  --space-12: 12px;
+  --space-14: 14px;
+  --space-16: 16px;
+  --space-18: 18px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-28: 28px;
+  --space-32: 32px;
+  --space-36: 36px;
+  --space-40: 40px;
+  --space-56: 56px;
+
+  /* Tailles de texte : les font-size en rem écrites au moins cinq fois
+     comme valeur entière. Le nombre du nom est la taille en centièmes de
+     rem : --text-78 vaut .78rem. Les autres tailles, et celles placées dans
+     un clamp() ou un max(), restent écrites en dur. */
+  --text-68:  .68rem;
+  --text-70:  .7rem;
+  --text-72:  .72rem;
+  --text-74:  .74rem;
+  --text-76:  .76rem;
+  --text-78:  .78rem;
+  --text-80:  .8rem;
+  --text-82:  .82rem;
+  --text-84:  .84rem;
+  --text-85:  .85rem;
+  --text-86:  .86rem;
+  --text-88:  .88rem;
+  --text-90:  .9rem;
+  --text-92:  .92rem;
+  --text-93:  .93rem;
+  --text-94:  .94rem;
+  --text-95:  .95rem;
+  --text-96:  .96rem;
+  --text-98:  .98rem;
+  --text-100: 1rem;
+  --text-102: 1.02rem;
+  --text-105: 1.05rem;
+
+  /* Rayons : squircle iOS, généreux */
+  --r-xs: 10px;  --r-sm: 14px;  --r-md: 20px;
+  --r-lg: 28px;  --r-xl: 36px;  --r-2xl: 44px;
+  --r-3xl: 56px; --r-full: 999px;
+
+  /* Ombres */
+  --sh-xs: 0 1px 2px rgba(31, 26, 61, 0.05);
+  --sh-sm: 0 2px 8px rgba(31, 26, 61, 0.06), 0 1px 2px rgba(31, 26, 61, 0.04);
+  --sh-md: 0 8px 24px rgba(31, 26, 61, 0.08), 0 2px 6px rgba(31, 26, 61, 0.04);
+  --sh-lg: 0 20px 50px rgba(31, 26, 61, 0.12), 0 4px 12px rgba(31, 26, 61, 0.05);
+  --sh-xl: 0 40px 90px rgba(31, 26, 61, 0.18), 0 8px 24px rgba(31, 26, 61, 0.06);
+  --sh-violet: 0 18px 44px rgba(83, 48, 171, 0.28);
+
+  /* Mouvement. Les durées ne remplacent que la durée d'une transition ou
+     d'une animation, jamais son délai. --ease-brand est la courbe qui était
+     écrite en dur dans coulee.css (cartes, images, jauges). */
+  --duration-fast:   .2s;
+  --duration-base:   .3s;
+  --duration-slow:   .45s;
+  --duration-slower: .6s;
+  --ease:       cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-out:   cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-brand: cubic-bezier(.2,.9,.3,1);
+
+  /* Police */
+  --font: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Display",
+          "Segoe UI", system-ui, sans-serif;
+
+  /* Interlettrage des titres selon leur taille, d'après les métriques
+     d'Inter (16 septembre 2026). Chaque règle de titre prend la valeur de
+     sa taille à 1440 px. Le texte courant garde -0.011em (body), les
+     libellés en capitales gardent leur valeur positive. */
+  --ls-titre-40: -0.022em;   /* 40 px et plus */
+  --ls-titre-28: -0.02em;    /* de 28 à 40 px */
+  --ls-titre-20: -0.017em;   /* de 20 à 28 px */
+  --ls-titre-17: -0.014em;   /* de 17 à 20 px */
+
+  /* Mise en page. Padding vertical des sections, repris du site du
+     développeur le 16 septembre 2026. Chaque section porte le sien, rien
+     entre deux sections. 120 px en haut et 130 en bas à 1440 px, 72 et 88
+     à 375 px. Remplace --section-y, clamp(52px, 5.4vw, 84px). */
+  --pad:       clamp(20px, 5vw, 40px);
+  --container: 1200px;
+  --narrow:    880px;
+  --section-y-haut: clamp(72px, 10vw, 120px);
+  --section-y-bas:  clamp(88px, 12vw, 130px);
+  /* Pages annexes : la règle de la page /recours du développeur, mesurée
+     le 17 septembre 2026. Symétrique, en hauteur de fenêtre : 90 px à
+     1440 x 900, 81 px à 375 x 812. Ses pages /confiance (108 px) et
+     /tarifs (de 108 à 130 px) ne suivent pas exactement la même. */
+  --annexe-y-haut: clamp(60px, 10vh, 100px);
+  --annexe-y-bas:  clamp(60px, 10vh, 100px);
+}
+
+/* --------------------------------------------------------------------------
+   2. SÉMANTIQUE
+   Vide pour l'instant, volontairement. Les feuilles désignent déjà les
+   rôles par les primitives : var(--ink) pour le texte, var(--ink-mute)
+   pour le texte atténué, var(--hairline) pour les filets. Un alias comme
+   --texte, posé seulement sur les quelques valeurs remplacées ici, donnerait
+   deux noms au même rôle. Cette couche se remplira quand une passe migrera
+   ces usages. Le nom --accent est déjà pris par des composants : un
+   --accent global prendrait effet partout où ils ne le définissent pas.
+   -------------------------------------------------------------------------- */
+
+/* --------------------------------------------------------------------------
+   3. COMPOSANT
+   Seuls les réglages globaux d'un composant précis vivent ici. Les autres
+   variables de composant restent dans leur règle d'origine : --c-* sur
+   .constat et .issues, --a-* sur .app, --w sur .phone, --accent,
+   --diapo-l, --split-bg. Les variables posées par
+   le script (--mvt-rang, --mj-decale) ne sont définies nulle part en CSS.
+   -------------------------------------------------------------------------- */
+:root {
+  /* La navigation : 14px de marge haute + la capsule flottante */
+  --nav-h: 84px;
+
+  /* Le bandeau du haut. Valeur de repli : le script pose sur <html> la
+     hauteur mesurée, car le texte peut tenir sur deux lignes. */
+  --h-bandeau: 38px;
+}
+
+/* La couleur de chaque page annexe, décision du 17 septembre 2026 : posée
+   sur <body data-teinte>, elle peint le hero clair (--teinte-hero) et revient
+   dans l'alternance des sections (--teinte-section, .section--teinte).
+   --teinte-point colore la pastille du hero, --teinte-texte le surtitre des
+   pages légales (neutres : sans accent coloré). Valeurs prises uniquement
+   dans la palette du développeur. */
+[data-teinte="peche"]   { --teinte-hero: var(--peach-100);  --teinte-section: var(--peach-50);   --teinte-point: var(--coral); }
+[data-teinte="menthe"]  { --teinte-hero: var(--mint-100);   --teinte-section: var(--mint-100);  --teinte-point: var(--violet); }
+[data-teinte="bleu"]    { --teinte-hero: var(--blue-100);   --teinte-section: var(--blue-100);  --teinte-point: var(--violet); }
+[data-teinte="lavande"] { --teinte-hero: var(--violet-100); --teinte-section: var(--violet-100); --teinte-point: var(--violet); }
+[data-teinte="creme"]   { --teinte-hero: var(--cream);      --teinte-section: var(--cream);     --teinte-point: var(--violet); }
+[data-teinte="neutre"]  { --teinte-hero: var(--cream);      --teinte-section: var(--cream);     --teinte-point: var(--ink-mute); --teinte-texte: var(--ink-mute); }
+@media (max-width: 520px) { :root { --h-bandeau: 34px; } }
+
+/* Sous 1024 px, une colonne : le haut clair des dégradés violets du
+   développeur (#9a7bef, où le blanc ne tient que 3,3:1) passe sous le petit
+   texte. Même géométrie, ses violets un cran plus sombres (#7a52d9, #6941d5,
+   #5a37c1) : le blanc y tient au moins 5,2:1. Mesuré à 375 px. */
+@media (max-width: 1023px) {
+  :root {
+    --violet-degrade:        radial-gradient(120% 90% at 10% 0%, #7a52d9, #6941d5 55%, #5a37c1);
+    --violet-degrade-hero:   radial-gradient(140% 90% at 90% -10%, #7a52d9, #6941d5 55%, #5a37c1);
+  }
+}

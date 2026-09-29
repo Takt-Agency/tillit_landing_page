@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from './ChatAssistant.module.css';
 import mascotUrl from '../../mascotte-besoin-aide.png';
+import { ASK_ASSISTANT_EVENT } from '../../lib/assistant';
 
 type Message = { id: number; role: 'bot' | 'user'; text: string };
 
@@ -77,6 +78,18 @@ export default function ChatAssistant() {
       ]);
     }, 650);
   };
+
+  const sendRef = useRef(send);
+  sendRef.current = send;
+
+  useEffect(() => {
+    const onAsk = (e: Event) => {
+      setOpen(true);
+      sendRef.current((e as CustomEvent<string>).detail);
+    };
+    window.addEventListener(ASK_ASSISTANT_EVENT, onAsk);
+    return () => window.removeEventListener(ASK_ASSISTANT_EVENT, onAsk);
+  }, []);
 
   return (
     <div className={styles.root}>

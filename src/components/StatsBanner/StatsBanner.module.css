@@ -61,6 +61,45 @@
   color: var(--color-violet);
 }
 
+.titleAccentCoral {
+  color: var(--color-coral);
+}
+
+.eyebrow {
+  display: inline-block;
+  margin-bottom: 16px;
+  padding: 7px 16px;
+  border-radius: var(--radius-full);
+  background: var(--color-white);
+  box-shadow: 0 6px 16px rgba(76, 52, 160, 0.1);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-violet);
+}
+
+.outro {
+  margin-top: clamp(32px, 4vw, 48px);
+  text-align: center;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  color: var(--color-ink);
+}
+
+.sourceLink {
+  text-decoration: underline;
+  text-decoration-color: rgba(31, 26, 61, 0.25);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.2s ease;
+}
+
+.sourceLink:hover {
+  text-decoration-color: currentColor;
+}
+
 .lead {
   margin-top: 14px;
   color: var(--color-ink-mute);

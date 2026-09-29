@@ -1,0 +1,167 @@
+/* ==========================================================================
+   TilliT prototype · theme-site.css
+   Habillage aligné sur le site vitrine (polices Quicksand / Nunito, dégradés,
+   ombres douces). Chargé en dernier : il ne fait que surcharger app.css et
+   ecrans.css, sans toucher à leur structure.
+   Les boutons partent de #7a52d9 : le blanc y tient au moins 4,5:1.
+   ========================================================================== */
+
+:root {
+  --font: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-titre: 'Quicksand', 'Nunito', system-ui, sans-serif;
+  --degrade-btn: linear-gradient(135deg, #7a52d9 0%, #6941d5 100%);
+  --ombre-carte: 0 10px 28px rgba(76, 52, 160, 0.08), 0 2px 6px rgba(31, 26, 61, 0.04);
+  --bord-carte: rgba(139, 99, 232, 0.14);
+}
+
+/* ---------- Fond et typographie ---------- */
+body {
+  letter-spacing: 0;
+}
+
+.app {
+  background:
+    radial-gradient(120% 50% at 100% 0%, rgba(139, 99, 232, 0.12), transparent 60%),
+    radial-gradient(100% 40% at 0% 100%, rgba(239, 128, 104, 0.08), transparent 60%),
+    linear-gradient(180deg, #f6f2fe 0%, #fbf7f2 55%);
+}
+
+h1, h2, h3,
+.titre,
+.accueil-h2,
+.montant-grand,
+.accueil-face-total,
+.ligne--forte dd,
+.btn,
+.onglet,
+.puce,
+.surtitre {
+  font-family: var(--font-titre);
+}
+
+.titre {
+  font-size: 1.7rem;
+  letter-spacing: -0.015em;
+}
+
+.montant-grand {
+  background: linear-gradient(135deg, #7a52d9 0%, #5330ab 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.surtitre {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: var(--r-full);
+  background: var(--violet-100);
+}
+
+/* ---------- Boutons ---------- */
+.btn {
+  font-weight: 700;
+}
+
+.btn--principal {
+  background: var(--degrade-btn);
+  box-shadow: 0 10px 22px rgba(105, 65, 213, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.btn--principal:active {
+  background: linear-gradient(135deg, #6941d5 0%, #5330ab 100%);
+}
+
+.btn--secondaire {
+  box-shadow: inset 0 0 0 1.5px rgba(122, 82, 217, 0.45), 0 4px 12px rgba(76, 52, 160, 0.08);
+}
+
+.btn--blanc {
+  box-shadow: 0 10px 22px rgba(31, 26, 61, 0.14);
+}
+
+/* ---------- Cartes ---------- */
+.carte,
+.accueil-action,
+.accueil-faces {
+  border-color: var(--bord-carte);
+  border-radius: 22px;
+  box-shadow: var(--ombre-carte);
+}
+
+.accueil-faces {
+  background: var(--white);
+}
+
+.accueil-face:first-child .accueil-face-total {
+  color: var(--violet-700);
+}
+
+.accueil-face:last-child .accueil-face-total {
+  color: var(--or-titre);
+}
+
+.accueil-face:first-child {
+  background: linear-gradient(180deg, rgba(139, 99, 232, 0.07), transparent 70%);
+}
+
+.accueil-face:last-child {
+  background: linear-gradient(180deg, rgba(239, 128, 104, 0.08), transparent 70%);
+}
+
+.ligne--corail {
+  background: linear-gradient(135deg, #fff4ef 0%, var(--coral-pale) 100%);
+}
+
+/* ---------- Onboarding ---------- */
+.compte-onb-illu {
+  background: radial-gradient(circle at 50% 42%, #ffffff 0%, #f1ebfd 72%) !important;
+  border: 1px solid var(--bord-carte);
+  box-shadow: var(--ombre-carte);
+}
+
+.compte-onb-illu--lavande {
+  background: radial-gradient(circle at 50% 42%, #ffffff 0%, #e9e0fc 72%) !important;
+}
+
+/* ---------- Barre d'onglets ---------- */
+.barre {
+  grid-template-columns: 1fr 1fr 76px 1fr 1fr;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: saturate(160%) blur(16px);
+  -webkit-backdrop-filter: saturate(160%) blur(16px);
+  border-top: 1px solid var(--bord-carte);
+  box-shadow: 0 -8px 24px rgba(76, 52, 160, 0.06);
+}
+
+.onglet {
+  font-weight: 600;
+  transition: color var(--duration-fast) var(--ease), background var(--duration-fast) var(--ease);
+}
+
+.onglet[aria-current='page'] {
+  background: var(--violet-100);
+  color: var(--violet-800);
+  font-weight: 700;
+}
+
+.onglet-plus {
+  background: var(--degrade-btn);
+  box-shadow: 0 12px 26px rgba(105, 65, 213, 0.4);
+}
+
+/* ---------- Puces et avatars ---------- */
+.puce {
+  font-weight: 700;
+}
+
+.avatar--moi {
+  background: var(--degrade-btn);
+}
+
+/* ---------- Bandeau prototype ---------- */
+.bandeau-prototype {
+  border: 1px solid rgba(239, 128, 104, 0.25);
+  border-radius: 14px;
+  background: linear-gradient(135deg, #fff6f2 0%, var(--peach-50) 100%);
+}

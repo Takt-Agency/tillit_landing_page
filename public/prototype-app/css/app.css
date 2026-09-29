@@ -1,0 +1,350 @@
+/* ==========================================================================
+   TilliT prototype · app.css (lot 0)
+   Composants partagés. Les valeurs viennent de tokens.css (copie du site).
+   Téléphone d'abord ; sur ordinateur, cadre de téléphone centré.
+   Les lots écrivent seulement dans css/ecrans.css, dans leur section.
+   ========================================================================== */
+
+/* ---------- Police : Inter, fichiers du site, rien en ligne ---------- */
+@font-face {
+  font-family: 'Inter'; font-style: normal; font-weight: 100 900; font-display: swap;
+  src: url('../assets/fonts/inter-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Inter'; font-style: normal; font-weight: 100 900; font-display: swap;
+  src: url('../assets/fonts/inter-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ---------- Teintes absentes de la palette (spec 00 §7) ---------- */
+:root {
+  --zen-fond: var(--blue-100);     /* à valider : teinte de Zen, pas de bleu dans la palette */
+  --zen-accent: var(--blue-pale);  /* à valider */
+  --or-noeud: #d9a93a;             /* à valider : nœud doré « remboursée en avance », choix provisoire du lot 0 */
+  --gris-trait: rgba(31, 26, 61, 0.18);
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  font-family: var(--font); font-size: 16px; line-height: 1.45; letter-spacing: -0.011em;
+  color: var(--ink); background: var(--cream);
+  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+button, input, textarea, select { font: inherit; color: inherit; letter-spacing: inherit; }
+img { max-width: 100%; display: block; }
+p { margin: 0; }
+h1, h2, h3 { margin: 0; line-height: 1.15; text-wrap: balance; }
+[hidden] { display: none !important; }
+:focus-visible { outline: 3px solid var(--violet-600); outline-offset: 2px; }
+::selection { background: var(--violet-200); }
+.visuellement-cache { position: absolute !important; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.sans-js { padding: 24px; text-align: center; }
+
+/* ---------- Cadre : plein écran sur téléphone, téléphone centré sur ordinateur ---------- */
+.app {
+  position: relative; display: flex; flex-direction: column;
+  width: 100%; height: 100vh; height: 100dvh; overflow: hidden; background: var(--cream);
+}
+@media (min-width: 600px) and (min-height: 700px) {
+  body { display: grid; place-items: center; min-height: 100vh; background: var(--violet-50); }
+  .app { width: 390px; height: min(844px, calc(100vh - 48px)); border: 10px solid var(--ink); border-radius: 54px; box-shadow: var(--sh-xl); }
+}
+
+/* ---------- En-tête et barre des écrans principaux (décision Q4) ---------- */
+.entete {
+  flex: none; display: flex; align-items: center; justify-content: space-between;
+  min-height: 60px; padding: max(8px, env(safe-area-inset-top)) 12px 4px;
+}
+.entete-droite { display: flex; align-items: center; gap: 4px; }
+.icone-bouton {
+  position: relative; display: inline-grid; place-items: center; width: 44px; height: 44px; flex: none;
+  border: 0; border-radius: 50%; background: transparent; color: var(--ink); cursor: pointer;
+}
+.icone-bouton:active { background: var(--violet-100); }
+.avatar-bouton { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; background: none; cursor: pointer; }
+.pastille-compte {
+  position: absolute; top: 4px; right: 3px; min-width: 18px; height: 18px; padding: 0 5px;
+  border-radius: var(--r-full); background: var(--coral); color: var(--ink);
+  font-size: .7rem; font-weight: 700; line-height: 18px; text-align: center;
+}
+.barre {
+  flex: none; display: grid; grid-template-columns: 1fr 1fr 76px 2fr; align-items: end;
+  background: var(--white); border-top: 1px solid var(--hairline);
+  padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+}
+.onglet {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  min-height: 52px; padding: 4px 0; border: 0; border-radius: var(--r-sm); background: none;
+  color: var(--ink-mute); font-size: .75rem; font-weight: 520; cursor: pointer;
+}
+.onglet[aria-current="page"] { color: var(--violet-700); font-weight: 680; }
+.onglet-plus {
+  justify-self: center; display: grid; place-items: center; width: 62px; height: 62px; margin-top: -30px;
+  border: 4px solid var(--white); border-radius: 50%; background: var(--violet); color: var(--white);
+  box-shadow: var(--sh-violet); cursor: pointer;
+}
+.onglet-plus .icone { width: 30px; height: 30px; stroke-width: 2.2; }
+.onglet-plus:active { background: var(--violet-600); }
+
+/* ---------- Zone d'écran ---------- */
+.ecran { position: relative; flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 0 20px 28px; }
+.ecran:focus { outline: none; }
+.app:not(.app--principal) .ecran { padding-top: env(safe-area-inset-top); }
+.ecran--fondu { animation: fondu var(--duration-base) var(--ease-out); }
+
+/* ---------- Typographie ---------- */
+.titre { font-size: 1.6rem; font-weight: 700; letter-spacing: var(--ls-titre-20); margin: 8px 0 8px; }
+.sous-titre { color: var(--ink-soft); margin-bottom: 16px; }
+.surtitre { font-size: var(--text-78); font-weight: 650; letter-spacing: .06em; text-transform: uppercase; color: var(--violet-700); }
+.texte-mute { color: var(--ink-mute); }
+.montant-grand { font-size: 2.6rem; font-weight: 750; letter-spacing: var(--ls-titre-40); font-variant-numeric: tabular-nums; }
+.bandeau-prototype { margin: 12px 0 8px; padding: 10px 14px; border-radius: var(--r-xs); background: var(--peach-50); color: var(--or-sombre); font-size: var(--text-88); }
+
+/* ---------- Boutons ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 52px; padding: 12px 22px; border: 0; border-radius: var(--r-full);
+  font-size: 1rem; font-weight: 620; line-height: 1.2; text-align: center; cursor: pointer;
+  transition: background var(--duration-fast) var(--ease), transform var(--duration-fast) var(--ease);
+}
+.btn:active { transform: scale(.98); }
+.btn--pleine { display: flex; width: 100%; }
+.btn--principal { background: var(--violet-600); color: var(--white); }   /* #8b63e8 ne tient que 4,16 pour 1 avec du blanc, comme sur le site */
+.btn--principal:active { background: var(--violet-700); }
+.btn--secondaire { background: var(--white); color: var(--violet-700); box-shadow: inset 0 0 0 1.5px var(--violet-600); }
+.btn--secondaire:active { background: var(--violet-50); }
+.btn--discret { min-height: 44px; padding: 10px 12px; background: transparent; color: var(--violet-700); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.btn--attention { min-height: 44px; background: transparent; color: var(--or-texte); text-decoration: underline; text-underline-offset: 3px; }
+.btn--blanc { background: var(--white); color: var(--violet-800); }
+.btn--centre { margin-inline: auto; display: flex; }
+.btn:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+.btn--copier { min-height: 44px; padding: 8px 16px; font-size: var(--text-92); }
+.pile-reponses { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+
+/* ---------- Cartes, lignes, puces ---------- */
+.carte { background: var(--white); border: 1px solid var(--hairline); border-radius: var(--r-md); padding: 16px; margin: 12px 0; }
+.lignes { margin: 0; }
+.ligne { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--hairline); }
+.ligne:last-child { border-bottom: 0; }
+.ligne dt { color: var(--ink-soft); }
+.ligne dd { margin: 0; font-weight: 620; text-align: right; font-variant-numeric: tabular-nums; }
+.ligne--forte dd { font-size: 1.1rem; font-weight: 720; }
+.ligne--corail { margin: 4px -10px; padding: 12px 10px; border-radius: var(--r-xs); background: var(--coral-pale); border-bottom: 0; }
+.puce { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: var(--r-full); font-size: var(--text-78); font-weight: 640; line-height: 1.3; }
+.puce--action { background: var(--peach-100); color: var(--or-sombre); }
+.puce--attente { background: var(--violet-50); color: var(--ink-soft); box-shadow: inset 0 0 0 1px var(--violet-200); }
+.puce--actif { background: var(--violet-100); color: var(--violet-800); }
+.puce--ok { background: var(--green-pale); color: var(--green-deep); }
+.puce--fin { background: var(--cream); color: var(--ink-mute); box-shadow: inset 0 0 0 1px var(--gris-trait); }
+.puce--zen { background: var(--zen-fond); color: var(--ink); }
+
+/* ---------- Avatar à initiales ---------- */
+.avatar { display: inline-grid; place-items: center; flex: none; border-radius: 50%; overflow: hidden; font-weight: 680; letter-spacing: 0; }
+/* P-9 n° 10 : illustration choisie dans la galerie, cadrée dans le rond. */
+.avatar-illu { width: 100%; height: 100%; object-fit: cover; object-position: center 22%; }
+.avatar--s { width: 34px; height: 34px; font-size: .8rem; }
+.avatar--m { width: 44px; height: 44px; font-size: .95rem; }
+.avatar--l { width: 60px; height: 60px; font-size: 1.2rem; }
+.avatar--xl { width: 80px; height: 80px; font-size: 1.6rem; }
+.avatar--moi { background: var(--violet-600); color: var(--white); }
+.avatar--lavande { background: var(--violet-100); color: var(--violet-800); }
+.avatar--peche { background: var(--peach-100); color: var(--or-sombre); }
+.avatar--menthe { background: var(--mint-100); color: var(--green-deep); }
+.avatar--bleu { background: var(--blue-100); color: var(--ink); }
+
+/* ---------- Mascotte et bulle ---------- */
+.mascotte { height: auto; margin-inline: auto; }
+.mascotte--grande { width: 200px; }
+.mascotte--moyenne { width: 140px; }
+.mascotte--petite { width: 64px; margin: 0; }
+/* Pastille « Certifié » à côté d'un nom (ui.certifie) : informe, ne bloque rien */
+.certifie { display: inline-block; width: 18px; height: 18px; margin-left: 6px; border-radius: 50%; background: var(--violet-600); color: var(--white); vertical-align: -3px; flex: none; }   /* inline-block : innerText sans saut de ligne */
+.certifie .icone { vertical-align: top; margin: 3px; stroke: var(--white); stroke-width: 3; }   /* stroke : blanc même si le parent recolore ses .icone */
+.bulle { display: flex; align-items: flex-end; gap: 10px; margin: 16px 0; }
+.bulle-texte { flex: 1; padding: 12px 14px; border-radius: 18px 18px 18px 4px; background: var(--violet-100); font-size: var(--text-94); }
+
+/* ---------- Progression, anneau ---------- */
+.progression { height: 8px; border-radius: var(--r-full); background: var(--violet-100); overflow: hidden; }
+.progression > span { display: block; height: 100%; border-radius: inherit; background: var(--violet); transition: width var(--duration-slow) var(--ease-out); }
+.anneau { position: relative; display: inline-grid; place-items: center; flex: none; }
+.anneau svg { position: absolute; inset: 0; transform: rotate(-90deg); }
+.anneau-fond { fill: none; stroke: var(--violet-100); stroke-width: 8; }
+.anneau-plein { fill: none; stroke: var(--violet); stroke-width: 8; stroke-linecap: round; transition: stroke-dashoffset var(--duration-slower) var(--ease-out); }
+.anneau-centre { position: relative; font-weight: 720; font-size: 1rem; text-align: center; line-height: 1.1; }
+
+/* ---------- En-têtes des écrans secondaires et des étapes ---------- */
+.entete-retour {
+  position: sticky; top: 0; z-index: 2; display: flex; align-items: center; gap: 4px;
+  min-height: 56px; margin: 0 -20px 4px; padding: 6px 8px; background: var(--cream);
+}
+.entete-retour-titre { flex: 1; font-weight: 650; text-align: center; }
+.entete-retour-droite { min-width: 44px; display: flex; justify-content: flex-end; }
+.etape { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; min-height: 56px; margin: 0 -12px; }
+.etape-gauche { display: flex; }
+.etape-compteur { font-size: var(--text-88); font-weight: 650; color: var(--ink-soft); }
+.etape-barre { margin: 2px 0 16px; }
+
+/* ---------- Champs ---------- */
+.champ { margin: 14px 0; }
+.champ-libelle { display: block; margin-bottom: 6px; font-weight: 620; font-size: var(--text-92); padding: 0; }
+.champ-libelle--petit { font-weight: 560; color: var(--ink-soft); }
+.champ-boite { position: relative; display: flex; align-items: center; }
+.champ-input {
+  width: 100%; min-height: 50px; padding: 12px 14px; border: 1.5px solid var(--gris-trait); border-radius: var(--r-sm);
+  background: var(--white); font-size: 16px; line-height: 1.3;
+}
+.champ-input:focus { border-color: var(--violet-600); outline: none; box-shadow: 0 0 0 3px var(--violet-200); }
+.champ-input[aria-invalid="true"] { border-color: var(--or-texte); }
+.champ-boite--suffixe .champ-input { padding-right: 52px; }
+.champ-suffixe { position: absolute; right: 14px; color: var(--ink-mute); pointer-events: none; }
+.champ-texte { resize: vertical; min-height: 96px; }
+.champ-aide { margin-top: 6px; font-size: var(--text-86); color: var(--ink-mute); }
+.champ-erreur { margin-top: 6px; font-size: var(--text-86); color: var(--or-texte); font-weight: 560; }
+.case { position: relative; display: flex; align-items: flex-start; gap: 12px; min-height: 44px; padding: 8px 0; cursor: pointer; }
+.case input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.case-boite { display: grid; place-items: center; flex: none; width: 24px; height: 24px; margin-top: 1px; border: 1.5px solid var(--gris-trait); border-radius: 7px; background: var(--white); color: transparent; }
+.case input:checked + .case-boite { background: var(--violet-600); border-color: var(--violet-600); color: var(--white); }
+.case input:focus-visible + .case-boite { outline: 3px solid var(--violet-600); outline-offset: 2px; }
+.case-texte { font-size: var(--text-94); }
+
+/* ---------- Interrupteur ---------- */
+.interrupteur-bloc { margin: 8px 0; }
+.interrupteur { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 48px; cursor: pointer; }
+.interrupteur-texte { font-weight: 560; }
+.interrupteur-input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.interrupteur-piste { position: relative; flex: none; width: 52px; height: 32px; border-radius: var(--r-full); background: var(--gris-trait); transition: background var(--duration-fast) var(--ease); }
+.interrupteur-piste::after { content: ''; position: absolute; top: 3px; left: 3px; width: 26px; height: 26px; border-radius: 50%; background: var(--white); box-shadow: var(--sh-xs); transition: transform var(--duration-fast) var(--ease); }
+.interrupteur-input:checked + .interrupteur-piste { background: var(--violet-600); }
+.interrupteur-input:checked + .interrupteur-piste::after { transform: translateX(20px); }
+.interrupteur-input:focus-visible + .interrupteur-piste { outline: 3px solid var(--violet-600); outline-offset: 2px; }
+.interrupteur-input:disabled + .interrupteur-piste { opacity: .6; }
+.interrupteur:has(.interrupteur-input:disabled) { cursor: default; }
+
+/* ---------- Pastilles de choix ---------- */
+.pastilles { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+.pastille {
+  min-height: 44px; padding: 8px 16px; border: 1.5px solid var(--gris-trait); border-radius: var(--r-full);
+  background: var(--white); color: var(--ink); font-weight: 540; cursor: pointer;
+}
+.pastille[aria-pressed="true"] { border-color: var(--violet-600); background: var(--violet-100); color: var(--violet-800); font-weight: 650; }
+
+/* ---------- Infobulle (i) ---------- */
+.infobulle { display: inline-flex; vertical-align: middle; }
+.infobulle-bouton { display: inline-grid; place-items: center; width: 44px; height: 44px; margin: -12px -8px -12px -4px; border: 0; border-radius: 50%; background: none; color: var(--violet-700); cursor: pointer; }
+.infobulle-texte { display: block; margin: 8px 0; padding: 12px 14px; border-radius: var(--r-sm); background: var(--ink); color: var(--white); font-size: var(--text-88); font-weight: 450; }
+
+/* ---------- Options (feuille « Nouveau prêt ») ---------- */
+.options { display: flex; flex-direction: column; gap: 10px; }
+.option {
+  display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2px 12px; width: 100%;
+  min-height: 72px; padding: 14px 16px; border: 1.5px solid var(--gris-trait); border-radius: var(--r-md);
+  background: var(--white); text-align: left; cursor: pointer;
+}
+.option:active { background: var(--violet-50); border-color: var(--violet-600); }
+.option-titre { font-weight: 680; font-size: 1.05rem; }
+.option-sous { grid-column: 1; color: var(--ink-mute); font-size: var(--text-90); }
+.option .icone { grid-row: 1 / span 2; grid-column: 2; color: var(--violet-700); }
+
+/* ---------- Feuille du bas ---------- */
+.feuilles { position: absolute; inset: 0; z-index: 40; }
+.feuille-fond { position: absolute; inset: 0; background: rgba(31, 26, 61, .42); animation: fondu var(--duration-base) var(--ease-out); }
+.feuille {
+  position: absolute; left: 0; right: 0; bottom: 0; max-height: 90%; overflow-y: auto;
+  padding: 8px 20px calc(24px + env(safe-area-inset-bottom)); border-radius: var(--r-lg) var(--r-lg) 0 0;
+  background: var(--white); animation: monte var(--duration-base) var(--ease-out);
+}
+.feuille-poignee { width: 40px; height: 5px; margin: 0 auto 6px; border-radius: var(--r-full); background: var(--gris-trait); }
+.feuille-haut { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+.feuille-titre { font-size: 1.25rem; font-weight: 700; }
+.feuille-haut .icone-bouton { margin-right: -10px; }
+
+/* ---------- Carte de succès, célébration ---------- */
+.succes { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 8px 0 4px; text-align: center; }
+.succes-coche { display: grid; place-items: center; width: 72px; height: 72px; border-radius: 50%; background: var(--green-pale); color: var(--green); }
+.succes-titre { font-size: 1.35rem; font-weight: 720; }
+.succes-texte { color: var(--ink-soft); }
+.succes .btn { margin-top: 8px; }
+.celebration {
+  position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+  padding: 32px 24px calc(32px + env(safe-area-inset-bottom)); background: var(--violet-degrade); color: var(--white); text-align: center;
+}
+.celebration-titre { font-size: 1.8rem; font-weight: 750; letter-spacing: var(--ls-titre-28); }
+.celebration-texte { color: rgba(255, 255, 255, .9); max-width: 30ch; }
+.celebration .btn { max-width: 320px; margin-top: 12px; }
+.celebration :focus-visible { outline-color: var(--white); }
+
+/* ---------- Bannière de notification simulée ---------- */
+.bannieres { position: absolute; top: 0; left: 0; right: 0; z-index: 50; pointer-events: none; }
+.banniere {
+  pointer-events: auto; display: flex; align-items: center; gap: 4px; margin: calc(8px + env(safe-area-inset-top)) 10px 0;
+  padding: 6px 4px 6px 6px; border-radius: var(--r-md); background: var(--white); box-shadow: var(--sh-lg);
+  animation: descend var(--duration-slow) var(--ease-out); touch-action: none;
+}
+.banniere-corps { flex: 1; display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 6px; border: 0; border-radius: var(--r-sm); background: none; text-align: left; cursor: pointer; }
+.banniere-icone { flex: none; width: 36px; height: 36px; border-radius: 9px; }
+.banniere-texte { display: flex; flex-direction: column; gap: 2px; font-size: var(--text-90); }
+.banniere-app { font-size: var(--text-76); font-weight: 620; color: var(--ink-mute); }
+
+/* ---------- Bloc des termes ---------- */
+.bt-montant { display: flex; align-items: baseline; justify-content: center; gap: 6px; margin: 8px 0 4px; }
+.bt-montant-input {
+  width: 5.2ch; padding: 0; border: 0; border-bottom: 2px solid var(--violet-200); background: transparent; text-align: center;
+  font-size: 3rem; font-weight: 750; letter-spacing: var(--ls-titre-40); font-variant-numeric: tabular-nums; color: var(--ink);
+}
+.bt-montant-input:focus { outline: none; border-bottom-color: var(--violet-600); }
+.bt-montant-euro { font-size: 2rem; font-weight: 700; color: var(--ink-soft); }
+.bt-pastilles { justify-content: center; }
+.bt-mensuel { margin: 18px 0 4px; padding: 0; border: 0; }
+.bt-deux { display: grid; grid-template-columns: 1fr 1.25fr; gap: 12px; }
+.bt-deux .champ { margin: 0; }
+.bt-duree { display: flex; align-items: center; gap: 2px; }
+.bt-pas { width: 44px; height: 44px; border-radius: 50%; background: var(--violet-100); color: var(--violet-800); font-size: 1.4rem; font-weight: 600; }
+.bt-duree .champ-boite { flex: 1; }
+.bt-duree .champ-input { padding: 12px 44px 12px 10px; text-align: center; }
+.bt-duree .champ-suffixe { right: 8px; font-size: var(--text-86); }
+.bt-resultat { min-height: 20px; margin: 10px 0 0; }
+.bt-resultat-ligne { font-size: var(--text-96); }
+.bt-echeancier { margin-top: 4px; font-size: var(--text-88); color: var(--ink-mute); }
+.bt-message { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin: 10px 0; padding: 12px 14px; border-radius: var(--r-sm); background: var(--peach-50); color: var(--or-sombre); font-size: var(--text-92); }
+.bt-message .btn { background: var(--white); }
+.bt-message--info { background: var(--violet-50); color: var(--ink-soft); }
+.bt-note { margin: 2px 0 8px; font-size: var(--text-88); color: var(--ink-mute); }
+/* P-9 : le seuil des 1 500 € et le bloc Zen sur l'écran du montant (n° 7 et n° 8),
+   la phrase de retour dans les bornes (n° 9), le sélecteur de devise (n° 12). */
+.bt-seuil { margin: 18px 0 8px; font-size: var(--text-92); color: var(--ink-soft); }
+.bt-zen { margin-top: 4px; padding: 14px 16px; border-radius: var(--r-md); background: var(--zen-fond); }
+.bt-zen-prix { margin: 0 0 6px; font-weight: 700; font-size: 1.05rem; }
+.bt-zen p { font-size: var(--text-92); }
+.bt-zen .bt-note { margin-bottom: 0; }
+.bt-retour { background: var(--violet-50); color: var(--ink-soft); }
+
+/* ---------- Écrans provisoires du lot 0 ---------- */
+.provisoire { display: flex; flex-direction: column; gap: 14px; padding-top: 12px; }
+.liste-notifs { list-style: none; margin: 0; padding: 0; }
+.notif {
+  position: relative; display: flex; flex-direction: column; gap: 4px; width: 100%; min-height: 56px;
+  padding: 12px 12px 12px 26px; border: 0; border-bottom: 1px solid var(--hairline); background: none; text-align: left; cursor: pointer;
+}
+.notif--non-lue::before { content: ''; position: absolute; left: 8px; top: 18px; width: 9px; height: 9px; border-radius: 50%; background: var(--violet); }
+.notif-date { font-size: var(--text-82); color: var(--ink-mute); }
+
+/* ---------- Animations reprises du prototype ---------- */
+@keyframes fondu { from { opacity: 0; } to { opacity: 1; } }
+@keyframes monte { from { transform: translateY(100%); } to { transform: none; } }
+@keyframes descend { from { transform: translateY(-120%); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes appear { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes pop { 0% { transform: scale(.86); opacity: 0; } 60% { transform: scale(1.04); } 100% { transform: scale(1); opacity: 1; } }
+@keyframes bob { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-7px) rotate(2deg); } }
+@keyframes grow { from { width: 0; } }
+.anim-pop { animation: pop .5s var(--ease-out) both; }
+.anim-bob { animation: bob 3.2s ease-in-out infinite; }
+.anim-appear { animation: appear .4s var(--ease-out) both; }
+.anim-grow { animation: grow .9s var(--ease-out) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}

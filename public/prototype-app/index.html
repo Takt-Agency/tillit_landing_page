@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#8b63e8">
+  <meta name="robots" content="noindex, nofollow">
+  <title>TilliT · prototype de test</title>
+  <meta name="description" content="Prototype de test de l'application TilliT : prêter de l'argent entre proches, à 0 % d'intérêt.">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/brand/icone-tillit-32.png">
+  <link rel="apple-touch-icon" href="assets/brand/icone-tillit-180.png">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/ecrans.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="css/theme-site.css">
+</head>
+<body>
+  <div id="app" class="app">
+    <header id="entete" class="entete" hidden></header>
+    <main id="ecran" class="ecran" tabindex="-1"></main>
+    <nav id="barre" class="barre" aria-label="Navigation principale" hidden></nav>
+    <div id="bannieres" class="bannieres" aria-live="polite"></div>
+    <div id="feuilles" class="feuilles" hidden></div>
+  </div>
+
+  <noscript><p class="sans-js">Ce prototype a besoin de JavaScript pour fonctionner.</p></noscript>
+
+  <!-- Questionnaire (spec 11) : formulaire caché pour que Netlify le détecte au déploiement.
+       Le lot K l'envoie par envoyerQuestionnaire(reponses). Rien ne part en local. -->
+  <form name="avis-prototype" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input type="hidden" name="form-name" value="avis-prototype">
+    <p hidden><label>Ne pas remplir <input name="bot-field"></label></p>
+    <textarea name="q1"></textarea>
+    <textarea name="q2"></textarea>
+    <textarea name="q3"></textarea>
+    <input name="q4">
+    <textarea name="q5"></textarea>
+  </form>
+
+  <!-- Lot 0 : socle (ordre de chargement important) -->
+  <script src="js/calculs.js"></script>
+  <script src="js/textes.js"></script>
+  <script src="js/notifications-textes.js"></script>
+  <script src="js/etat.js"></script>
+  <script src="js/routeur.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/provisoire.js"></script>
+  <!-- Lots A à K : un fichier chacun -->
+  <script src="js/ecrans/compte.js"></script>
+  <script src="js/ecrans/accueil.js"></script>
+  <script src="js/ecrans/creer.js"></script>
+  <script src="js/ecrans/negocier.js"></script>
+  <script src="js/ecrans/zen.js"></script>
+  <script src="js/ecrans/versement.js"></script>
+  <script src="js/ecrans/parcours.js"></script>
+  <script src="js/ecrans/changer.js"></script>
+  <script src="js/ecrans/carnet.js"></script>
+  <script src="js/ecrans/fin.js"></script>
+  <script src="js/ecrans/questionnaire.js"></script>
+  <script src="js/simulation.js"></script>
+</body>
+</html>
