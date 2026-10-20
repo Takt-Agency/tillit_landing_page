@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type MouseEvent } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, type MouseEvent } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styles from './Navbar.module.css';
 import Logo from '../Logo/Logo';
@@ -31,6 +31,7 @@ type Copy = {
   closeMenu: string;
   language: string;
   skip: string;
+  topbar: string;
 };
 
 // Hrefs are FRENCH paths; they are localised with useLocalize() at render time.
@@ -51,11 +52,6 @@ const COPY: Record<Lang, Copy> = {
       { href: '/recours', label: 'Si ça coince', icon: 'fa-triangle-exclamation' },
       { href: '/cas-usage', label: "Cas d'usage", icon: 'fa-lightbulb' },
       { href: '/blog', label: 'Conseils', icon: 'fa-comments' },
-      {
-        href: '/prototype',
-        label: "Prototype de l'application",
-        icon: 'fa-mobile-screen',
-      },
     ],
     links: [
       {
@@ -83,6 +79,7 @@ const COPY: Record<Lang, Copy> = {
     closeMenu: 'Fermer le menu',
     language: 'Langue',
     skip: 'Aller au contenu',
+    topbar: 'L’application française qui aide à organiser les prêts d’argent entre proches.',
   },
   en: {
     resources: [
@@ -100,7 +97,6 @@ const COPY: Record<Lang, Copy> = {
       { href: '/recours', label: 'If it gets stuck', icon: 'fa-triangle-exclamation' },
       { href: '/cas-usage', label: 'Use cases', icon: 'fa-lightbulb' },
       { href: '/blog', label: 'Advice', icon: 'fa-comments' },
-      { href: '/prototype', label: 'App prototype', icon: 'fa-mobile-screen' },
     ],
     links: [
       {
@@ -128,6 +124,7 @@ const COPY: Record<Lang, Copy> = {
     closeMenu: 'Close the menu',
     language: 'Language',
     skip: 'Skip to content',
+    topbar: 'The French app that helps organise money lent between friends and family.',
   },
 };
 
@@ -159,6 +156,7 @@ export default function Navbar() {
   const [active, setActive] = useState<string>('');
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const burgerRef = useRef<HTMLButtonElement | null>(null);
+  const topbarRef = useRef<HTMLDivElement | null>(null);
   const location = useLocation();
   const lang = useLang();
   const l = useLocalize();
@@ -175,6 +173,18 @@ export default function Navbar() {
     setOpen(false);
     setDropdownOpen(false);
   };
+
+  // The banner wraps on small screens: publish its real height so the page and navbar sit below it.
+  useLayoutEffect(() => {
+    const el = topbarRef.current;
+    if (!el) return;
+    const update = () =>
+      document.documentElement.style.setProperty('--topbar-h', `${el.offsetHeight}px`);
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -259,194 +269,211 @@ export default function Navbar() {
     : {};
 
   return (
-    <div className={styles.wrapper}>
+    <>
       <a href="#contenu" className={styles.skip} onClick={skipToContent}>
         {t.skip}
       </a>
       <div
-        className={`${styles.backdrop} ${open ? styles.backdropVisible : ''}`}
-        onClick={closeMenu}
-        aria-hidden="true"
-      />
-      <header
-        className={`${styles.header} ${scrolled ? styles.scrolled : ''} ${
-          open ? styles.headerMenuOpen : ''
-        }`}
+        className={`${styles.topbar} ${scrolled ? styles.topbarHidden : ''}`}
+        ref={topbarRef}
+        aria-hidden={scrolled || undefined}
       >
-        <Link to={l('/')} className={styles.brand} aria-label={t.home}>
-          <Logo />
-        </Link>
-
-        <nav
-          id="main-nav"
-          className={`${styles.nav} ${open ? styles.navOpen : ''}`}
-          aria-label={t.navLabel}
+        <p className={styles.topbarText}>
+          {/* SVG rather than the 🇫🇷 emoji: Windows doesn't render flag emoji */}
+          <svg className={styles.flag} viewBox="0 0 9 6" width="17" height="12" aria-hidden="true">
+            <rect width="3" height="6" fill="#002395" />
+            <rect x="3" width="3" height="6" fill="#F7F7F7" />
+            <rect x="6" width="3" height="6" fill="#ED2939" />
+          </svg>
+          <span>{t.topbar}</span>
+        </p>
+      </div>
+      <div className={`${styles.wrapper} ${scrolled ? styles.wrapperUp : ''}`}>
+        <div
+          className={`${styles.backdrop} ${open ? styles.backdropVisible : ''}`}
+          onClick={closeMenu}
+          aria-hidden="true"
+        />
+        <header
+          className={`${styles.header} ${scrolled ? styles.scrolled : ''} ${
+            open ? styles.headerMenuOpen : ''
+          }`}
         >
-          <ul className={styles.navList}>
-            {NAV_LINKS.map((link, index) => {
-              const isRoute = Boolean(link.route);
-              const itemStyle = { ['--i' as string]: index };
+          <Link to={l('/')} className={styles.brand} aria-label={t.home}>
+            <Logo />
+          </Link>
 
-              if (link.dropdown) {
-                return (
-                  <li
-                    key={link.href}
-                    className={`${styles.navItem} ${styles.dropdownWrap}`}
-                    style={itemStyle}
-                    {...hoverHandlers}
-                  >
-                    <button
-                      type="button"
-                      className={`${styles.navLink} ${styles.navLinkButton} ${
-                        dropdownOpen ? styles.navLinkExpanded : ''
-                      }`}
-                      aria-expanded={dropdownOpen}
-                      aria-controls="resources-menu"
-                      onClick={(e) =>
-                        canHover && e.detail > 0
-                          ? setDropdownOpen(true)
-                          : setDropdownOpen((v) => !v)
-                      }
+          <nav
+            id="main-nav"
+            className={`${styles.nav} ${open ? styles.navOpen : ''}`}
+            aria-label={t.navLabel}
+          >
+            <ul className={styles.navList}>
+              {NAV_LINKS.map((link, index) => {
+                const isRoute = Boolean(link.route);
+                const itemStyle = { ['--i' as string]: index };
+
+                if (link.dropdown) {
+                  return (
+                    <li
+                      key={link.href}
+                      className={`${styles.navItem} ${styles.dropdownWrap}`}
+                      style={itemStyle}
+                      {...hoverHandlers}
                     >
-                      <i
-                        className={`fa-solid ${link.icon} ${styles.navIcon}`}
-                        aria-hidden="true"
-                      />
-                      <span>{link.label}</span>
-                      <i
-                        className={`fa-solid fa-chevron-down ${styles.chevron} ${
-                          dropdownOpen ? styles.chevronOpen : ''
+                      <button
+                        type="button"
+                        className={`${styles.navLink} ${styles.navLinkButton} ${
+                          dropdownOpen ? styles.navLinkExpanded : ''
                         }`}
-                        aria-hidden="true"
-                      />
-                    </button>
+                        aria-expanded={dropdownOpen}
+                        aria-controls="resources-menu"
+                        onClick={(e) =>
+                          canHover && e.detail > 0
+                            ? setDropdownOpen(true)
+                            : setDropdownOpen((v) => !v)
+                        }
+                      >
+                        <i
+                          className={`fa-solid ${link.icon} ${styles.navIcon}`}
+                          aria-hidden="true"
+                        />
+                        <span>{link.label}</span>
+                        <i
+                          className={`fa-solid fa-chevron-down ${styles.chevron} ${
+                            dropdownOpen ? styles.chevronOpen : ''
+                          }`}
+                          aria-hidden="true"
+                        />
+                      </button>
 
-                    <div
-                      id="resources-menu"
-                      className={`${styles.dropdown} ${
-                        dropdownOpen ? styles.dropdownOpen : ''
-                      }`}
-                    >
-                      <ul className={styles.dropdownList}>
-                        {link.dropdown.map((item) => (
-                          <li key={item.label}>
-                            <Link
-                              to={l(item.href)}
-                              className={`${styles.dropdownItem} ${
-                                item.hasSubmenu ? styles.dropdownItemWithArrow : ''
-                              }`}
-                              onClick={closeMenu}
-                            >
-                              <i
-                                className={`fa-solid ${item.icon} ${styles.dropdownIcon}`}
-                                aria-hidden="true"
-                              />
-                              <span className={styles.dropdownLabel}>
-                                {item.label}
-                              </span>
-                              <i
-                                className={`fa-solid fa-chevron-right ${styles.dropdownArrow}`}
-                                aria-hidden="true"
-                              />
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                      <div
+                        id="resources-menu"
+                        className={`${styles.dropdown} ${
+                          dropdownOpen ? styles.dropdownOpen : ''
+                        }`}
+                      >
+                        <ul className={styles.dropdownList}>
+                          {link.dropdown.map((item) => (
+                            <li key={item.label}>
+                              <Link
+                                to={l(item.href)}
+                                className={`${styles.dropdownItem} ${
+                                  item.hasSubmenu ? styles.dropdownItemWithArrow : ''
+                                }`}
+                                onClick={closeMenu}
+                              >
+                                <i
+                                  className={`fa-solid ${item.icon} ${styles.dropdownIcon}`}
+                                  aria-hidden="true"
+                                />
+                                <span className={styles.dropdownLabel}>
+                                  {item.label}
+                                </span>
+                                <i
+                                  className={`fa-solid fa-chevron-right ${styles.dropdownArrow}`}
+                                  aria-hidden="true"
+                                />
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </li>
+                  );
+                }
+
+                const isActive = isRoute
+                  ? location.pathname === l(link.route!)
+                  : active === link.href;
+                const commonProps = {
+                  className: `${styles.navLink} ${
+                    isActive ? styles.navLinkActive : ''
+                  }`,
+                  onClick: closeMenu,
+                  'aria-current': (isActive ? 'page' : undefined) as
+                    | 'page'
+                    | undefined,
+                };
+                const inner = (
+                  <>
+                    <i
+                      className={`fa-solid ${link.icon} ${styles.navIcon}`}
+                      aria-hidden="true"
+                    />
+                    <span>{link.label}</span>
+                  </>
+                );
+                return (
+                  <li key={link.href} className={styles.navItem} style={itemStyle}>
+                    {isRoute ? (
+                      <Link to={l(link.route!)} {...commonProps}>
+                        {inner}
+                      </Link>
+                    ) : (
+                      <a href={link.href} {...commonProps}>
+                        {inner}
+                      </a>
+                    )}
                   </li>
                 );
-              }
+              })}
+            </ul>
 
-              const isActive = isRoute
-                ? location.pathname === l(link.route!)
-                : active === link.href;
-              const commonProps = {
-                className: `${styles.navLink} ${
-                  isActive ? styles.navLinkActive : ''
-                }`,
-                onClick: closeMenu,
-                'aria-current': (isActive ? 'page' : undefined) as
-                  | 'page'
-                  | undefined,
-              };
-              const inner = (
-                <>
-                  <i
-                    className={`fa-solid ${link.icon} ${styles.navIcon}`}
-                    aria-hidden="true"
-                  />
-                  <span>{link.label}</span>
-                </>
-              );
-              return (
-                <li key={link.href} className={styles.navItem} style={itemStyle}>
-                  {isRoute ? (
-                    <Link to={l(link.route!)} {...commonProps}>
-                      {inner}
-                    </Link>
-                  ) : (
-                    <a href={link.href} {...commonProps}>
-                      {inner}
-                    </a>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
+            <div className={styles.menuFooter}>
+              <a className={styles.menuCta} href={ctaHref} onClick={closeMenu}>
+                <i className="fa-solid fa-bell" aria-hidden="true" />
+                {t.cta}
+              </a>
+              <p className={styles.menuNote}>{t.menuNote}</p>
+            </div>
+          </nav>
 
-          <div className={styles.menuFooter}>
-            <a className={styles.menuCta} href={ctaHref} onClick={closeMenu}>
+          <div className={styles.actions}>
+            <div className={styles.lang} role="group" aria-label={t.language}>
+              {LANGS.map((o) =>
+                o.code === lang ? (
+                  <span key={o.code} className={styles.langOn} lang={o.code} aria-current="true">
+                    {o.label}
+                  </span>
+                ) : (
+                  <Link
+                    key={o.code}
+                    to={switchLang(location.pathname, location.hash, o.code)}
+                    className={styles.langLink}
+                    lang={o.code}
+                    hrefLang={o.code}
+                  >
+                    {o.label}
+                    <span className="sr-only"> · {o.name}</span>
+                  </Link>
+                ),
+              )}
+            </div>
+            <a
+              className={`${styles.cta} ${open ? styles.ctaHidden : ''}`}
+              href={ctaHref}
+              aria-label={t.cta}
+            >
               <i className="fa-solid fa-bell" aria-hidden="true" />
-              {t.cta}
+              <span className={styles.ctaText}>{t.ctaShort}</span>
             </a>
-            <p className={styles.menuNote}>{t.menuNote}</p>
+            <button
+              ref={burgerRef}
+              type="button"
+              className={`${styles.burger} ${open ? styles.burgerOpen : ''}`}
+              aria-expanded={open}
+              aria-controls="main-nav"
+              aria-label={open ? t.closeMenu : t.openMenu}
+              onClick={() => (open ? closeMenu() : setOpen(true))}
+            >
+              <span />
+              <span />
+              <span />
+            </button>
           </div>
-        </nav>
-
-        <div className={styles.actions}>
-          <div className={styles.lang} role="group" aria-label={t.language}>
-            {LANGS.map((o) =>
-              o.code === lang ? (
-                <span key={o.code} className={styles.langOn} lang={o.code} aria-current="true">
-                  {o.label}
-                </span>
-              ) : (
-                <Link
-                  key={o.code}
-                  to={switchLang(location.pathname, location.hash, o.code)}
-                  className={styles.langLink}
-                  lang={o.code}
-                  hrefLang={o.code}
-                >
-                  {o.label}
-                  <span className="sr-only"> · {o.name}</span>
-                </Link>
-              ),
-            )}
-          </div>
-          <a
-            className={`${styles.cta} ${open ? styles.ctaHidden : ''}`}
-            href={ctaHref}
-            aria-label={t.cta}
-          >
-            <i className="fa-solid fa-bell" aria-hidden="true" />
-            <span className={styles.ctaText}>{t.ctaShort}</span>
-          </a>
-          <button
-            ref={burgerRef}
-            type="button"
-            className={`${styles.burger} ${open ? styles.burgerOpen : ''}`}
-            aria-expanded={open}
-            aria-controls="main-nav"
-            aria-label={open ? t.closeMenu : t.openMenu}
-            onClick={() => (open ? closeMenu() : setOpen(true))}
-          >
-            <span />
-            <span />
-            <span />
-          </button>
-        </div>
-      </header>
-    </div>
+        </header>
+      </div>
+    </>
   );
 }

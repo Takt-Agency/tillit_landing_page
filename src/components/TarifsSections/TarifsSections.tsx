@@ -4,8 +4,9 @@ import styles from './TarifsSections.module.css';
 import InfoTip from '../InfoTip/InfoTip';
 import { typo, useLang, useLocalize } from '../../i18n';
 import mascotUrl from '../../millions-mascotte.png';
-import { SimulatorCard } from '../Comparateur/Comparateur';
+import LoanSimulator from '../LoanSimulator/LoanSimulator';
 import {
+  RATES_QUARTER,
   CONSO_BRACKETS,
   REVOLV_BRACKETS,
   ZEN_TIERS,
@@ -14,6 +15,8 @@ import {
   rateFmt,
   zenTierIndex,
 } from '../../lib/loanPricing';
+
+const QUARTER_EN = ['', 'first', 'second', 'third', 'fourth'];
 
 const BEATS = {
   fr: [
@@ -235,7 +238,7 @@ const GRILLE_COPY = {
     pill: 'Grille TilliT Zen',
     intro:
       'Un paiement unique, selon le montant prêté. Le prix reste le même, quelle que soit la durée du prêt.',
-    outro: <>Jusqu’à 1&nbsp;500&nbsp;€, tu choisis entre Note et Zen. Au-delà, c’est Zen.</>,
+    outro: <>Jusqu’à 1&nbsp;500&nbsp;€, tu choisis entre Note et Zen. Au-delà, Zen est obligatoire.</>,
   },
   en: {
     kicker: 'Simulator',
@@ -249,7 +252,7 @@ const GRILLE_COPY = {
     pill: 'TilliT Zen price grid',
     intro:
       'One payment, based on the amount lent. The price stays the same, whatever the length of the loan.',
-    outro: <>Up to €1,500, you choose between Note and Zen. Above that, it’s Zen.</>,
+    outro: <>Up to €1,500, you choose between Note and Zen. Above that, Zen is required.</>,
   },
 };
 
@@ -269,7 +272,7 @@ export function TarifsGrille() {
         </header>
 
         <div className={styles.narrow}>
-          <SimulatorCard full onAmountChange={onAmountChange} />
+          <LoanSimulator variant="full" onAmountChange={onAmountChange} />
 
           <div className={styles.grid} data-reveal>
             <h3 className={styles.gridPill}>{t.pill}</h3>
@@ -482,15 +485,16 @@ export function TarifsSuite() {
               </p>
               {en ? (
                 <p>
-                  Banque de France, average effective rates and usury ceilings for the third
-                  quarter of 2026. These values are revised every three months: to be checked
-                  again each quarter.
+                  Banque de France, average effective rates and usury ceilings for the{' '}
+                  {QUARTER_EN[RATES_QUARTER.quarter]} quarter of {RATES_QUARTER.year}. These
+                  values are revised every three months.
                 </p>
               ) : (
                 <p>
-                  Banque de France, taux effectifs moyens et seuils de l’usure du
-                  3<sup>e</sup> trimestre 2026. Ces valeurs sont révisées tous les trois
-                  mois&nbsp;: à revérifier à chaque trimestre.
+                  Banque de France, taux effectifs moyens et seuils de l’usure du{' '}
+                  {RATES_QUARTER.quarter}
+                  <sup>{RATES_QUARTER.quarter === 1 ? 'er' : 'e'}</sup> trimestre{' '}
+                  {RATES_QUARTER.year}. Ces valeurs sont révisées tous les trois mois.
                 </p>
               )}
             </article>
@@ -610,7 +614,7 @@ export function TarifsSuite() {
                 acknowledgement of debt, for a loan up to the Zen ceiling of €5,000. One payment,
                 from €2.99.
                 <br />
-                Above €1,500, it’s Zen. A loan of that size is proved by something in writing, and
+                Above €1,500, Zen is required. A loan of that size is proved by something in writing, and
                 Zen provides that writing.
                 <br />
                 <small className={styles.muted}>
@@ -623,7 +627,7 @@ export function TarifsSuite() {
                 une reconnaissance de dette signée, pour un prêt jusqu’au plafond Zen de
                 5&nbsp;000&nbsp;€. Un seul paiement, dès 2,99&nbsp;€.
                 <br />
-                Au-delà de 1&nbsp;500&nbsp;€, c’est Zen. Un prêt de ce montant se prouve par un
+                Au-delà de 1&nbsp;500&nbsp;€, Zen est obligatoire. Un prêt de ce montant se prouve par un
                 écrit, et c’est Zen qui l’établit.
                 <br />
                 <small className={styles.muted}>

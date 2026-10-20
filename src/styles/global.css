@@ -31,6 +31,8 @@
   --container-max: 1200px;
   --container-pad: clamp(20px, 4vw, 40px);
   --header-height: 76px;
+  /* Height of the fixed top banner, measured live by the Navbar */
+  --topbar-h: 38px;
 }
 
 *,
@@ -56,6 +58,11 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* The top banner is fixed: the page starts below it */
+body {
+  padding-top: var(--topbar-h);
 }
 
 h1,

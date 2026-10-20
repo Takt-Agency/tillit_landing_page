@@ -40,7 +40,7 @@
 }
 
 .logo {
-  filter: brightness(0) invert(1) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
+  width: auto;
   height: 40px;
   margin-bottom: 18px;
 }

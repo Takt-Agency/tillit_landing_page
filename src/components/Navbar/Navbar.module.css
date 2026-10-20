@@ -1,6 +1,7 @@
 .wrapper {
   position: fixed;
-  top: 0;
+  top: var(--topbar-h);
+  transition: top 0.3s ease;
   left: 0;
   right: 0;
   z-index: 50;
@@ -8,8 +9,69 @@
   pointer-events: none;
 }
 
+/* Once the page is scrolled the banner slides away and the navbar moves up */
+.wrapperUp {
+  top: 0;
+}
+
 .backdrop {
   display: none;
+}
+
+/* Top banner: fixed above the navigation, on every page */
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 60;
+  background: #0f0d18;
+  color: var(--color-white);
+  transition: transform 0.3s ease;
+}
+
+.topbarHidden {
+  transform: translateY(-100%);
+}
+
+/* Inline flow: the flag sits right before the first word and stays with the
+   centred text when it wraps on two lines */
+.topbarText {
+  margin: 0;
+  padding: 9px 18px;
+  text-align: center;
+  font-size: clamp(0.82rem, 1.4vw, 0.98rem);
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0.005em;
+}
+
+.flag {
+  display: inline-block;
+  margin-right: 10px;
+  vertical-align: -1px;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3);
+}
+
+@media (max-width: 700px) {
+  .topbarText {
+    padding: 7px 14px;
+    font-size: 0.74rem;
+    line-height: 1.3;
+  }
+
+  .flag {
+    width: 15px;
+    height: 11px;
+    margin-right: 7px;
+  }
+}
+
+@media (max-width: 380px) {
+  .topbarText {
+    font-size: 0.69rem;
+  }
 }
 
 .header {
@@ -389,7 +451,7 @@
     right: 0;
     display: flex;
     flex-direction: column;
-    max-height: calc(100dvh - 110px);
+    max-height: calc(100dvh - 110px - var(--topbar-h));
     overflow-y: auto;
     overscroll-behavior: contain;
     background: var(--color-white);
@@ -403,6 +465,11 @@
     visibility: hidden;
     pointer-events: none;
     transition: transform 0.25s ease, opacity 0.25s ease, visibility 0.25s;
+  }
+
+  /* Banner hidden once scrolled: the open menu can use that height */
+  .wrapperUp .nav {
+    max-height: calc(100dvh - 110px);
   }
 
   .navOpen {
@@ -532,7 +599,6 @@
     overflow: hidden;
     margin-left: 29px;
     padding-left: 14px;
-    border-left: 2px solid var(--color-violet-light);
   }
 
   .dropdownOpen .dropdownList {
@@ -630,6 +696,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .wrapper,
+  .topbar {
+    transition: none;
+  }
+
   .nav,
   .navItem,
   .dropdown,

@@ -72,21 +72,6 @@
   isolation: isolate;
 }
 
-.side::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #8b63e8, #b599f2);
-  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
-}
-
-.sideZen::before {
-  background: linear-gradient(90deg, #ef8068, #f4a68e);
-}
-
 .side::after {
   content: '';
   position: absolute;

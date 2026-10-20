@@ -1,19 +1,22 @@
 import styles from './Logo.module.css';
-import logoUrl from '../../logo.png';
+import logoViolet from '../../assets/logo-tillit-violet.webp';
+import logoWhite from '../../assets/logo-tillit-blanc.webp';
 
 type LogoProps = {
   className?: string;
+  /** 'white' on dark backgrounds (footer), violet everywhere else. */
+  variant?: 'violet' | 'white';
 };
 
-export default function Logo({ className }: LogoProps) {
+export default function Logo({ className, variant = 'violet' }: LogoProps) {
   return (
     <img
-      src={logoUrl}
+      src={variant === 'white' ? logoWhite : logoViolet}
       alt="TilliT"
       className={`${styles.logo} ${className ?? ''}`}
       decoding="async"
-      width={120}
-      height={40}
+      width={600}
+      height={212}
     />
   );
 }

@@ -187,6 +187,19 @@ export default function PageMeta() {
     document.documentElement.lang = lang;
     document.title = meta.title;
     document.querySelector('meta[name="description"]')?.setAttribute('content', meta.description);
+
+    // The app prototype is private (incubator demo): reachable by its URL, never indexed.
+    let robots = document.querySelector<HTMLMetaElement>('meta[name="robots"]');
+    if (frPath === '/prototype') {
+      if (!robots) {
+        robots = document.createElement('meta');
+        robots.name = 'robots';
+        document.head.appendChild(robots);
+      }
+      robots.content = 'noindex, nofollow';
+    } else {
+      robots?.remove();
+    }
   }, [pathname]);
 
   return null;

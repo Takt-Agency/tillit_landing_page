@@ -116,24 +116,6 @@
   position: relative;
 }
 
-.path {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 90px;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.path path {
-  fill: none;
-  stroke: rgba(139, 99, 232, 0.4);
-  stroke-width: 2;
-  stroke-dasharray: 8 8;
-  vector-effect: non-scaling-stroke;
-}
-
 .steps {
   position: relative;
   z-index: 1;
@@ -146,34 +128,29 @@
   align-items: start;
 }
 
-.step:nth-child(2),
-.step:nth-child(3) {
-  margin-top: 30px;
-}
-
+/* Same head for the four steps: round number + title on two lines max */
 .stepHead {
   display: flex;
   align-items: center;
-  gap: 10px;
-  min-height: 60px;
-  margin-bottom: 18px;
+  gap: 12px;
+  min-height: 52px;
+  margin-bottom: 16px;
 }
 
 .stepNum {
   flex-shrink: 0;
-  padding: 0 6px;
-  border-radius: 6px;
-  background: rgba(139, 99, 232, 0.12);
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #a785f0 0%, var(--color-violet) 100%);
+  box-shadow: 0 8px 18px rgba(139, 99, 232, 0.3);
   font-family: var(--font-heading);
-  font-weight: 500;
-  font-size: clamp(2rem, 3vw, 2.5rem);
-  line-height: 1.1;
-  color: #9c7cf0;
-}
-
-.step:last-child .stepNum {
-  background: rgba(30, 138, 76, 0.12);
-  color: #2fae6d;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--color-white);
 }
 
 .stepTitle {
@@ -221,6 +198,160 @@
   height: auto;
   border-radius: 4px;
   background: #efe9fd;
+}
+
+/* Step 2: the TilliT confirmation screen, framed like the photos */
+.confirmShot {
+  position: relative;
+  aspect-ratio: 1040 / 1300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16% 10% 12%;
+  border-radius: 4px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 20% 15%, rgba(255, 255, 255, 0.7) 0, transparent 45%),
+    linear-gradient(160deg, #efe8ff 0%, #ddd0fb 100%);
+}
+
+.confirmPhone {
+  width: 100%;
+  padding: 14px 14px 12px;
+  border-radius: 20px;
+  background: var(--color-white);
+  box-shadow: 0 18px 36px rgba(76, 52, 160, 0.22);
+  text-align: center;
+}
+
+.confirmApp {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.66rem;
+  color: var(--color-ink-mute);
+}
+
+.confirmApp img {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+}
+
+.confirmHead {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.8rem;
+  line-height: 1.25;
+  color: var(--color-ink);
+  text-align: left;
+}
+
+.confirmAvatar {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #6bb1f2;
+  color: var(--color-white);
+  font-size: 0.7rem;
+}
+
+.confirmSub {
+  margin-top: 4px;
+  font-size: 0.68rem;
+  color: var(--color-ink-mute);
+}
+
+.confirmAmount {
+  margin-top: 10px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--color-violet);
+}
+
+.confirmAmountSub {
+  font-size: 0.64rem;
+  color: var(--color-ink-mute);
+}
+
+.confirmGauge {
+  display: block;
+  height: 6px;
+  margin: 8px 0 12px;
+  border-radius: var(--radius-full);
+  background: var(--color-violet-light);
+  overflow: hidden;
+}
+
+.confirmGauge i {
+  display: block;
+  width: 40%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #a785f0, var(--color-violet));
+}
+
+.confirmYes,
+.confirmNo {
+  display: block;
+  padding: 7px 8px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.68rem;
+}
+
+.confirmYes {
+  background: var(--color-violet);
+  color: var(--color-white);
+  box-shadow: 0 6px 14px rgba(139, 99, 232, 0.35);
+}
+
+.confirmNo {
+  margin-top: 4px;
+  color: var(--color-ink-mute);
+}
+
+.confirmStamp {
+  position: absolute;
+  right: 5%;
+  top: 4%;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: var(--radius-full);
+  background: var(--color-white);
+  color: var(--color-green);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.66rem;
+  box-shadow: 0 10px 22px rgba(30, 138, 76, 0.22);
+  transform: rotate(4deg);
+}
+
+.confirmStamp i {
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--color-green);
+  color: var(--color-white);
+  font-size: 0.55rem;
 }
 
 .stepText {
@@ -775,13 +906,6 @@
     row-gap: 36px;
   }
 
-  .path {
-    display: none;
-  }
-
-  .step:nth-child(3) {
-    margin-top: 0;
-  }
 }
 
 @media (max-width: 820px) {
@@ -802,10 +926,6 @@
     max-width: 320px;
     margin: 0 auto;
     row-gap: 32px;
-  }
-
-  .step:nth-child(2) {
-    margin-top: 0;
   }
 
   .stepHead {

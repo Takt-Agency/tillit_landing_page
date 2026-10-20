@@ -127,16 +127,6 @@
     box-shadow 0.35s ease;
 }
 
-.card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 5px;
-  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
-}
-
 .card::after {
   content: '';
   position: absolute;
@@ -154,23 +144,14 @@
   box-shadow: 0 30px 60px rgba(31, 26, 61, 0.16);
 }
 
-.accent_violet::before {
-  background: linear-gradient(90deg, #8b63e8, #b599f2);
-}
 .accent_violet::after {
   background: radial-gradient(closest-side, #8b63e8, transparent);
 }
 
-.accent_coral::before {
-  background: linear-gradient(90deg, #ef8068, #f4a68e);
-}
 .accent_coral::after {
   background: radial-gradient(closest-side, #ef8068, transparent);
 }
 
-.accent_blue::before {
-  background: linear-gradient(90deg, #6bb1f2, #9dcbf7);
-}
 .accent_blue::after {
   background: radial-gradient(closest-side, #6bb1f2, transparent);
 }

@@ -190,16 +190,6 @@
   box-shadow: 0 16px 40px rgba(31, 26, 61, 0.07);
 }
 
-.beat::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: var(--tone);
-}
-
 .beatIcon {
   width: 48px;
   height: 48px;

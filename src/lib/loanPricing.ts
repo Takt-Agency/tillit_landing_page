@@ -15,7 +15,13 @@ export const MAX_AMOUNT = 5000;
 export const NOTE_FREE_LIMIT = 1500;
 export const FRANCECONNECT_FEE = 1.5;
 
-/** Banque de France — taux effectifs moyens & seuils de l'usure (3ᵉ trim. 2026). */
+/**
+ * Banque de France — taux effectifs moyens & seuils de l'usure.
+ * À METTRE À JOUR CHAQUE TRIMESTRE (règle interne TilliT) : le trimestre
+ * ci-dessous et les quatre taux des tranches. Tout le site lit ces valeurs.
+ */
+export const RATES_QUARTER = { quarter: 3, year: 2026 };
+
 type RateBracket = { max: number; rate: number };
 
 export const CONSO_BRACKETS: RateBracket[] = [

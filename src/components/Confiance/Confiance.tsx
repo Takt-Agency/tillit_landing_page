@@ -3,29 +3,80 @@ import { Link } from 'react-router-dom';
 import styles from './Confiance.module.css';
 import PageHero from '../PageHero/PageHero';
 import { useLang, useLocalize, type Lang } from '../../i18n';
-import accordImg from '../../assets/confiance/confiance-accord-terrasse.webp';
-import telephoneImg from '../../assets/confiance/confiance-telephone-main.webp';
+import accordImg from '../../assets/confiance/confiance-accord-poignee.webp';
 import carnetImg from '../../assets/confiance/carnet-pret-ouvert.webp';
 import calinImg from '../../assets/confiance/carnet-calin.webp';
 
-const STEP_IMGS = [
+const STEP_IMGS: ({ img: string; height: number } | null)[] = [
   { img: accordImg, height: 1300 },
-  { img: telephoneImg, height: 1300 },
+  null, // step 2: the TilliT confirmation screen, not a photo
   { img: carnetImg, height: 1387 },
   { img: calinImg, height: 1387 },
 ];
+
+// Step 2 is not a photo: the TilliT confirmation screen itself (same texts as on How it works).
+const CONFIRM: Record<Lang, { head: string; sub: string; amount: string; amountSub: string; yes: string; no: string; done: string }> = {
+  fr: {
+    head: 'Thomas a remboursé 100 €',
+    sub: 'Tu confirmes les avoir reçus ?',
+    amount: '200,00 €',
+    amountSub: 'remboursés sur 500 €',
+    yes: 'Oui, je confirme',
+    no: 'Je n’ai rien vu',
+    done: 'Remboursement confirmé',
+  },
+  en: {
+    head: 'Thomas has repaid €100',
+    sub: 'Can you confirm it’s arrived?',
+    amount: '€200.00',
+    amountSub: 'repaid of €500',
+    yes: 'Yes, I confirm',
+    no: 'I haven’t seen it',
+    done: 'Repayment confirmed',
+  },
+};
+
+function ConfirmScreen({ lang, label }: { lang: Lang; label: string }) {
+  const c = CONFIRM[lang];
+  return (
+    <div className={styles.confirmShot} role="img" aria-label={label}>
+      <div className={styles.confirmPhone} aria-hidden="true">
+        <p className={styles.confirmApp}>
+          <img src="/favicon.png" alt="" width={16} height={16} />
+          TilliT
+        </p>
+        <p className={styles.confirmHead}>
+          <span className={styles.confirmAvatar}>T</span>
+          {c.head}
+        </p>
+        <p className={styles.confirmSub}>{c.sub}</p>
+        <p className={styles.confirmAmount}>{c.amount}</p>
+        <p className={styles.confirmAmountSub}>{c.amountSub}</p>
+        <span className={styles.confirmGauge}>
+          <i />
+        </span>
+        <span className={styles.confirmYes}>{c.yes}</span>
+        <span className={styles.confirmNo}>{c.no}</span>
+      </div>
+      <span className={styles.confirmStamp} aria-hidden="true">
+        <i className="fa-solid fa-check" />
+        {c.done}
+      </span>
+    </div>
+  );
+}
 
 const STEPS: Record<Lang, { title: string; text: string; alt: string }[]> = {
   fr: [
     {
       title: 'Vous vous mettez d’accord',
       text: 'Le montant, les échéances, la date de fin. Ce qui est convenu est écrit avant le virement.',
-      alt: 'Deux amies qui se mettent d’accord à la terrasse d’un café',
+      alt: 'Deux amis se serrent la main en souriant à la terrasse d’un café',
     },
     {
       title: 'Chaque remboursement est confirmé',
       text: 'Tu déclares ton remboursement, l’autre le confirme. Ce remboursement confirmé rejoint l’historique partagé.',
-      alt: 'Un téléphone tenu à la main, en gros plan',
+      alt: 'L’écran TilliT où l’on confirme avoir reçu un remboursement de 100 €',
     },
     {
       title: 'Ton Carnet se remplit',
@@ -42,12 +93,12 @@ const STEPS: Record<Lang, { title: string; text: string; alt: string }[]> = {
     {
       title: 'You two agree',
       text: 'The amount, the instalments, the end date. What you agree is written down before the transfer.',
-      alt: 'Two friends agreeing on the terrace of a café',
+      alt: 'Two friends shaking hands and smiling on a café terrace',
     },
     {
       title: 'Each repayment is confirmed',
       text: 'You record your repayment, the other person confirms it. That confirmed repayment joins the shared history.',
-      alt: 'A phone held in one hand, close up',
+      alt: 'The TilliT screen where you confirm you received a €100 repayment',
     },
     {
       title: 'Your Carnet fills up',
@@ -300,15 +351,6 @@ export default function Confiance() {
           </div>
 
           <div className={styles.stepsZone}>
-            <svg
-              className={styles.path}
-              viewBox="0 0 1000 90"
-              preserveAspectRatio="none"
-              aria-hidden="true"
-            >
-              <path d="M10 30 C 120 30, 170 75, 290 72 S 470 70, 560 72 S 720 50, 790 30 S 930 26, 990 30" />
-            </svg>
-
             <ol className={styles.steps}>
               {steps.map((s, i) => (
                 <li
@@ -322,14 +364,18 @@ export default function Confiance() {
                     <span className={styles.stepTitle}>{s.title}</span>
                   </p>
                   <figure className={styles.polaroid}>
-                    <img
-                      src={STEP_IMGS[i].img}
-                      alt={s.alt}
-                      width={1040}
-                      height={STEP_IMGS[i].height}
-                      loading="lazy"
-                      decoding="async"
-                    />
+                    {STEP_IMGS[i] === null ? (
+                      <ConfirmScreen lang={lang} label={s.alt} />
+                    ) : (
+                      <img
+                        src={STEP_IMGS[i]!.img}
+                        alt={s.alt}
+                        width={1040}
+                        height={STEP_IMGS[i]!.height}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    )}
                     <figcaption className={styles.stepText}>{s.text}</figcaption>
                   </figure>
                 </li>

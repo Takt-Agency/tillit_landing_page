@@ -148,7 +148,7 @@ const SCENES: Record<Lang, Record<Mode, Scene[]>> = {
 export default function Problem() {
   const lang = useLang();
   const t = COPY[lang];
-  const [mode, setMode] = useState<Mode>('sans');
+  const [mode, setMode] = useState<Mode>('avec');
 
   return (
     <section
@@ -189,14 +189,7 @@ export default function Problem() {
 
           <div className={styles.switch} role="group" aria-label={t.switchLabel}>
             <span className={styles.switchThumb} aria-hidden="true" />
-            <button
-              type="button"
-              className={`${styles.switchBtn} ${mode === 'sans' ? styles.switchBtnActive : ''}`}
-              aria-pressed={mode === 'sans'}
-              onClick={() => setMode('sans')}
-            >
-              {t.sans}
-            </button>
+            {/* Avec TilliT first: the solution comes before the problem */}
             <button
               type="button"
               className={`${styles.switchBtn} ${mode === 'avec' ? styles.switchBtnActive : ''}`}
@@ -204,6 +197,14 @@ export default function Problem() {
               onClick={() => setMode('avec')}
             >
               {t.avec}
+            </button>
+            <button
+              type="button"
+              className={`${styles.switchBtn} ${mode === 'sans' ? styles.switchBtnActive : ''}`}
+              aria-pressed={mode === 'sans'}
+              onClick={() => setMode('sans')}
+            >
+              {t.sans}
             </button>
           </div>
         </header>

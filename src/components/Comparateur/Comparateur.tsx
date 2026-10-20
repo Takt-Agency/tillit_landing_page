@@ -2,6 +2,7 @@ import { useEffect, useId, useMemo, useState, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Comparateur.module.css';
 import InfoTip from '../InfoTip/InfoTip';
+import LoanSimulator from '../LoanSimulator/LoanSimulator';
 import { useLang, useLocalize, type Lang } from '../../i18n';
 import {
   CONSO_BRACKETS,
@@ -84,7 +85,7 @@ const COPY = {
     // Messages
     outOfRange: (_amount: number) =>
       `Le montant doit être compris entre ${eur(MIN_AMOUNT)} et ${eur(MAX_AMOUNT)}.`,
-    noteTooHigh: `Note couvre les prêts jusqu’à ${eur(NOTE_FREE_LIMIT)}. Au-delà, c’est Zen.`,
+    noteTooHigh: `Note couvre les prêts jusqu’à ${eur(NOTE_FREE_LIMIT)}. Au-delà, Zen est obligatoire.`,
     waitBoth: 'Saisis un montant et choisis une durée.',
     waitAmount: 'Saisis un montant.',
     waitDuration: 'Choisis une durée.',
@@ -209,7 +210,7 @@ const COPY = {
       MIN_AMOUNT > amount
         ? `The calculation starts at ${eurShortEn(MIN_AMOUNT)}.`
         : `TilliT organises loans up to ${eurShortEn(MAX_AMOUNT)}.`,
-    noteTooHigh: `Note covers loans up to ${eurShortEn(NOTE_FREE_LIMIT)}. Above that, it’s Zen.`,
+    noteTooHigh: `Note covers loans up to ${eurShortEn(NOTE_FREE_LIMIT)}. Above that, Zen is required.`,
     waitBoth: 'Enter an amount and choose how long.',
     waitAmount: 'Enter an amount.',
     waitDuration: 'Choose how long.',
@@ -785,12 +786,38 @@ export function SimulatorCard({ full = false, onAmountChange }: CardProps) {
   );
 }
 
+const HOME_HEAD = {
+  fr: {
+    kicker: 'Simulateur',
+    lead: 'Saisis une somme, choisis une durée : tu vois la différence, noir sur blanc.',
+  },
+  en: {
+    kicker: 'Simulator',
+    lead: 'Enter an amount, choose a length: you see the difference in black and white.',
+  },
+};
+
+// Home page: the compact version of the pricing-page simulator.
 export default function Comparateur() {
-  const t = COPY[useLang()];
+  const lang = useLang();
+  const t = COPY[lang];
+  const head = HOME_HEAD[lang];
   return (
     <section className={styles.section} id="comparateur" aria-labelledby="comparateur-titre">
       <div className={styles.inner}>
-        <SimulatorCard />
+        <header className={styles.homeHead} data-reveal>
+          <span className={styles.homeKicker}>
+            <i className="fa-solid fa-calculator" aria-hidden="true" /> {head.kicker}
+          </span>
+          <h2 className={styles.title} id="comparateur-titre">
+            {t.titleHome}
+          </h2>
+          <p className={styles.homeLead}>{head.lead}</p>
+        </header>
+
+        <div className={styles.homeCard} data-reveal>
+          <LoanSimulator variant="mini" />
+        </div>
 
         <p className={styles.closing} data-reveal>
           <span>{t.closing1}</span>{' '}

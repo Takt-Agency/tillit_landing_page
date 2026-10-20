@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import styles from './Pricing.module.css';
+import InfoTip from '../InfoTip/InfoTip';
+import mascotUrl from '../../mascoote avis.png';
 import { useLang, useLocalize } from '../../i18n';
 
 type Feature = { icon: string; label: string };
@@ -30,7 +32,7 @@ const COPY = {
         De <strong>100 à 5 000 €</strong> par prêt
       </>
     ),
-    zenAbove: 'Au-delà de 1 500 €, c’est Zen.',
+    zenAbove: 'Au-delà de 1 500 €, Zen est obligatoire.',
     oneOff: 'Paiement unique · aucun abonnement',
     whoPays: '« Qui paie ? »',
     together: 'Vous choisissez ensemble.',
@@ -99,7 +101,7 @@ const COPY = {
         From <strong>€100 to €5,000</strong> per loan
       </>
     ),
-    zenAbove: 'Above €1,500, it’s Zen.',
+    zenAbove: 'Above €1,500, Zen is required.',
     oneOff: 'One payment · no subscription',
     whoPays: '“Who pays?”',
     together: 'You two choose together.',
@@ -170,6 +172,16 @@ export default function Pricing() {
                 <p className={styles.price}>{t.notePrice}</p>
               </div>
               <p className={styles.meta}>{t.noteMeta}</p>
+              <img
+                src={mascotUrl}
+                alt=""
+                aria-hidden="true"
+                className={styles.noteMascot}
+                width={180}
+                height={154}
+                loading="lazy"
+                decoding="async"
+              />
             </div>
 
             <div className={styles.cardBody}>
@@ -205,15 +217,8 @@ export default function Pricing() {
               <p className={styles.metaSoft}>{t.zenAbove}</p>
               <p className={styles.metaStrong}>{t.oneOff}</p>
               <p className={styles.meta}>
-                <strong>{t.whoPays}</strong> {t.together}{' '}
-                <span
-                  className={styles.infoDot}
-                  role="img"
-                  aria-label={t.whoPaysTip}
-                  title={t.whoPaysTip}
-                >
-                  i
-                </span>
+                <strong>{t.whoPays}</strong> {t.together}
+                <InfoTip light label={t.whoPays} text={t.whoPaysTip} />
               </p>
               <Link to={l('/#comparateur')} className={styles.inlineLink}>
                 {t.calc}

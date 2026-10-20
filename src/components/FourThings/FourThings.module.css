@@ -178,27 +178,10 @@
     border-color 0.3s ease;
 }
 
-.card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 18px;
-  right: 18px;
-  height: 3px;
-  border-radius: 0 0 4px 4px;
-  background: linear-gradient(90deg, var(--accent-2), var(--accent));
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
 .card:hover {
   transform: translateY(-4px);
   border-color: color-mix(in srgb, var(--accent) 40%, transparent);
   box-shadow: 0 22px 44px color-mix(in srgb, var(--accent) 22%, transparent);
-}
-
-.card:hover::before {
-  opacity: 1;
 }
 
 .cardIcon {
@@ -454,15 +437,39 @@
     gap: 14px;
   }
 
+  /* Phone: tag on the left and illustration on the right on the same line,
+     then the title and text full width, all starting at the same edge */
   .card {
-    padding: 16px 18px 18px 14px;
-    gap: 12px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    column-gap: 12px;
+    padding: 18px 18px 20px;
     border-radius: 22px;
   }
 
+  .cardBody {
+    display: contents;
+  }
+
+  .tag {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: start;
+  }
+
   .cardIcon {
-    width: 44px;
-    height: 44px;
+    grid-column: 2;
+    grid-row: 1;
+    width: 48px;
+    height: 48px;
+    margin-top: 0;
+  }
+
+  .cardText {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin-top: 8px;
   }
 
   .center {
@@ -480,5 +487,16 @@
   .card,
   .cardIcon {
     transition: none;
+  }
+}
+
+/* Magnifier on the value tags (Clarté, Confiance…), mouse only */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .tag {
+    transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1);
+  }
+
+  .tag:hover {
+    transform: scale(1.08);
   }
 }

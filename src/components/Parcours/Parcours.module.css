@@ -1,6 +1,8 @@
 .section {
   position: relative;
   overflow: hidden;
+  /* Switching steps changes heights: don't let the browser nudge the scroll */
+  overflow-anchor: none;
   isolation: isolate;
   padding: clamp(64px, 8vw, 104px) 0;
   background: linear-gradient(180deg, #f3effd 0%, #ece5fb 100%);
@@ -124,7 +126,8 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
   gap: clamp(28px, 4vw, 56px);
-  align-items: center;
+  /* Top-aligned: the phone stays put when the stage grows (step 03 cases, longer text) */
+  align-items: start;
 }
 
 /* --- Steps --- */
@@ -609,7 +612,9 @@
 /* --- Benefit --- */
 .benefit {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  /* Same height for every step, whatever the length of the sentence */
+  min-height: 96px;
   gap: 12px;
   width: 100%;
   max-width: 400px;

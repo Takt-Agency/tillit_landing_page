@@ -1,3 +1,4 @@
+import { useState, type KeyboardEvent } from 'react';
 import styles from './SplitVsTillit.module.css';
 import { useLang } from '../../i18n';
 
@@ -8,7 +9,15 @@ type Step = {
   meta: string;
   amount?: string;
   tone: 'done' | 'notice' | 'next' | 'later';
+  /** Total repaid once this instalment is paid (instalments only). */
+  cumul?: number;
+  /** Meta shown when the instalment is displayed as repaid. */
+  metaRepaid?: string;
 };
+
+// The loan at rest: instalment 1 repaid, 50 € of 150 €.
+const REST = 50;
+const TOTAL = 150;
 
 const COPY = {
   fr: {
@@ -38,13 +47,17 @@ const COPY = {
     lentAmount: '150,00 €',
     interest: 'Intérêts',
     interestValue: '0 %',
-    progressLabel: '50 € remboursés sur 150 €',
     steps: [
-      { label: 'Échéance 1/3', meta: '5 juil. · Remboursée', amount: '50,00 €', tone: 'done' },
+      { label: 'Échéance 1/3', meta: '5 juil. · Remboursée', amount: '50,00 €', tone: 'done', cumul: 50 },
       { label: 'Report accepté', meta: 'Échéance 2/3 déplacée du 5 août au 5 septembre', tone: 'notice' },
-      { label: 'Échéance 2/3', meta: '5 sept. · Prochaine', amount: '50,00 €', tone: 'next' },
-      { label: 'Échéance 3/3', meta: '5 oct. · À venir', amount: '50,00 €', tone: 'later' },
+      { label: 'Échéance 2/3', meta: '5 sept. · Prochaine', metaRepaid: '5 sept. · Remboursée', amount: '50,00 €', tone: 'next', cumul: 100 },
+      { label: 'Échéance 3/3', meta: '5 oct. · À venir', metaRepaid: '5 oct. · Remboursée', amount: '50,00 €', tone: 'later', cumul: 150 },
     ] as Step[],
+    money: (v: number) => `${v} €`,
+    repaidOf: 'remboursés sur',
+    endsOn: 'Fin prévue le 5 octobre.',
+    loanRepaid: 'Prêt remboursé.',
+    hint: 'Touche une échéance pour voir le remboursement avancer.',
   },
   en: {
     leadStrong: 'TilliT organises what you lend each other.',
@@ -73,13 +86,17 @@ const COPY = {
     lentAmount: '€150.00',
     interest: 'Interest',
     interestValue: '0%',
-    progressLabel: '€50 repaid of €150',
     steps: [
-      { label: 'Instalment 1 of 3', meta: '5 Jul · Repaid', amount: '€50.00', tone: 'done' },
+      { label: 'Instalment 1 of 3', meta: '5 Jul · Repaid', amount: '€50.00', tone: 'done', cumul: 50 },
       { label: 'Postponement agreed', meta: 'Instalment 2 of 3 moved from 5 August to 5 September', tone: 'notice' },
-      { label: 'Instalment 2 of 3', meta: '5 Sep · Next', amount: '€50.00', tone: 'next' },
-      { label: 'Instalment 3 of 3', meta: '5 Oct · Upcoming', amount: '€50.00', tone: 'later' },
+      { label: 'Instalment 2 of 3', meta: '5 Sep · Next', metaRepaid: '5 Sep · Repaid', amount: '€50.00', tone: 'next', cumul: 100 },
+      { label: 'Instalment 3 of 3', meta: '5 Oct · Upcoming', metaRepaid: '5 Oct · Repaid', amount: '€50.00', tone: 'later', cumul: 150 },
     ] as Step[],
+    money: (v: number) => `€${v}`,
+    repaidOf: 'repaid of',
+    endsOn: 'Ends 5 October.',
+    loanRepaid: 'Loan repaid.',
+    hint: 'Tap an instalment to watch the repayment move forward.',
   },
 };
 
@@ -93,6 +110,22 @@ const STEP_ICON: Record<Step['tone'], string> = {
 export default function SplitVsTillit() {
   const lang = useLang();
   const t = COPY[lang];
+  const payerColor = (name: string) => t.expenses.find((e) => e.payer === name)?.color;
+
+  // Pointing at an instalment shows the loan at that date (hover, focus or tap);
+  // a click keeps it selected, which is what a finger needs on mobile.
+  const [hovered, setHovered] = useState<number | null>(null);
+  const [picked, setPicked] = useState<number | null>(null);
+  const active = hovered ?? picked;
+  const cumul = active !== null ? (t.steps[active].cumul ?? REST) : REST;
+  const full = cumul === TOTAL;
+  const toggle = (i: number) => setPicked((p) => (p === i ? null : i));
+  const onKey = (e: KeyboardEvent, i: number) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggle(i);
+    }
+  };
 
   return (
     <section
@@ -128,6 +161,28 @@ export default function SplitVsTillit() {
               <p className={styles.eyebrow}>{t.splitEyebrow}</p>
             </div>
             <h3 className={styles.cardTitle}>{t.splitTitle}</h3>
+
+            {/* The answer to the title, right under it: what the app ends up telling you */}
+            <p className={styles.answer}>
+              <span className={styles.answerAvatar} style={{ background: payerColor('Julie') }} aria-hidden="true">
+                J
+              </span>
+              {lang === 'en' ? (
+                <span className={styles.answerText}>
+                  <strong>Julie</strong> owes <span className={styles.answerAmount}>€150</span> to{' '}
+                  <strong>Emma</strong>.
+                </span>
+              ) : (
+                <span className={styles.answerText}>
+                  <strong>Julie</strong> doit <span className={styles.answerAmount}>150&nbsp;€</span> à{' '}
+                  <strong>Emma</strong>.
+                </span>
+              )}
+              <span className={styles.answerAvatar} style={{ background: payerColor('Emma') }} aria-hidden="true">
+                E
+              </span>
+            </p>
+
             <p className={styles.examples}>{t.splitExamples}</p>
             <p className={styles.desc}>{t.splitDesc}</p>
 
@@ -167,17 +222,6 @@ export default function SplitVsTillit() {
                 ))}
               </ul>
 
-              {lang === 'en' ? (
-                <p className={styles.result}>
-                  <strong>Julie</strong> owes <span className={styles.coral}>€150</span> to{' '}
-                  <strong>Emma</strong>.
-                </p>
-              ) : (
-                <p className={styles.result}>
-                  <strong>Julie</strong> doit <span className={styles.coral}>150 €</span> à{' '}
-                  <strong>Emma</strong>.
-                </p>
-              )}
             </div>
           </article>
 
@@ -216,43 +260,64 @@ export default function SplitVsTillit() {
               </div>
 
               <div className={styles.progressBlock}>
-                {lang === 'en' ? (
-                  <p className={styles.progressText}>
-                    <span className={styles.violet}>€50</span> repaid of{' '}
-                    <span className={styles.coral}>€150</span> · Ends 5 October.
-                  </p>
-                ) : (
-                  <p className={styles.progressText}>
-                    <span className={styles.violet}>50 €</span> remboursés sur{' '}
-                    <span className={styles.coral}>150 €</span> · Fin prévue le 5 octobre.
-                  </p>
-                )}
+                <p className={styles.progressText} aria-live="polite">
+                  <span className={full ? styles.green : styles.violet}>{t.money(cumul)}</span>{' '}
+                  {t.repaidOf} <span className={styles.coral}>{t.money(TOTAL)}</span> ·{' '}
+                  {full ? t.loanRepaid : t.endsOn}
+                </p>
                 <div
                   className={styles.progress}
                   role="progressbar"
                   aria-valuemin={0}
                   aria-valuemax={150}
-                  aria-valuenow={50}
-                  aria-label={t.progressLabel}
+                  aria-valuenow={cumul}
+                  aria-label={`${t.money(cumul)} ${t.repaidOf} ${t.money(TOTAL)}`}
                 >
-                  <span className={styles.progressFill} />
+                  <span
+                    className={`${styles.progressFill} ${full ? styles.progressFull : ''}`}
+                    style={{ width: `${(cumul / TOTAL) * 100}%` }}
+                  />
                 </div>
               </div>
 
               <ol className={styles.timeline}>
-                {t.steps.map((s) => (
-                  <li key={s.label} className={`${styles.step} ${styles[`step_${s.tone}`]}`}>
-                    <span className={styles.dot} aria-hidden="true">
-                      <i className={`fa-solid ${STEP_ICON[s.tone]}`} />
-                    </span>
-                    <div className={styles.rowText}>
-                      <p className={styles.rowLabel}>{s.label}</p>
-                      <p className={styles.stepMeta}>{s.meta}</p>
-                    </div>
-                    {s.amount && <p className={styles.rowAmount}>{s.amount}</p>}
-                  </li>
-                ))}
+                {t.steps.map((s, i) => {
+                  const interactive = s.cumul !== undefined;
+                  const repaid = interactive && s.cumul! <= cumul;
+                  const tone = repaid ? 'done' : s.tone;
+                  const meta = repaid && s.metaRepaid ? s.metaRepaid : s.meta;
+                  return (
+                    <li
+                      key={s.label}
+                      className={`${styles.step} ${styles[`step_${tone}`]} ${
+                        interactive ? styles.stepInteractive : ''
+                      } ${active === i ? styles.stepActive : ''}`}
+                      {...(interactive && {
+                        role: 'button',
+                        tabIndex: 0,
+                        'aria-pressed': picked === i,
+                        onClick: () => toggle(i),
+                        onKeyDown: (e: KeyboardEvent) => onKey(e, i),
+                        onMouseEnter: () => setHovered(i),
+                        onMouseLeave: () => setHovered(null),
+                      })}
+                    >
+                      <span className={styles.dot} aria-hidden="true">
+                        <i className={`fa-solid ${STEP_ICON[tone]}`} />
+                      </span>
+                      <div className={styles.rowText}>
+                        <p className={styles.rowLabel}>{s.label}</p>
+                        <p className={styles.stepMeta}>{meta}</p>
+                      </div>
+                      {s.amount && <p className={styles.rowAmount}>{s.amount}</p>}
+                    </li>
+                  );
+                })}
               </ol>
+              <p className={styles.hint}>
+                <i className="fa-solid fa-hand-pointer" aria-hidden="true" />
+                {t.hint}
+              </p>
             </div>
           </article>
         </div>

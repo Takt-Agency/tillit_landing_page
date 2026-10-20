@@ -160,7 +160,7 @@ export default function Footer(_props: Props) {
       <div className={styles.inner}>
         <div className={styles.top}>
           <div className={styles.brand} data-reveal="left">
-            <Logo className={styles.logo} />
+            <Logo variant="white" className={styles.logo} />
             <p className={styles.tagline}>{t.tagline}</p>
           </div>
 

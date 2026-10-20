@@ -48,7 +48,7 @@ const CASES: Record<Lang, Record<Role, Case[]>> = {
         amount: '600 €',
         status: 'Rappel envoyé',
         tone: 'violet',
-        title: '« J’avance 600 € pour le billet d’avion d’un ami. »',
+        title: '« J’aide à financer 600 € pour le billet d’avion d’un ami. »',
         situation: 'Tu paies le billet maintenant, il te rembourse après le voyage.',
         benefits: [
           'La date du remboursement est fixée avant que tu paies',
@@ -61,7 +61,7 @@ const CASES: Record<Lang, Record<Role, Case[]>> = {
         amount: '1 200 €',
         status: 'Accepté',
         tone: 'green',
-        title: '« J’avance 1 200 € à ma sœur pour son permis. »',
+        title: '« J’aide à financer 1 200 € pour le permis de ma sœur. »',
         situation: 'Tu veux l’aider sans que la somme revienne à chaque repas de famille.',
         benefits: [
           'Le montant, les mensualités et la date de fin sont fixés avant le virement',
@@ -135,7 +135,7 @@ const CASES: Record<Lang, Record<Role, Case[]>> = {
         amount: '€600',
         status: 'Reminder sent',
         tone: 'violet',
-        title: '“I’m fronting €600 for a friend’s plane ticket.”',
+        title: '“I’m helping pay €600 towards a friend’s plane ticket.”',
         situation: 'You pay for the ticket now, he repays you after the trip.',
         benefits: [
           'The repayment date is set before you pay',
@@ -148,7 +148,7 @@ const CASES: Record<Lang, Record<Role, Case[]>> = {
         amount: '€1,200',
         status: 'Accepted',
         tone: 'green',
-        title: '“I’m fronting €1,200 to my sister for her driving licence.”',
+        title: '“I’m helping pay €1,200 towards my sister’s driving licence.”',
         situation: 'You want to help without the money coming up at every family meal.',
         benefits: [
           'The amount, the monthly instalments and the end date are set before the transfer',
