@@ -695,6 +695,67 @@
   }
 }
 
+/* Small phones (360-420 px): logo, FR/EN, bell and menu stay inside the bar */
+@media (max-width: 420px) {
+  .header {
+    gap: 8px;
+    padding: 6px 6px 6px 10px;
+  }
+
+  .brand {
+    padding: 4px 2px;
+  }
+
+  .actions {
+    gap: 4px;
+  }
+
+  .lang {
+    margin-right: 2px;
+  }
+
+  .langOn,
+  .langLink {
+    min-width: 32px;
+    height: 30px;
+    padding: 0 6px;
+  }
+
+  .cta,
+  .burger {
+    width: 40px;
+    height: 40px;
+  }
+
+  .burger span {
+    left: 10px;
+  }
+
+  .burger span:nth-child(1) {
+    top: 13px;
+  }
+
+  .burger span:nth-child(2) {
+    top: 19px;
+  }
+
+  .burger span:nth-child(3) {
+    top: 25px;
+  }
+
+  .burgerOpen span:nth-child(1),
+  .burgerOpen span:nth-child(3) {
+    top: 19px;
+  }
+}
+
+/* Very narrow phones (320 px): a slightly smaller logo */
+@media (max-width: 340px) {
+  .brand img {
+    height: 30px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .wrapper,
   .topbar {
