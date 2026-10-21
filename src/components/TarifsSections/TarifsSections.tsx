@@ -4,7 +4,7 @@ import styles from './TarifsSections.module.css';
 import InfoTip from '../InfoTip/InfoTip';
 import { typo, useLang, useLocalize } from '../../i18n';
 import mascotUrl from '../../millions-mascotte.png';
-import LoanSimulator from '../LoanSimulator/LoanSimulator';
+import { SimulatorCard } from '../Comparateur/Comparateur';
 import {
   RATES_QUARTER,
   CONSO_BRACKETS,
@@ -272,7 +272,7 @@ export function TarifsGrille() {
         </header>
 
         <div className={styles.narrow}>
-          <LoanSimulator variant="full" onAmountChange={onAmountChange} />
+          <SimulatorCard full onAmountChange={onAmountChange} />
 
           <div className={styles.grid} data-reveal>
             <h3 className={styles.gridPill}>{t.pill}</h3>
@@ -387,6 +387,7 @@ export function TarifsSuite() {
                     </>
                   )}
                   <InfoTip
+                    placement="bottom"
                     label={
                       en
                         ? 'Who pays the FranceConnect extra'

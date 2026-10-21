@@ -59,6 +59,17 @@
   transform: translate(calc(-50% + var(--shift, 0px)), 0);
 }
 
+/* Under the (i): keeps the title above it visible */
+.bottom {
+  top: calc(100% + 10px);
+  bottom: auto;
+  transform: translate(calc(-50% + var(--shift, 0px)), -4px);
+}
+
+.bottom.open {
+  transform: translate(calc(-50% + var(--shift, 0px)), 0);
+}
+
 @media (max-width: 520px) {
   .bubble {
     max-width: 220px;

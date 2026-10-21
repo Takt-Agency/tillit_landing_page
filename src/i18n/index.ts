@@ -23,7 +23,6 @@ export const ROUTE_PAIRS: [fr: string, en: string][] = [
   ['/faq', '/en/faq'],
   ['/contact', '/en/contact'],
   ['/confirmation', '/en/thank-you'],
-  ['/prototype', '/en/prototype'],
   ['/mentions-legales', '/en/legal-notice'],
   ['/conditions', '/en/terms'],
   ['/confidentialite', '/en/privacy'],

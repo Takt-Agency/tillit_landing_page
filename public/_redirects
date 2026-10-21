@@ -1,1 +1,7 @@
+# The app prototype is no longer public: its page and its files lead home
+/prototype         /      302!
+/en/prototype      /en/   302!
+/prototype-app     /      302!
+/prototype-app/*   /      302!
+
 /*    /index.html   200

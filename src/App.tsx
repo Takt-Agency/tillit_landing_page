@@ -16,7 +16,6 @@ const CommentCaMarche = lazy(() => import('./pages/CommentCaMarche'));
 const Difference = lazy(() => import('./pages/Difference'));
 const CasUsage = lazy(() => import('./pages/CasUsage'));
 const Blog = lazy(() => import('./pages/Blog'));
-const Prototype = lazy(() => import('./pages/Prototype'));
 const Legal = lazy(() => import('./pages/Legal'));
 const Contact = lazy(() => import('./pages/Contact'));
 const Confirmation = lazy(() => import('./pages/Confirmation'));
@@ -36,7 +35,6 @@ const PAGES: [string, JSX.Element][] = [
   ['/difference', <Difference />],
   ['/cas-usage', <CasUsage />],
   ['/blog', <Blog />],
-  ['/prototype', <Prototype />],
   ['/mentions-legales', <Legal tab="mentions" />],
   ['/conditions', <Legal tab="conditions" />],
   ['/confidentialite', <Legal tab="confidentialite" />],
@@ -63,6 +61,9 @@ export default function App() {
           <Route path="/en" element={<Home />} />
           <Route path="/pourquoi-tillit" element={<Navigate to="/notre-histoire" replace />} />
           <Route path="/cgv" element={<Navigate to="/conditions" replace />} />
+          {/* The app prototype is no longer public: its old addresses lead home */}
+          <Route path="/prototype" element={<Navigate to="/" replace />} />
+          <Route path="/en/prototype" element={<Navigate to="/en/" replace />} />
           <Route path="/en/*" element={<NotFound />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

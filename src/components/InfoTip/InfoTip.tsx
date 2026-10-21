@@ -1,9 +1,15 @@
 import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
 import styles from './InfoTip.module.css';
 
-type Props = { label: string; text: string; light?: boolean };
+type Props = {
+  label: string;
+  text: string;
+  light?: boolean;
+  /** 'bottom' opens the bubble under the (i), when a title sits right above it. */
+  placement?: 'top' | 'bottom';
+};
 
-export default function InfoTip({ label, text, light = false }: Props) {
+export default function InfoTip({ label, text, light = false, placement = 'top' }: Props) {
   const [open, setOpen] = useState(false);
   const id = useId();
   const bubbleRef = useRef<HTMLSpanElement>(null);
@@ -52,7 +58,9 @@ export default function InfoTip({ label, text, light = false }: Props) {
         ref={bubbleRef}
         id={id}
         role="tooltip"
-        className={`${styles.bubble} ${open ? styles.open : ''}`}
+        className={`${styles.bubble} ${placement === 'bottom' ? styles.bottom : ''} ${
+          open ? styles.open : ''
+        }`}
         style={{ ['--shift' as string]: `${shift}px` }}
       >
         {text}

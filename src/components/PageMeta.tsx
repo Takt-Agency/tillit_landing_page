@@ -84,10 +84,6 @@ const META: Record<Lang, Record<string, Meta>> = {
       title: "Cookies · TilliT",
       description: "Ce site n’en dépose aucun. Voici comment on l’a vérifié.",
     },
-      '/prototype': {
-      title: 'Prototype de l’application · TilliT',
-      description: 'Le prototype cliquable de l’application TilliT.',
-    },
   },
   en: {
     '/': {
@@ -166,10 +162,6 @@ const META: Record<Lang, Record<string, Meta>> = {
       title: "Cookies · TilliT",
       description: "This site sets none. Here is how we checked.",
     },
-    '/prototype': {
-      title: 'App prototype · TilliT',
-      description: 'The clickable prototype of the TilliT app.',
-    },
   },
 };
 
@@ -187,19 +179,6 @@ export default function PageMeta() {
     document.documentElement.lang = lang;
     document.title = meta.title;
     document.querySelector('meta[name="description"]')?.setAttribute('content', meta.description);
-
-    // The app prototype is private (incubator demo): reachable by its URL, never indexed.
-    let robots = document.querySelector<HTMLMetaElement>('meta[name="robots"]');
-    if (frPath === '/prototype') {
-      if (!robots) {
-        robots = document.createElement('meta');
-        robots.name = 'robots';
-        document.head.appendChild(robots);
-      }
-      robots.content = 'noindex, nofollow';
-    } else {
-      robots?.remove();
-    }
   }, [pathname]);
 
   return null;

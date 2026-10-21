@@ -449,10 +449,13 @@ function initialState(full: boolean) {
   const montant = params.get('montant') ?? '';
   const duree = Number(params.get('duree'));
   const offre = params.get('offre');
+  const amountStr = /^\d+(\.\d+)?$/.test(montant) ? montant : '';
+  // The home simulator sends no offer: above the Note ceiling, start on Zen.
+  const defaultOffer: Offer = Number(amountStr) > NOTE_FREE_LIMIT ? 'zen' : 'note';
   return {
-    amountStr: /^\d+(\.\d+)?$/.test(montant) ? montant : '',
+    amountStr,
     months: DURATIONS.includes(duree) ? duree : 0,
-    offer: (offre === 'zen' || offre === 'note' ? offre : 'note') as Offer,
+    offer: (offre === 'zen' || offre === 'note' ? offre : defaultOffer) as Offer,
   };
 }
 
